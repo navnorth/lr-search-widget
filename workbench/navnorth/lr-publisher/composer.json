@@ -1,0 +1,20 @@
+{
+    "name": "navnorth/lr-publisher",
+    "description": "",
+    "authors": [
+        {
+            "name": "navnorth",
+            "email": "dan@navnorth.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "4.1.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Navnorth\\LrPublisher": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
