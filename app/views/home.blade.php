@@ -1,90 +1,83 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>LR Publisher Widget</title>
-    <link rel="stylesheet" href="packages/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="packages/bootstrap/css/bootstrap-theme.min.css">
-    <script src="/js/head.js"></script>
-</head>
-<body>
 
-    <div class="container">
-        <h1>LR Publisher Widget</h1>
+@if(Auth::guest())
+    Login Required
 
-        @if(Auth::guest())
-            Login Required
+    <button class="btn login">Login</button>
 
-            <button class="btn login">Login</button>
+@else
+    <?php
+        $user = Auth::user();
+    ?>
 
-        @else
-            <?php
-                $user = Auth::user();
-            ?>
-
-            <p>
-                Your are currently logged in.
-
-                <button class="btn btn-sm logout">Log Out</button>
-            </p>
+    <div class="well">
 
 
-            <div class="well">
-                <dl>
-                    <dt>E-mail</dt>
-                    <dd>{{ $user->email }}</dd>
 
-                    <dt>API Key</dt>
-                    <dd>
-                        @if($user->api_key)
-                            {{ $user->api_key }}
-                        @else
+        <dl class="dl-horizontal">
+            @if($user->firstname !== '')
+                <dt>Name</dt>
+                <dd>{{ $user->firstname }} {{ $user->lastname }}</dd>
 
-                            You have not yet generated an API Key
+                <dt>Organization</dt>
+                <dd>{{ $user->organization }}</dd>
 
-                            <a href="/auth/create-api-key">Create One</a>
-                        @endif
-                    </dd>
+                <dt>URL</dt>
+                <dd>{{ $user->url }}</dd>
 
-                </dl>
-
-            </div>
+            @endif
 
 
-        @endif
+
+            <dt>E-mail</dt>
+            <dd>{{ $user->email }}</dd>
+
+            <dt>API Key</dt>
+            <dd>
+                @if($user->api_key)
+                    {{ $user->api_key }}
+                @else
+
+                    You have not yet generated an API Key
+
+                    <a href="/auth/create-api-key">Create One</a>
+                @endif
+            </dd>
+
+
+            @if($user->firstname !== '')
+                <dt></dt>
+                <dd>
+                    <a href="/auth/update-profile" class="btn btn-primary">Update Profile</a>
+                </dd>
+            @endif
+
+        </dl>
     </div>
 
+    @if($user->firstname === '')
+        <fieldset>
+            <legend>Help us improve usage data, provide more info about yourself</legend>
+
+            @include('auth.forms.update_profile', array('user' => $user))
+
+        </fieldset>
+
+    @else
+        <fieldset>
+            <legend>My Search Filters</legend>
+
+            <ul>
+                @each('search_filters.helpers.list', $user->searchFilters, 'searchFilter', 'raw|No search filters defined')
+            </ul>
+
+            <a href="/searchfilter/create" class="btn btn-default">Create Search Filter</a>
+
+        </fieldset>
+    @endif
+
+
+@endif
+
 <script>
-    head.js(
-        'https://login.persona.org/include.js',
-        '/js/jquery.js',
-        '/js/auth.js',
-        function() {
 
-            navigator.id.watch({
-                loggedInUser: {{ json_encode(Auth::guest() ? null : Auth::user()->email) }},
-                onlogin: function(assertion) {
-                    $.post('/auth/persona', { assertion: assertion })
-                        .done(function() {
-                            window.location.reload();
-                        })
-                        .fail(function() {
-                            navigator.id.logout();
-                        })
-                },
-                onlogout: function() {
-                    $.post('/auth/logout')
-                        .done(function() {
-                            window.location.reload();
-                        });
-                }
-
-            })
-
-        }
-    );
 </script>
-
-</body>
-</html>

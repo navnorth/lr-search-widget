@@ -45,9 +45,28 @@ class AuthController extends BaseController {
 		return Redirect::to('/');
 	}
 
-	public function __call($method, $parameters)
+	public function postUpdateProfile()
 	{
-		dd(func_get_args());
+		$user = Auth::user();
+
+		if(!$user)
+		{
+			Redirect::to('/');
+		}
+
+		$user->firstname = Input::get('firstname');
+		$user->lastname = Input::get('lastname');
+		$user->organization = Input::get('organization');
+		$user->url = Input::get('url');
+
+		$user->save();
+
+		return Redirect::to('/');
+	}
+
+	public function getUpdateProfile()
+	{
+		return $this->layout->with('content', View::make('auth.update_profile'));
 	}
 
 }

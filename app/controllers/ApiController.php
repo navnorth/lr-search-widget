@@ -14,7 +14,7 @@ class ApiController extends BaseController {
 
     public function getUserId()
     {
-        return $this->apiUser ? $this->apiUser->id : null;
+        return $this->apiUser ? $this->apiUser->api_user_id : null;
     }
 
     public function filterApiAuth($route, $request)

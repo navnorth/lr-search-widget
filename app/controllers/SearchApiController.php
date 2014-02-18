@@ -21,7 +21,7 @@ class SearchApiController extends ApiController
     public function getIndex()
     {
         $term = Input::get('q', '');
-        $filters = Input::get('filters', array());
+        $filters = Input::get('filter', array());
 
         $query = $this->buildQuery($term, $filters);
 
@@ -95,34 +95,31 @@ class SearchApiController extends ApiController
 
     public function getDomains()
     {
-        $term = Input::get('q');
+        return $this->_searchFacets('url_domain', true);
+    }
 
-        if($term)
+    public function getKeys()
+    {
+        return $this->_searchFacets('keys');
+    }
+
+    public function getFacets()
+    {
+        // !!! only allow defined facets
+
+        $facet = Input::get('facet');
+
+        if($facet)
         {
-            $query = array('wildcard' => array('url_domain' => '*'.$term.'*'));
+            $facetResult = $this->_searchFacets($facet, in_array($facet, array('url_domain')));
+            return $facetResult['facets'][$facet];
         }
         else
         {
-            $query = array('match_all' => array());
+            return array();
         }
 
-
-        $result = $this->client()->search(array(
-            'size' => 0,
-            'query' => $query,
-            'facets' => array(
-                'url_domain' => array(
-                    'terms' => array(
-                        'field' => 'url_domain',
-                        'size' => min(Input::get('limit', 15), 40),
-                    )
-                )
-            )
-        ));
-
-        return $result;
     }
-
 
     protected function buildQuery($query, $filters = array())
     {
@@ -130,30 +127,38 @@ class SearchApiController extends ApiController
         {
             $term = $query;
 
-            $query = array(
-                'dis_max' => array(
-                    'tie_breaker' => 0.7,
-                    'boost' => 1.0,
-                    'queries' => array(
-                        array('query_string' => array('query' => $term)),
-                        array('query_string' => array(
-                            'default_field' => 'title',
-                            'query' => $term,
-                            'boost' => 3,
-                        )),
-                        array('query_string' => array(
-                            'default_field' => 'keys',
-                            'query' => $term,
-                            'boost' => 1.5,
-                        )),
-                        array('query_string' => array(
-                            'default_field' => 'description',
-                            'query' => $term,
-                            'boost' => 1.2,
-                        )),
+            if($term)
+            {
+                $query = array(
+                    'dis_max' => array(
+                        'tie_breaker' => 0.7,
+                        'boost' => 1.0,
+                        'queries' => array(
+                            array('query_string' => array('query' => $term)),
+                            array('query_string' => array(
+                                'default_field' => 'title',
+                                'query' => $term,
+                                'boost' => 3,
+                            )),
+                            array('query_string' => array(
+                                'default_field' => 'keys',
+                                'query' => $term,
+                                'boost' => 1.5,
+                            )),
+                            array('query_string' => array(
+                                'default_field' => 'description',
+                                'query' => $term,
+                                'boost' => 1.2,
+                            )),
+                        )
                     )
-                )
-            );
+                );
+            }
+            else
+            {
+                $query = array('match_all' => array());
+            }
+
         }
 
         $limit = min(Input::get('limit', 20), 40);
@@ -180,12 +185,132 @@ class SearchApiController extends ApiController
                 } , array());
         }
 
-        if($facetFilter)
+        $totalFilters = array(
+            'include' => array(),
+            'exclude' => array(),
+            'exclude_non_whitelisted' => false,
+            'include_blacklisted' => false,
+        );
+
+        /* Merge all filter values */
+
+        foreach((array) $filters as $f)
         {
 
+            $filter = SearchFilter::where('filter_key', $f)->where('api_user_id', $this->getUserId())->first();
+
+            $settings = $filter->filter_settings;
+
+            if(is_array($settings['include']))
+            {
+                $totalFilters['include'] = array_merge_recursive($totalFilters['include'], $settings['include']);
+            }
+
+            if(is_array($settings['exclude']))
+            {
+                $totalFilters['exclude'] = array_merge_recursive($totalFilters['exclude'], $settings['exclude']);
+            }
+
+            $totalFilters['exclude_non_whitelisted'] = $totalFilters['exclude_non_whitelisted'] || !!$settings['exclude_non_whitelisted'];
+            $totalFilters['include_blacklisted'] = $totalFilters['include_blacklisted'] || !!$settings['include_blacklisted'];
+        }
+
+        $must = array();
+        $should = array();
+        $must_not = array();
+
+        foreach($totalFilters['include'] as $type => $values)
+        {
+            $must[] = array('terms' => array($type => $values));
+        }
+
+        foreach($totalFilters['exclude'] as $type => $values)
+        {
+            $must_not[] = array('terms' => array($type => $values));
+        }
+
+        if(!$totalFilters['include_blacklisted'])
+        {
+            $must_not[] = array('term' => array('blacklisted' => true));
+        }
+
+        if($totalFilters['exclude_non_whitelisted'])
+        {
+            $must[] = array('term' => array('whitelisted' => true));
+        }
+
+        if($must || $should || $must_not)
+        {
+            $combinedBoolQuery = array(
+                'bool' => array(
+                    'must' => $must,
+                    'should' => $should,
+                    'must_not' => $must_not,
+                )
+            );
+
+            $searchQuery['query'] = array(
+                'filtered' => array(
+                    'query' => $searchQuery['query'],
+                    'filter' => $combinedBoolQuery
+                )
+            );
         }
 
         return $searchQuery;
+    }
+
+
+    protected function _searchFacets($facets, $wildcardBefore = false)
+    {
+        $term = Input::get('q');
+
+        $wildcardFormat = $wildcardBefore ? '*%s*' : '%s*';
+
+        if($term)
+        {
+            $query = array(
+                'bool' => array(
+                    'must' => array_map(function($f) use ($wildcardFormat, $term) {
+                        return array(
+                            'wildcard' => array(
+                                $f => sprintf($wildcardFormat, $term)
+                            )
+                        );
+                    }, (array) $facets),
+                    'should' => array(),
+                    'must_not' => array(),
+                ),
+            );
+        }
+        else
+        {
+            $query = array('match_all' => array());
+        }
+
+        $limit = min(Input::get('limit', 15), 40);
+
+        $searchQuery = array(
+            'size' => 0,
+            'query' => $query,
+            'facets' => array_reduce((array) $facets, function($memo, $f) use ($term, $limit, $wildcardBefore) {
+                    $memo[$f] = array(
+                        'terms' => array(
+                            'field' => $f,
+                            'size' => $limit,
+                            'regex' => $wildcardBefore ? '.*'.preg_quote($term).'.*' : preg_quote($term).'.*',
+                            'regex_flags' => 'DOTALL',
+                        )
+                    );
+
+                    return $memo;
+                } , array()
+            ),
+        );
+
+        $result = $this->client()->search($searchQuery);
+
+        return $result;
     }
 
 

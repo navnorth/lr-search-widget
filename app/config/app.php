@@ -109,7 +109,10 @@ return array(
 
 		'Former\FormerServiceProvider',
 		'Jyggen\Persona\Provider\Laravel\PersonaServiceProvider',
+		'Profiler\ProfilerServiceProvider',
+
 		'Navnorth\LrPublisher\LrPublisherServiceProvider',
+		'Roumen\Asset\AssetServiceProvider',
 	),
 
 	/*
@@ -177,6 +180,8 @@ return array(
 		'View'            => 'Illuminate\Support\Facades\View',
 
 		'Former'		  => 'Former\Facades\Former',
+		'Profiler' 		  => 'Profiler\Facades\Profiler',
+		'Asset' 		  => 'Roumen\Asset\Asset',
 
 	),
 

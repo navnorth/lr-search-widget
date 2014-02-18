@@ -21,8 +21,6 @@ class LrPublisherServiceProvider extends ServiceProvider {
 	public function register()
 	{
 		// Setup persona to connect to our ApiUser model
-
-
 		Event::listen('persona.login', function($email) {
     		return ApiUser::where('email', $email)->first();
 		});
@@ -34,7 +32,6 @@ class LrPublisherServiceProvider extends ServiceProvider {
 		    $user->save();
 		    return $user;
 		});
-
 	}
 
 	/**

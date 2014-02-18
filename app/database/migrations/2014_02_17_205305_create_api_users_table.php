@@ -12,10 +12,10 @@ class CreateApiUsersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('api_users', function($table) {
+		Schema::create('api_user', function($table) {
 			$table->engine = 'InnoDB';
 
-			$table->increments('id');
+			$table->increments('api_user_id');
 			$table->string('firstname', 50);
 			$table->string('lastname', 50);
 			$table->string('email', 50)->unique();
@@ -23,8 +23,7 @@ class CreateApiUsersTable extends Migration {
 			$table->string('organization', 50);
 			$table->string('url', 255);
 			$table->string('api_key', 200)->unique();
-			$table->timestamp('created_at');
-			$table->timestamp('updated_at');
+			$table->timestamps();
 			$table->softDeletes();
 
 		});

@@ -5,6 +5,8 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 
 class ApiUser extends Eloquent implements UserInterface, RemindableInterface {
 
+	protected $primaryKey = 'api_user_id';
+
 	protected $softDelete = true;
 
 	/**
@@ -12,7 +14,7 @@ class ApiUser extends Eloquent implements UserInterface, RemindableInterface {
 	 *
 	 * @var string
 	 */
-	protected $table = 'api_users';
+	protected $table = 'api_user';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -49,6 +51,30 @@ class ApiUser extends Eloquent implements UserInterface, RemindableInterface {
 	public function getReminderEmail()
 	{
 		return $this->email;
+	}
+
+
+	/*
+		Helpers
+	 */
+
+	public function display_name()
+	{
+		return $this->firstname ?: $this->email;
+	}
+
+	public function full_name()
+	{
+		return trim($this->firstname.' '.$this->lastname);
+	}
+
+	/*
+		Relationships
+	 */
+
+	public function searchFilters()
+	{
+		return $this->hasMany('SearchFilter');
 	}
 
 }

@@ -9,7 +9,9 @@
 		"nervetattoo/elasticsearch": "2.3.*",
 		"anahkiasen/former": "dev-master",
 		"jyggen/persona": "v1.0.1",
-		"twitter/bootstrap": "v3.1.1"
+		"twitter/bootstrap": "v3.1.1",
+		"loic-sharma/profiler": "1.1.*",
+		"roumen/asset": "dev-master"
 	},
 	"autoload": {
 		"classmap": [

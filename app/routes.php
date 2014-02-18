@@ -15,7 +15,6 @@ Route::controller('auth', 'AuthController');
 Route::controller('api/search', 'SearchApiController');
 Route::controller('api', 'ApiController');
 
-Route::get('/', function()
-{
-	return View::make('home');
-});
+Route::resource('searchfilter', 'SearchFilterController');
+
+Route::get('/', 'HomeController@showHome');
