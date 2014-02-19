@@ -245,7 +245,7 @@
 
       if (typeahead.options && $.fn.typeahead) {
 
-        self.$input.typeahead(null, typeahead.source)
+        self.$input.typeahead(typeahead.options, typeahead.source)
           .on('typeahead:selected', $.proxy(function (obj, datum) {
                self.$element.tagsinput('add', datum);
                self.$element.tagsinput('input').typeahead('val', '');
@@ -335,15 +335,24 @@
         self.remove($(event.target).closest('.tag').data('item'));
       }, self));
 
-      // Only add existing value as tags when using strings as tags
-      if (self.options.itemValue === defaultOptions.itemValue) {
-        if (self.$element[0].tagName === 'INPUT') {
-            self.add(self.$element.val());
-        } else {
-          $('option', self.$element).each(function() {
-            self.add($(this).attr('value'), true);
-          });
-        }
+      if (self.$element[0].tagName === 'INPUT') {
+          self.add(self.$element.val());
+      } else {
+        $('option', self.$element).each(function() {
+
+          var val = $(this).attr('value');
+
+          if(self.objectItems && typeof val === 'string')
+          {
+              var newVal = {};
+
+              newVal[self.objectItems] = val;
+
+              val = newVal
+          }
+
+          self.add(val, true);
+        });
       }
     },
 

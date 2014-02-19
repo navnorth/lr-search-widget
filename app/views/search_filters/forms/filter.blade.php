@@ -1,6 +1,8 @@
 <?php
     Asset::add('css/lib/bootstrap-tagsinput.css');
 
+    use SearchFilter as SF;
+
 
     if(isset($searchFilter))
     {
@@ -13,6 +15,10 @@
             ),
             $settings
         ));
+    }
+    else
+    {
+        $settings = SF::$DEFAULT_FILTER_VALUES;
     }
 
 
@@ -44,32 +50,21 @@
 
         <?php
 
-            echo Former::select('include[url_domain][]', 'Domain Names')
+            foreach(array('url_domain', 'keys', 'mediaFeatures', 'accessMode') as $type)
+            {
+                $values = isset($settings[SF::FILTER_INCLUDE][$type]) ? $settings[SF::FILTER_INCLUDE][$type] : array();
+
+                $values = array_combine(array_values($values), array_values($values));
+
+                echo Former::select(SF::FILTER_INCLUDE.'['.$type.'][]', 'Domain Names')
                     ->multiple()
                     ->data_role('multiinput')
-                    ->data_field('url_domain');
+                    ->data_field($type)
+                    ->options($values)
+                    ->select(array_keys($values));
+            }
 
-            echo Former::select('include[keys][]', 'Keywords')
-                    ->multiple()
-                    ->data_role('multiinput')
-                    ->data_field('keys');
-
-            /*echo Former::select('include[subjects][]', 'Subjects')
-                    ->multiple()
-                    ->data_role('multiinput')
-                    ->data_field('subjects'); */
-
-            echo Former::select('include[mediaFeatures][]', 'Media Features')
-                    ->multiple()
-                    ->data_role('multiinput')
-                    ->data_field('mediaFeatures');
-
-            echo Former::select('include[accessMode][]', 'Access Mode')
-                    ->multiple()
-                    ->data_role('multiinput')
-                    ->data_field('accessMode');
-
-            echo Former::checkbox('include_blacklisted');
+            echo Former::checkbox(SF::FILTER_INCLUDE_BLACKLISTED);
         ?>
 
 
@@ -81,38 +76,46 @@
 
         <?php
 
-            echo Former::select('exclude[url_domain][]', 'Domain Names')
-                    ->multiple()
-                    ->placeholder('Start typing to trigger autocomplete')
-                    ->data_role('multiinput')
-                    ->data_field('url_domain');
+            foreach(array('url_domain', 'keys', 'mediaFeatures', 'accessMode') as $type)
+            {
+                $values = isset($settings[SF::FILTER_EXCLUDE][$type]) ? $settings[SF::FILTER_EXCLUDE][$type] : array();
 
-            echo Former::select('exclude[keys][]', 'Keywords')
-                    ->multiple()
-                    ->placeholder('Start typing to trigger autocomplete')
-                    ->data_role('multiinput')
-                    ->data_field('keys');
+                $values = array_combine(array_values($values), array_values($values));
 
-            /*echo Former::select('exclude[subjects][]', 'Subjects')
+                echo Former::select(SF::FILTER_EXCLUDE.'['.$type.'][]', 'Domain Names')
                     ->multiple()
                     ->data_role('multiinput')
-                    ->data_field('url_domain')*/
+                    ->data_field($type)
+                    ->options($values)
+                    ->select(array_keys($values));
+            }
 
-            echo Former::select('exclude[mediaFeatures][]', 'Media Features')
-                    ->multiple()
-                    ->placeholder('Start typing to trigger autocomplete')
-                    ->data_role('multiinput')
-                    ->data_field('mediaFeatures');
 
-            echo Former::select('exclude[accessMode][]', 'Access Mode')
-                    ->multiple()
-                    ->placeholder('Start typing to trigger autocomplete')
-                    ->data_role('multiinput')
-                    ->data_field('accessMode');
-
-            echo Former::checkbox('exclude_non_whitelisted');
+            echo Former::checkbox(SF::FILTER_WHITELISTED_ONLY);
         ?>
 
+
+    </fieldset>
+
+    <fieldset>
+        <legend>Discouraged (Not removed, but lowered scores)</legend>
+
+        <?php
+
+            foreach(array('url_domain', 'keys', 'mediaFeatures', 'accessMode') as $type)
+            {
+                $values = isset($settings[SF::FILTER_DISCOURAGE][$type]) ? $settings[SF::FILTER_DISCOURAGE][$type] : array();
+
+                $values = array_combine(array_values($values), array_values($values));
+
+                echo Former::select(SF::FILTER_DISCOURAGE.'['.$type.'][]', 'Domain Names')
+                    ->multiple()
+                    ->data_role('multiinput')
+                    ->data_field($type)
+                    ->options($values)
+                    ->select(array_keys($values));
+            }
+        ?>
 
     </fieldset>
 

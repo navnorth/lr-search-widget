@@ -4,11 +4,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>LR Publisher Widget</title>
-    <link rel="stylesheet" href="/css/app.css">
+
     <link rel="stylesheet" href="/packages/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/packages/bootstrap/css/bootstrap-theme.min.css">
-
     {{ Asset::css() }}
+
+    <link rel="stylesheet" href="/css/app.css">
 
     <script src="/js/head.js"></script>
 

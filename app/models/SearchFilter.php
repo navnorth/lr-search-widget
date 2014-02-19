@@ -13,9 +13,26 @@ class SearchFilter extends Eloquent {
 
     protected $softDelete = true;
 
+
+    const FILTER_INCLUDE = 'include';
+    const FILTER_EXCLUDE = 'exclude';
+    const FILTER_DISCOURAGE = 'discourage';
+    const FILTER_WHITELISTED_ONLY = 'whitelisted_only';
+    const FILTER_INCLUDE_BLACKLISTED = 'include_blacklisted';
+
+    public static $DEFAULT_FILTER_VALUES = array(
+        self::FILTER_INCLUDE => array(),
+        self::FILTER_EXCLUDE => array(),
+        self::FILTER_DISCOURAGE => array(),
+        self::FILTER_WHITELISTED_ONLY => null,
+        self::FILTER_INCLUDE_BLACKLISTED => null,
+    );
+
     public function getFilterSettingsAttribute($value)
     {
-        return json_decode($value ?: '{}', true);
+        $parsed = json_decode($value ?: '{}', true);
+
+        return array_merge(self::$DEFAULT_FILTER_VALUES, $parsed);
     }
 
     public function setFilterSettingsAttribute($value)
@@ -33,7 +50,5 @@ class SearchFilter extends Eloquent {
     {
         return $this->belongsTo('ApiUser');
     }
-
-
 
 }

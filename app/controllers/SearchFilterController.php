@@ -39,8 +39,7 @@ class SearchFilterController extends \BaseController {
 	{
 		$filter = new SearchFilter();
 
-		$filter->name = Input::get('name');
-		$filter->filter_settings = Input::only(array('include', 'exclude', 'exclude_non_whitelisted', 'include_blacklisted'));
+		$this->_applyFilterSettings($filter);
 
 		$filter->filter_key = str_random(10);
 		$filter->api_user_id = Auth::user()->api_user_id;
@@ -59,13 +58,9 @@ class SearchFilterController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$filter = SearchFilter::find($id);
-
-		if(Auth::user()->api_user_id == $filter->api_user_id)
+		if($filter = $this->_loadSearchFilter($id))
 		{
-			SearchFilter::where('filter_key', 'Ulx230mcyc')->where('api_user_id', Auth::user()->api_user_id)->first();
-
-			return $this->_defaultView('show', compact('filter'));
+			return $this->_defaultView('show', array('filter' => $filter));
 		}
 		else
 		{
@@ -81,11 +76,10 @@ class SearchFilterController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		$filter = SearchFilter::find($id);
 
-		if(Auth::user()->api_user_id == $filter->api_user_id)
+		if($filter = $this->_loadSearchFilter($id))
 		{
-			return $this->_defaultView('edit', compact('filter'));
+			return $this->_defaultView('edit', array('filter' => $filter));
 		}
 		else
 		{
@@ -101,7 +95,18 @@ class SearchFilterController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		if($filter = $this->_loadSearchFilter($id))
+		{
+			$this->_applyFilterSettings($filter);
+
+			$filter->save();
+
+			return Redirect::to($filter->link());
+		}
+		else
+		{
+			return Redirect::to('/');
+		}
 	}
 
 	/**
@@ -113,6 +118,32 @@ class SearchFilterController extends \BaseController {
 	public function destroy($id)
 	{
 		//
+	}
+
+	protected function _applyFilterSettings(SearchFilter $filter)
+	{
+		$filter->name = Input::get('name');
+		$filter->filter_settings = Input::only(array(
+			SearchFilter::FILTER_INCLUDE,
+			SearchFilter::FILTER_EXCLUDE,
+			SearchFilter::FILTER_DISCOURAGE,
+			SearchFilter::FILTER_WHITELISTED_ONLY,
+			SearchFilter::FILTER_INCLUDE_BLACKLISTED,
+		));
+	}
+
+	protected function _loadSearchFilter($id)
+	{
+		$filter = SearchFilter::find($id);
+
+		if(Auth::user()->api_user_id == $filter->api_user_id)
+		{
+			return $filter;
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 }

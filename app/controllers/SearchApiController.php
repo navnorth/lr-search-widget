@@ -2,6 +2,8 @@
 
 use ElasticSearch\Client;
 
+use SearchFilter as SF;
+
 class SearchApiController extends ApiController
 {
 
@@ -60,7 +62,15 @@ class SearchApiController extends ApiController
 
         });
 
+
+
         $searchResponse = $this->client()->search($query);
+
+        // This is incredibly handy for developers...
+        if(Input::get('show_query') && app()->environment() === 'local')
+        {
+            return $query;
+        }
 
         return $searchResponse;
     }
@@ -185,56 +195,94 @@ class SearchApiController extends ApiController
                 } , array());
         }
 
-        $totalFilters = array(
-            'include' => array(),
-            'exclude' => array(),
-            'exclude_non_whitelisted' => false,
-            'include_blacklisted' => false,
-        );
+        $totalFilters = SF::$DEFAULT_FILTER_VALUES;
 
         /* Merge all filter values */
 
         foreach((array) $filters as $f)
         {
 
-            $filter = SearchFilter::where('filter_key', $f)->where('api_user_id', $this->getUserId())->first();
+            $filter = SF::where('filter_key', $f)->where('api_user_id', $this->getUserId())->first();
 
             $settings = $filter->filter_settings;
 
-            if(is_array($settings['include']))
+            if(is_array($settings[SF::FILTER_INCLUDE]))
             {
-                $totalFilters['include'] = array_merge_recursive($totalFilters['include'], $settings['include']);
+                $totalFilters[SF::FILTER_INCLUDE] = array_merge_recursive(
+                    $totalFilters[SF::FILTER_INCLUDE],
+                    $settings[SF::FILTER_INCLUDE]
+                );
             }
 
-            if(is_array($settings['exclude']))
+            if(is_array($settings[SF::FILTER_EXCLUDE]))
             {
-                $totalFilters['exclude'] = array_merge_recursive($totalFilters['exclude'], $settings['exclude']);
+                $totalFilters[SF::FILTER_EXCLUDE] = array_merge_recursive(
+                    $totalFilters[SF::FILTER_EXCLUDE],
+                    $settings[SF::FILTER_EXCLUDE]
+                );
             }
 
-            $totalFilters['exclude_non_whitelisted'] = $totalFilters['exclude_non_whitelisted'] || !!$settings['exclude_non_whitelisted'];
-            $totalFilters['include_blacklisted'] = $totalFilters['include_blacklisted'] || !!$settings['include_blacklisted'];
+            if(is_array($settings[SF::FILTER_DISCOURAGE]))
+            {
+                $totalFilters[SF::FILTER_DISCOURAGE] = array_merge_recursive(
+                    $totalFilters[SF::FILTER_DISCOURAGE],
+                    $settings[SF::FILTER_DISCOURAGE]
+                );
+            }
+
+            $totalFilters[SF::FILTER_WHITELISTED_ONLY] = $totalFilters[SF::FILTER_WHITELISTED_ONLY] || !!$settings[SF::FILTER_WHITELISTED_ONLY];
+            $totalFilters[SF::FILTER_INCLUDE_BLACKLISTED] = $totalFilters[SF::FILTER_INCLUDE_BLACKLISTED] || !!$settings[SF::FILTER_INCLUDE_BLACKLISTED];
         }
+
+        // Apply Discouragement
+
+        if(count($totalFilters[SF::FILTER_DISCOURAGE]))
+        {
+            $negative = array();
+
+            foreach($totalFilters[SF::FILTER_DISCOURAGE] as $type => $values)
+            {
+                $negative[] = array('terms' => array($type => $values));
+            }
+
+            $boostingQuery = array(
+                'boosting' => array(
+                    'positive' => $searchQuery['query'],
+                    'negative' => array(
+                        'bool' => array(
+                            'must' => array(),
+                            'should' => $negative,
+                            'must_not' => array(),
+                        ),
+                    ),
+                    'negative_boost' => 0.3,
+                )
+            );
+
+            $searchQuery['query'] = $boostingQuery;
+        }
+
 
         $must = array();
         $should = array();
         $must_not = array();
 
-        foreach($totalFilters['include'] as $type => $values)
+        foreach($totalFilters[SF::FILTER_INCLUDE] as $type => $values)
         {
             $must[] = array('terms' => array($type => $values));
         }
 
-        foreach($totalFilters['exclude'] as $type => $values)
+        foreach($totalFilters[SF::FILTER_EXCLUDE] as $type => $values)
         {
             $must_not[] = array('terms' => array($type => $values));
         }
 
-        if(!$totalFilters['include_blacklisted'])
+        if(!$totalFilters[SF::FILTER_INCLUDE_BLACKLISTED])
         {
             $must_not[] = array('term' => array('blacklisted' => true));
         }
 
-        if($totalFilters['exclude_non_whitelisted'])
+        if($totalFilters[SF::FILTER_WHITELISTED_ONLY])
         {
             $must[] = array('term' => array('whitelisted' => true));
         }

@@ -1,0 +1,21 @@
+{
+  "name": "LR-Search-Widget",
+  "version": "0.0.1",
+  "description": "Site to manage creating search filters and embeddable search widgets for the Learning Registry",
+  "main": "index.js",
+  "dependencies": {
+    "clean-css": "~2.1.0",
+    "hogan.js": "~2.0.0"
+  },
+  "devDependencies": {
+    "coffee-script": "~1.7.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "navnorth/LR-Search-Widget",
+  "author": "",
+  "license": "BSD",
+  "gitHead": "9ec20bb70be6c621e0d3127e04afcb47f424f211",
+  "readmeFilename": "README.md"
+}

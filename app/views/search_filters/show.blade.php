@@ -1,4 +1,6 @@
 <?php
+    use SearchFilter as SF;
+
     $filterSettings = $filter->filter_settings;
 ?>
 
@@ -16,11 +18,11 @@
             <dt>Filter Key</dt>
             <dd>{{ $filter->filter_key }}</dd>
 
-            @if(is_array($filterSettings['include']))
+            @if(is_array($filterSettings[SF::FILTER_INCLUDE]) && count($filterSettings[SF::FILTER_INCLUDE]))
                 <dt>Includes</dt>
 
                 <dd>
-                    @foreach($filterSettings['include'] as $type => $values)
+                    @foreach($filterSettings[SF::FILTER_INCLUDE] as $type => $values)
                         <strong>{{ $type }}</strong>
 
                         <ul>
@@ -32,6 +34,51 @@
                     @endforeach
                 </dd>
             @endif
+
+            @if(is_array($filterSettings[SF::FILTER_EXCLUDE]) && count($filterSettings[SF::FILTER_EXCLUDE]))
+                <dt>Excludes</dt>
+
+                <dd>
+                    @foreach($filterSettings[SF::FILTER_EXCLUDE] as $type => $values)
+                        <strong>{{ $type }}</strong>
+
+                        <ul>
+                            @foreach($values as $v)
+                                <li>{{ $v }}</li>
+                            @endforeach
+                        </ul>
+
+                    @endforeach
+                </dd>
+            @endif
+
+            @if(is_array($filterSettings[SF::FILTER_DISCOURAGE]) && count($filterSettings[SF::FILTER_DISCOURAGE]))
+                <dt>Discouraged</dt>
+
+                <dd>
+                    @foreach($filterSettings[SF::FILTER_DISCOURAGE] as $type => $values)
+                        <strong>{{ $type }}</strong>
+
+                        <ul>
+                            @foreach($values as $v)
+                                <li>{{ $v }}</li>
+                            @endforeach
+                        </ul>
+
+                    @endforeach
+                </dd>
+            @endif
+
+            @if($filterSettings[SF::FILTER_WHITELISTED_ONLY])
+                <dt>Whitelisted Only</dt>
+                <dd>True</dd>
+            @endif
+
+            @if($filterSettings[SF::FILTER_INCLUDE_BLACKLISTED])
+                <dt>Include Blacklisted</dt>
+                <dd>True</dd>
+            @endif
+
         </dl>
 
     </div>
