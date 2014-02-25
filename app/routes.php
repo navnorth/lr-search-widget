@@ -15,6 +15,14 @@ Route::controller('auth', 'AuthController');
 Route::controller('api/search', 'SearchApiController');
 Route::controller('api', 'ApiController');
 
+
 Route::resource('searchfilter', 'SearchFilterController');
+Route::resource('embed', 'EmbedController');
 
 Route::get('/', 'HomeController@showHome');
+
+Route::get('webcap', 'WebcapController@getIndex');
+Route::get('webcap/screencap.jpg', 'WebcapController@getIndex');
+Route::get('webcap/{id}/screencap.jpg', 'WebcapController@getScreencapById');
+Route::get('webcap/{id}/{size}/screencap.jpg', 'WebcapController@getScreencapById');
+

@@ -11,7 +11,8 @@
 		"jyggen/persona": "v1.0.1",
 		"twitter/bootstrap": "v3.1.1",
 		"loic-sharma/profiler": "1.1.*",
-		"roumen/asset": "dev-master"
+		"roumen/asset": "dev-master",
+		"intervention/image": "1.5.*"
 	},
 	"autoload": {
 		"classmap": [

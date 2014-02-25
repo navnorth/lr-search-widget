@@ -113,6 +113,7 @@ return array(
 
 		'Navnorth\LrPublisher\LrPublisherServiceProvider',
 		'Roumen\Asset\AssetServiceProvider',
+		'Intervention\Image\ImageServiceProvider',
 	),
 
 	/*
@@ -182,6 +183,7 @@ return array(
 		'Former'		  => 'Former\Facades\Former',
 		'Profiler' 		  => 'Profiler\Facades\Profiler',
 		'Asset' 		  => 'Roumen\Asset\Asset',
+		'Image'			  => 'Intervention\Image\Facades\Image',
 
 	),
 

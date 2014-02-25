@@ -9,7 +9,6 @@ class SearchApiController extends ApiController
 
     public function __construct()
     {
-
         parent::__construct();
     }
 
@@ -18,6 +17,11 @@ class SearchApiController extends ApiController
         $config = Config::get('search');
 
         return ElasticSearch\Client::connection($config);
+    }
+
+    public function postIndex()
+    {
+        return $this->getIndex();
     }
 
     public function getIndex()
@@ -172,14 +176,12 @@ class SearchApiController extends ApiController
         }
 
         $limit = min(Input::get('limit', 20), 40);
-        $facetFilter = Input::get('facet_filter', array());
         $facets = Input::get('facets', array());
-
 
 
         $searchQuery = array(
             'query' => $query,
-            'fields' => array('title', 'url', 'description'),
+            'fields' => array('title', 'url', 'description', 'url_domain'),
             'size' => $limit,
             'sort' => array('_score'),
             'track_scores' => true,
@@ -304,6 +306,60 @@ class SearchApiController extends ApiController
                 )
             );
         }
+
+        // Apply Facet Filters
+        $facetFilters = Input::get('facet_filters', array());
+
+        if($facetFilters)
+        {
+            if(array_key_exists('filtered', $searchQuery['query']))
+            {
+                // covert to filtered
+                $searchQuery['query'] = array(
+                    'filtered' => array(
+                        'query' => $searchQuery['query'],
+                        'filter' => array(
+                            'bool' => array(
+                                'must' => array(),
+                                'should' => array(),
+                                'must_not' => array(),
+                            )
+                        )
+                    )
+                );
+            }
+
+            foreach($facetFilters as $name => $values)
+            {
+                $searchQuery['query']['filtered']['filter']['bool']['must'][] = array(
+                    'terms' => array(
+                        $name => (array) $values
+                    )
+                );
+            }
+
+
+        }
+
+        // Highlighting
+
+        $highlight = Input::get('highlight', array());
+
+        if($highlight)
+        {
+            $searchQuery['highlight'] = array(
+                array(
+                    'fields' => array_reduce((array) $highlight, function($memo, $field) {
+
+                        $memo[$field] = array('index_options' => 'offsets');
+
+                        return $memo;
+
+                    }, array())
+                )
+            );
+        }
+
 
         return $searchQuery;
     }
