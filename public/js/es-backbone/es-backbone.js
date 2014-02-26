@@ -8,7 +8,7 @@ define([
 	'jquery.flot',
 	'jquery.flot.pie',
 	'jquery.flot.selection',
-	'select2',
+	'magnific',
 ], function($, Mustache, _, Backbone) {
 	var ESBB = {};
 
@@ -250,13 +250,13 @@ define([
 
 	});
 
-
 	ESBB.SearchResultsView = Backbone.View.extend({
 		el: '#esbb-results-set',
 		header: 'Search Results',
 		highlightField: 'content',
 		default_data: {},
 		queryModel: null,
+		modalView: null,
 		template: '\
 			<h4>{{total}} Results</h4>\
 			{{#hits}}\
@@ -271,9 +271,13 @@ define([
 			<h4>No Results</h4>\
 			',
 		templateError: '\
-			<h4>Elasticsearch Server Error</h4>\
+			<h4>Error connecting to Search Service</h4>\
 			<p>{{& error}}</p>\
 			',
+
+		events: {
+			'click a': 'clickLink'
+		},
 
 		initialize: function(options) {
 			this.options = options
@@ -293,14 +297,32 @@ define([
 				this.queryModel.bind('search:end', this.searchEnded, this );
 			}
 			this.globalData = options.globalData || {}
+			this.widgetConfig = options.widgetConfig || new Backbone.Model()
 
 			this.render();
+
+			this.modalView = options.modalView
+		},
+
+		clickLink: function(e) {
+
+			if(this.modalView && this.widgetConfig.get('show_resource_modal'))
+			{
+				e.preventDefault()
+
+				var docId = $(e.target).closest('.esbb-result').data('docId'),
+					doc = _.findWhere(this.model.get('hits').hits, { _id: docId })
+
+				this.modalView.renderResource(new Backbone.Model(doc))
+			}
+
 		},
 
 		render: function( note ) {
-			var t = this;
+			var t = this,
+				results = this.model.toJSON();
+
 			this.$el.empty();
-			var results = this.model.toJSON();
 
 			if ( t.model.hasResults && ( results.hits != undefined ) && ( 0 != results.hits.total ) ) {
 				for ( docIndex in results.hits.hits ) {
@@ -315,6 +337,7 @@ define([
 				data.hits = results.hits.hits;
 				data.total = results.hits.total;
 				data.global = this.globalData
+
 
 				this.$el.append( Mustache.render( this.template, data ) );
 			} else {
@@ -589,50 +612,58 @@ define([
 					break;
 			}
 
-			$.plot( $canvas, data, {
-				series: {
-					pie: {
-						show: true,
-						label: {
-							show: false
+			// if we have no matching results (or 1 so we don't show a full pie chart)
+			if(data.length < 2)
+			{
+				this.$el.hide()
+			}
+			else
+			{
+				$.plot( $canvas, data, {
+					series: {
+						pie: {
+							show: true,
+							label: {
+								show: false
+							}
 						}
+					},
+					legend: {
+						show: false
+					},
+					grid: {
+						hoverable: true,
+						clickable: true
 					}
-				},
-				legend: {
-					show: false
-				},
-				grid: {
-					hoverable: true,
-					clickable: true
-				}
-			});
+				});
 
-			$canvas.bind("plothover", function( ev, pos, obj ) {
-				if (!obj)
-					return;
-				var percent = parseFloat( obj.series.percent ).toFixed(2);
-				$helperText.html(
-					'<span style="font-weight: bold; color:' + obj.series.color + '">' +
-					obj.series.label + ' (' + percent + '%)</span>'
-				);
-			} );
-			$canvas.bind("plotclick", function(ev, pos, obj ) {
-				if (!obj)
-					return;
-				switch( t.facetType ) {
-					case 'terms':
-						t.searchQueryModel.addTermFilter( t.facetName, obj.series.label );
-						break;
-					case 'range':
-						t.searchQueryModel.addRangeFilter( t.facetName, t.seriesData[ obj.seriesIndex ].from, t.seriesData[ obj.seriesIndex ].to );
-						break;
-					default:
+				$canvas.bind("plothover", function( ev, pos, obj ) {
+					if (!obj)
 						return;
-				}
-				t.searchQueryModel.trigger('change');
-				t.searchQueryModel.search( t.model );
-				return true;
-			} );
+					var percent = parseFloat( obj.series.percent ).toFixed(2);
+					$helperText.html(
+						'<span style="font-weight: bold; color:' + obj.series.color + '">' +
+						obj.series.label + ' (' + percent + '%)</span>'
+					);
+				} );
+				$canvas.bind("plotclick", function(ev, pos, obj ) {
+					if (!obj)
+						return;
+					switch( t.facetType ) {
+						case 'terms':
+							t.searchQueryModel.addTermFilter( t.facetName, obj.series.label );
+							break;
+						case 'range':
+							t.searchQueryModel.addRangeFilter( t.facetName, t.seriesData[ obj.seriesIndex ].from, t.seriesData[ obj.seriesIndex ].to );
+							break;
+						default:
+							return;
+					}
+					t.searchQueryModel.trigger('change');
+					t.searchQueryModel.search( t.model );
+					return true;
+				} );
+			}
 		},
 
 		calcTermsData: function( facet ) {
@@ -1136,8 +1167,9 @@ define([
 		search: function( ev ) {
 			if ( ev ) {
 				ev.preventDefault();
-				this.setQuery( null );
+
 			}
+			this.setQuery();
 			this.model.search();
 		},
 

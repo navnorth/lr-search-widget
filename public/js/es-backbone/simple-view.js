@@ -5,9 +5,41 @@ define([
 	'underscore',
 	'backbone',
 	'esbb/es-backbone',
+	'magnific',
 ], function($, Mustache, _, Backbone, ESBB) {
 
 	var ESBBApp = {};
+
+	ESBBApp.ResourceModalView = Backbone.View.extend({
+		className: 'esbb-popup',
+
+		initialize: function(options) {
+			this.options = options;
+			this.template = options.template;
+			this.globalConfig = options.globalConfig;
+		},
+
+		renderResource: function(model) {
+			this.model = model;
+			this.render();
+		},
+
+		render: function() {
+
+			var data = _.extend(this.model.toJSON(), { global: this.globalConfig })
+
+			this.$el.html(Mustache.render(this.template, data))
+
+			$.magnificPopup.open({
+				items: {
+					src: this.$el,
+					type: 'inline'
+				}
+			})
+
+			return this;
+		}
+	});
 
 	ESBBApp.SimpleAppView = Backbone.View.extend({
 		query: null,
@@ -24,11 +56,33 @@ define([
 			this.originalHTML = this.$el.html()
 
 			this.globalConfig = options.globalConfig || {}
-			this.widgetConfig = options.widgetConfig || {}
+			this.widgetConfig = options.widgetConfig || new Backbone.Model()
+			this.templates = options.templates
+
+			this.listenTo(this.widgetConfig, 'change:show_facets change:enable_flagging', this.configChange)
+
+			this.modalView = new ESBBApp.ResourceModalView({
+				template: this.templates.modal
+			});
 
 			this.query = this.options.query;
 			_.bindAll( this, 'render' );
 			this.render();
+		},
+
+		configChange: function(configModel) {
+			_.each(configModel.changed, function(val, key) {
+
+				if(key == 'show_facets')
+				{
+					this.$('.lr-embed').toggleClass('no-facets', !val)
+				}
+				else if(key == 'enable_flagging')
+				{
+					this.$('.lr-embed').toggleClass('no-flagging', !val)
+				}
+
+			})
 		},
 
 		updateFilterKeys: function(e) {
@@ -57,8 +111,10 @@ define([
 
 			new ESBB.SearchResultsView( {
 				model: this.model,
-				template: this.widgetConfig.templates.list,
+				template: this.templates.list,
 				globalData: this.globalConfig,
+				widgetConfig: this.widgetConfig,
+				modalView: this.modalView,
 				el: this.$('.embed-search-results') ,
 				highlightField: 'description' //TODO: set to whatever your highlighted field name is
 			} );
@@ -104,6 +160,17 @@ define([
 				new ESBB.SearchFacetSelectView( {
 					facetName: 'publisher_full',
 					headerName: 'Publisher',
+					el: $facet,
+					searchQueryModel: this.query,
+					model: this.model
+				} );
+			}
+
+			if(($facet = this.$('.embed-mediaFeatures-selector')).length)
+			{
+				new ESBB.SearchFacetSelectView( {
+					facetName: 'mediaFeatures',
+					headerName: 'Media Features',
 					el: $facet,
 					searchQueryModel: this.query,
 					model: this.model

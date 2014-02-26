@@ -1,5 +1,5 @@
 
-<div class="lr-embed" data-widget-key="01234567"></div>
+<div class="lr-search-widget" data-widget-key="01234567"></div>
 
 {{--
 

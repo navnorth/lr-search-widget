@@ -1,13 +1,15 @@
 @import 'nib'
 
-.lr-embed
+.lr-search-widget
+
+    global-reset()
+
 
     font-family: 'Open Sans', helvetica, sans-serif
+    font-size: 14px
 
     .clearfix
         clearfix()
-
-    global-reset()
 
     label
         display: inline
@@ -63,10 +65,22 @@
         width: 70%;
         float: left;
 
+
+    // toggle-able functionality
     .no-facets
 
         .embed-center-col
             width: 100%
+
+        .embed-left-col
+        .embed-search-facets
+            display: none
+
+
+    .no-flagging
+
+        a.flagging
+            display: none
 
     .embed-col .col-wrapper
         padding: 20px 30px
@@ -123,10 +137,16 @@
         .esbb-result-img
             float: left;
             margin-right: 10px;
-            border: 1px solid #999;
+
+            img
+                border: 1px solid #bbb;
 
         .esbb-info
             float: right;
+            margin-left: 10px
+
+        .esbb-content
+            margin-left: 160px
 
         .esbb-result-url
             font-size: 80%;
@@ -203,13 +223,63 @@
             font-size: 12px
 
             a
-                margin-left: 3px
                 display: inline-block
-                width: 12px
+                width: 14px
+                height: 14px
+                line-height: 14px
+                margin-left: 3px
+                border-radius: 10px
                 text-align: center
+                font-size: 14px
                 font-weight: bold
                 color: red
                 background-color: white
-                border-radius: 10px
-                font-size: 80%
+                text-decoration: none
+
+                &:hover
+                    text-decoration: none
+                    background-color: red
+                    color: white
+
+
+.esbb-popup
+    position: relative
+    display: block
+    background-color: white
+    padding: 20px
+    width: 80%
+    margin: 20px auto
+
+    .domain
+        float: right
+        margin-left: 10px
+
+    .title
+        margin-top: 0
+
+    .link
+        white-space: no-wrap
+        text-overflow: ellipsis
+        overflow: hidden
+
+    .preview
+        float: left
+
+        img
+            border: 1px solid #bbb
+
+    .content
+        margin-left: 320px
+
+    .keywords
+        font-size: 90%
+        span
+            display: inline-block
+            padding: 3px 5px
+            border-radius: 5px
+            border: 1px solid #999
+            margin-left: 5px
+            white-space: nowrap
+            margin-bottom: 4px
+
 

@@ -16,7 +16,6 @@
     <script>
     head.js(
         '/js/jquery.js',
-        '/js/primer.js',
         'https://login.persona.org/include.js',
         '/js/auth.js',
         function() {
@@ -54,7 +53,6 @@
     </div>
     <div id="footer">
         Developed by <a href="http://www.navigationnorth.com" target="_blank">Navigation North</a>
-        <!-- Copyright 2014 Navigation North -->
     </div>
 </body>
 </html>

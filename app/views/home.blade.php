@@ -63,16 +63,44 @@
         </fieldset>
 
     @else
-        <fieldset>
-            <legend>My Search Filters</legend>
 
-            <ul>
-                @each('search_filters.helpers.list', $user->searchFilters, 'searchFilter', 'raw|No search filters defined')
-            </ul>
+        <div class="row">
+            <div class="col-md-6">
+                <fieldset>
+                    <legend>
+                        My Search Filters
+                        <a href="/searchfilter/create" class="btn btn-default btn-sm">
+                            <i class="glyphicon glyphicon-plus-sign"></i>
+                            Create Search Filter
+                        </a>
+                    </legend>
 
-            <a href="/searchfilter/create" class="btn btn-default">Create Search Filter</a>
+                    <ul>
+                        @each('search_filters.helpers.list', $user->searchFilters, 'searchFilter', 'raw|No search filters defined')
+                    </ul>
 
-        </fieldset>
+
+
+                </fieldset>
+            </div>
+            <div class="col-md-6">
+                <fieldset>
+                    <legend>
+                        My Search Widgets
+                        <a href="/widget/create" class="btn btn-default btn-sm">
+                            <i class="glyphicon glyphicon-plus-sign"></i>
+                            Create Search Widget
+                        </a>
+                    </legend>
+
+                    <ul>
+                        @each('widgets.helpers.list', $user->widgets, 'widget', 'raw|No widgets have been created')
+                    </ul>
+
+                </fieldset>
+            </div>
+        </div>
+
     @endif
 
 

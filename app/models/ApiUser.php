@@ -77,4 +77,9 @@ class ApiUser extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->hasMany('SearchFilter');
 	}
 
+	public function widgets()
+	{
+		return $this->hasMany('Widget');
+	}
+
 }

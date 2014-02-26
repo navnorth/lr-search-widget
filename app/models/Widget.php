@@ -14,16 +14,16 @@ class Widget extends Eloquent {
     protected $softDelete = true;
 
 
-    const WIDGET_FILTERS = 'filters';
-    const WIDGET_SHOW_FACETS = 'show_facets';
-    const WIDGET_SHOW_RESOURCE_MODAL = 'show_resource_modal';
-    const WIDGET_ENABLE_FLAGGING = 'enable_flagging';
+    const SETTINGS_FILTERS = 'filters';
+    const SETTINGS_SHOW_FACETS = 'show_facets';
+    const SETTINGS_SHOW_RESOURCE_MODAL = 'show_resource_modal';
+    const SETTINGS_ENABLE_FLAGGING = 'enable_flagging';
 
     public static $DEFAULT_WIDGET_SETTINGS = array(
-        self::WIDGET_FILTERS => array(),
-        self::WIDGET_SHOW_FACETS => true,
-        self::WIDGET_SHOW_RESOURCE_MODAL => true,
-        self::WIDGET_ENABLE_FLAGGING => false,
+        self::SETTINGS_FILTERS => array(),
+        self::SETTINGS_SHOW_FACETS => true,
+        self::SETTINGS_SHOW_RESOURCE_MODAL => false,
+        self::SETTINGS_ENABLE_FLAGGING => false,
     );
 
     public function getWidgetSettingsAttribute($value)

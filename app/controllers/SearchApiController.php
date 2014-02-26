@@ -181,7 +181,6 @@ class SearchApiController extends ApiController
 
         $searchQuery = array(
             'query' => $query,
-            'fields' => array('title', 'url', 'description', 'url_domain'),
             'size' => $limit,
             'sort' => array('_score'),
             'track_scores' => true,

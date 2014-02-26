@@ -19,6 +19,7 @@ Route::controller('embed', 'EmbedController');
 
 
 Route::resource('searchfilter', 'SearchFilterController');
+Route::resource('widget', 'WidgetController');
 
 
 Route::get('/', 'HomeController@showHome');
