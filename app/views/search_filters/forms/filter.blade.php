@@ -42,21 +42,28 @@
         ->placeholder('We will generate this one automatically for you')
         ->disabled();
 
+    $filterTypes = array(
+        'url_domain' => 'Domain Names',
+        'keys' => 'Keywords',
+        'mediaFeatures' => 'Media Features',
+        'accessMode' => 'Access Mode',
+    );
+
 ?>
 
 
     <fieldset>
-        <legend>Include Only</legend>
+        <legend>Include <small>(Only records matching the fields below will be included in search results)</small></legend>
 
         <?php
 
-            foreach(array('url_domain', 'keys', 'mediaFeatures', 'accessMode') as $type)
+            foreach($filterTypes as $type => $displayName)
             {
                 $values = isset($settings[SF::FILTER_INCLUDE][$type]) ? $settings[SF::FILTER_INCLUDE][$type] : array();
 
                 $values = array_combine(array_values($values), array_values($values));
 
-                echo Former::select(SF::FILTER_INCLUDE.'['.$type.'][]', 'Domain Names')
+                echo Former::select(SF::FILTER_INCLUDE.'['.$type.'][]', $displayName)
                     ->multiple()
                     ->data_role('multiinput')
                     ->data_field($type)
@@ -72,17 +79,17 @@
 
 
     <fieldset>
-        <legend>Exclude</legend>
+        <legend>Exclude <small>(Records matching the fields below will not show up)</small></legend>
 
         <?php
 
-            foreach(array('url_domain', 'keys', 'mediaFeatures', 'accessMode') as $type)
+            foreach($filterTypes as $type => $displayName)
             {
                 $values = isset($settings[SF::FILTER_EXCLUDE][$type]) ? $settings[SF::FILTER_EXCLUDE][$type] : array();
 
                 $values = array_combine(array_values($values), array_values($values));
 
-                echo Former::select(SF::FILTER_EXCLUDE.'['.$type.'][]', 'Domain Names')
+                echo Former::select(SF::FILTER_EXCLUDE.'['.$type.'][]', $displayName)
                     ->multiple()
                     ->data_role('multiinput')
                     ->data_field($type)
@@ -98,17 +105,17 @@
     </fieldset>
 
     <fieldset>
-        <legend>Discouraged (Not removed, but lowered scores)</legend>
+        <legend>Discouraged <small>(Records matching the fields below will result in a lower search score)</small></legend>
 
         <?php
 
-            foreach(array('url_domain', 'keys', 'mediaFeatures', 'accessMode') as $type)
+            foreach($filterTypes as $type => $displayName)
             {
                 $values = isset($settings[SF::FILTER_DISCOURAGE][$type]) ? $settings[SF::FILTER_DISCOURAGE][$type] : array();
 
                 $values = array_combine(array_values($values), array_values($values));
 
-                echo Former::select(SF::FILTER_DISCOURAGE.'['.$type.'][]', 'Domain Names')
+                echo Former::select(SF::FILTER_DISCOURAGE.'['.$type.'][]', $displayName)
                     ->multiple()
                     ->data_role('multiinput')
                     ->data_field($type)

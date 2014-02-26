@@ -9,73 +9,61 @@ class EmbedController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function getIndex()
 	{
         return $this->_defaultView('index');
 	}
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
+
+	public function getTest()
 	{
-		//
+		return $this->_defaultView('test');
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
+	public function getTemplate()
 	{
-		//
+		$callback = Input::get('jsonp');
+
+		$view = View::make('embed.template');
+
+		if($callback)
+		{
+			$headers = array(
+				'content-type' => 'application/javascript'
+			);
+
+			return Response::make($callback.'('.json_encode($view->render()).')', 200, $headers);
+		}
+		else
+		{
+			return $view;
+		}
 	}
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
+	public function getWidget($apiKey)
 	{
-		//
-	}
+		$vars = array(
+			'api_key' => $apiKey,
+			'domain' => URL::to('/'),
+		);
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
+		$content = 'window.LRWidget = '.json_encode($vars)."\n\n";
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
+		$assets = array(
+			'/js/require.js',
+			'/js/embed_config.js',
+		);
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
+		foreach($assets as $a)
+		{
+			$content .= file_get_contents(public_path($a));
+		}
+
+		$headers = array(
+			'content-type' => 'application/javascript',
+		);
+
+		return Response::make($content, 200, $headers);
 	}
 
 }

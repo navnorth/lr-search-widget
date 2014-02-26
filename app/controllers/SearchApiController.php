@@ -206,6 +206,11 @@ class SearchApiController extends ApiController
 
             $filter = SF::where('filter_key', $f)->where('api_user_id', $this->getUserId())->first();
 
+            if(!$filter)
+            {
+                continue;
+            }
+
             $settings = $filter->filter_settings;
 
             if(is_array($settings[SF::FILTER_INCLUDE]))

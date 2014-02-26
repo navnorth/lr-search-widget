@@ -32,7 +32,15 @@ class WebcapController extends BaseController
 
 	protected function _serveScreenshot($url, $size)
 	{
-		$file = $this->_getScreenshotFile($url);
+		if(preg_match('#\.(doc|docx|pdf|xls|xlsx|ppt|pptx)$#', parse_url($url, PHP_URL_PATH), $matches))
+		{
+			$file = storage_path('screencaps/documents/'.substr($matches[1], 0, 3).'/full.jpg');
+		}
+		else
+		{
+			$file = $this->_getScreenshotFile($url);
+		}
+
 
 		if($size)
 		{
@@ -59,7 +67,10 @@ class WebcapController extends BaseController
 	{
 		$hash = $this->_hashUrl($url);
 
-		$path = storage_path('screencaps/'.$hash.'/');
+		// split hashes into separate folders xxxxyyyyzzzzzzzz => /xxxx/yyyy/zzzzzzzz
+		preg_match('#^(.{4})(.{4})(.+?)$#', $hash, $matches);
+
+		$path = storage_path('screencaps/'.implode('/', array_slice($matches, 1)).'/');
 
 		if(!file_exists($path))
 		{

@@ -23,6 +23,7 @@ class ApiController extends BaseController {
         $apiKeys = array(
             $request->headers->get('X-Api-Key'),
             Input::get('api-key'),
+            Input::get('api_key'),
         );
 
         // find the first relevent key from our different submission means

@@ -10,7 +10,7 @@
 </h2>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-5">
         <h4>Filter Settings</h4>
 
         <dl class="dl-horizontal">
@@ -82,8 +82,51 @@
         </dl>
 
     </div>
-    <div class="col-md-6">
-        <h4>Search Using this Filter</h4>
+    <div class="col-md-7">
+        <fieldset>
+            <legend>Create Widget with this Filter
+                <a class="btn btn-default btn-sm" href="/embed?filter={{ $filter->filter_key }}">Test Filter</a>
+            </legend>
+            {{ Former::horizontal_open() }}
+
+                {{ Former::text('title', 'Widget Title')->placeholder('Text used in main header/title of widget') }}
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <label class="checkbox">
+                            <input type="checkbox"> Allow filtering by Website, Keywords, and Publisher
+                        </label>
+
+                        <label class="checkbox">
+                            <input type="checkbox"> Open resource information in modal box
+                        </label>
+
+                        <label class="checkbox">
+                            <input type="checkbox"> Allow flagging resources
+                        </label>
+                    </div>
+                </div>
+
+
+                <div class="results">
+
+
+                </div>
+
+                <div class="alert alert-warning">This is not yet functional</div>
+
+
+                <div>
+                    <button type="submit" class="btn btn-primary">Create Widget</button>
+                </div>
+
+
+
+            {{ Form::close() }}
+        </fieldset>
+
+
+        <!-- <h4>Search Using this Filter</h4>
 
 
         <p>
@@ -106,7 +149,7 @@
             @endfor
 
 
-        </div>
+        </div> -->
 
     </div>
 

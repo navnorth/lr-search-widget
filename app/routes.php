@@ -13,11 +13,13 @@
 
 Route::controller('auth', 'AuthController');
 Route::controller('api/search', 'SearchApiController');
+Route::controller('api/embed', 'EmbedApiController');
 Route::controller('api', 'ApiController');
+Route::controller('embed', 'EmbedController');
 
 
 Route::resource('searchfilter', 'SearchFilterController');
-Route::resource('embed', 'EmbedController');
+
 
 Route::get('/', 'HomeController@showHome');
 

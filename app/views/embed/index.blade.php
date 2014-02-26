@@ -1,6 +1,6 @@
 <?php
-    Asset::add('css/es-backbone/simple.css');
-    Asset::add('/cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/css/base/jquery-ui.css');
+    Asset::add('css/embed.css');
+    //Asset::add('/cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/css/base/jquery-ui.css');
     Asset::add('/cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css');
 
 ?>
@@ -20,10 +20,8 @@
         '//cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.min.js',
 
         '/js/es-backbone/lib/jquery.spin.js',
-        '/js/es-backbone/lib/jquery.deparam.js',
 
-        '/js/es-backbone/es-backbone.js?cb='+Math.random(),
-        '/js/es-backbone/simple-view.js?cb='+Math.random(),
+        '/js/require.js',
 
         function() {
 
@@ -31,41 +29,80 @@
     );
 </script>
 
+<div class="lr-embed">
+    <div id='esbb-simple-app' class="clearfix">
+        <div class="embed-header">
+            <div class="embed-search-filters">
+                <label>Filters:
+                    <select name="filter_keys" class="filter_keys">
+                        <option value="">(No Filters Active)</option>
+
+                        @if($user = Auth::user())
+                            @foreach($user->searchFilters as $filter)
+                                <option value="{{ $filter->filter_key }}"
+                                    {{ $filter->filter_key == Input::get('filter') ? 'selected="selected"' : ''}}>{{ $filter->name }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                </label>
+            </div>
+            <div class="embed-search-url"></div>
+            <div class="embed-search-bar"></div>
+            <div class="embed-search-facets"></div>
+            <div class="embed-date-range"></div>
+        </div>
+        <div class="embed-left-col">
+            <div class="embed-domain-pie esbb-pie"></div>
+            <div class="embed-keys-selector"></div>
+            <div class="embed-publishers-selector"></div>
+        </div>
+        <div class="embed-center-col">
+            <div class="embed-search-results"></div>
+        </div>
+    </div>
+</div>
+
+
 <script>
 
 head(function() {
-    var esbbSimpleSearchResults = new esbbSearchResultsModel( );
 
-    //TODO: the QueryModel defines the query that will be passed to your server.
-    // At a minimum you should change the field names, and ensure that you define all of the facets
-    // that your display will depend on.
+   require(['jquery', 'esbb/es-backbone', 'esbb/simple-view'], function($, ESBB, ESBBApp) {
 
-    var esbbSimpleSearchQuery = new searchQueryProxyModel( {
-        limit : 20,
-        query : '',
-        facets : [
-            'url_domain',
-            'keys'
-        ],
-        filter_keys: ['yOfmkr9NX1'],
-        highlight: ['description'],
-    } );
-    esbbSimpleSearchQuery.resultsModel = esbbSimpleSearchResults;
+        var resultsModel = new ESBB.SearchResultsModel( );
 
-    //TODO: define the url for your ES endpoint, index name, and doc type name
-    esbbSimpleSearchQuery.ajax_url = '/api/search';
-    esbbSimpleSearchQuery.index = 'lr';
-    esbbSimpleSearchQuery.index_type = 'lr_doc';
+        //TODO: the QueryModel defines the query that will be passed to your server.
+        // At a minimum you should change the field names, and ensure that you define all of the facets
+        // that your display will depend on.
 
-    var esbbSimpleApp = new esbbSimpleAppView( {
-        model: esbbSimpleSearchResults,
-        query: esbbSimpleSearchQuery,
-        el: '#esbb-simple-app',
-        id_prefix: 'esbb-simple'
-    } );
+        var queryModel = new ESBB.SearchQueryProxyModel( {
+            config: {
+                search_url: '/api/search',
+                index: 'lr',
+                index_type: 'lr_doc',
+            },
+            limit : 20,
+            query : '',
+            facets : [
+                'url_domain',
+                'keys',
+                'publisher_full',
+            ],
+            filter_keys: [{{json_encode(Input::get('filter', ''))}}],
+            highlight: ['description'],
+        } );
+
+        queryModel.resultsModel = resultsModel;
+
+        //TODO: define the url for your ES endpoint, index name, and doc type name
+        var esbbSimpleApp = new ESBBApp.SimpleAppView( {
+            model: resultsModel,
+            query: queryModel,
+            el: '#esbb-simple-app',
+            id_prefix: 'esbb-simple'
+        } );
+
+    });
 });
 
-
 </script>
-
-<div id='esbb-simple-app' class="clearfix"></div>
