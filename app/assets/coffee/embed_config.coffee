@@ -110,6 +110,7 @@
             $(this).html('Loading search widget...')
 
             widgetKey = $(this).data('widgetKey');
+            demo = !!$(this).data('demo')
 
             defers.push(defer = $.Deferred())
 
@@ -117,7 +118,8 @@
                 dataType: 'jsonp',
                 data:
                     widget_key: widgetKey
-                    api_key: WidgetConfig.api_key
+                    api_key: WidgetConfig.api_key,
+                    demo: demo
 
             }).done((t) =>
 
@@ -138,7 +140,7 @@
                     },
                     limit : 10
                     query : ''
-                    facets : if t.settings.show_facets then [ 'url_domain', 'keys', 'publisher_full', 'mediaFeatures'] else []
+                    facets : if t.settings.show_facets or demo then [ 'url_domain', 'keys', 'publisher_full', 'mediaFeatures'] else []
                     filter_keys: t.settings.filters || []
                     highlight: ['description']
                 } );

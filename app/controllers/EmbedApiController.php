@@ -32,14 +32,19 @@ class EmbedApiController extends ApiController
             $widget->name = 'Default';
         }
 
+        $viewArgs = array(
+            'widget' => $widget,
+            'demo' => Input::get('demo', '') === 'true',
+        );
+
         $data = array(
             'name' => $widget->name,
             'settings' => $widget->widget_settings,
             'widget_key' => $widget->widget_key,
             'templates' => array(
-                'core' => View::make('embed.templates.core', array('widget' => $widget))->render(),
-                'list' => View::make('embed.templates.list', array('widget' => $widget))->render(),
-                'modal' => View::make('embed.templates.modal', array('widget' => $widget))->render(),
+                'core' => View::make('embed.templates.core', $viewArgs)->render(),
+                'list' => View::make('embed.templates.list', $viewArgs)->render(),
+                'modal' => View::make('embed.templates.modal', $viewArgs)->render(),
             ),
         );
 

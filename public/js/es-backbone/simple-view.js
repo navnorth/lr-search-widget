@@ -119,12 +119,19 @@ define([
 				highlightField: 'description' //TODO: set to whatever your highlighted field name is
 			} );
 
+			new ESBB.SearchPaginationView({
+				model: this.model,
+				queryModel: this.query,
+				el: this.$('.embed-search-pagination')
+			}).render();
+
 			if(($facet = this.$('.embed-search-facets')).length)
 			{
 				new ESBB.ActiveFacetList( {
 					model: this.query,
 					el: $facet,
 					avail_fields: {
+						'mediaFeatures': 'Accessibility Features',
 						'url_domain': 'Domains',
 						'keys': 'Keywords',
 						'publisher_full': 'Publishers'
@@ -183,6 +190,14 @@ define([
 	});
 
 	ESBBApp.SearchQueryProxyModel = ESBB.SearchQueryModel.extend({
+		defaults: {
+			page: 1,
+			limit: 10,
+		},
+
+		initialize: function(options) {
+			this.listenTo(this, 'change:filters change:query', this.resetPage);
+		},
 
 		search: function() {
 		    var t = this;
@@ -196,6 +211,7 @@ define([
 	            facets: this.getFacets(),
 	            limit: this.get('limit'),
 	            highlight: this.get('highlight'),
+	            page: this.get('page')
 	        };
 
 		    $.ajax( {
@@ -231,8 +247,20 @@ define([
 		    } );
 		},
 
+		resetPage: function() {
+			this.set('page', 1);
+		},
+
+		nextPage: function() {
+			this.set('page', this.get('page') + 1)
+		},
+
+		prevPage: function() {
+			this.set('page', this.get('page') - 1)
+		},
+
 		setQueryString: function(str) {
-		    this.set('query', str, { silent: true })
+		    this.set('query', str)
 		},
 
 		getQueryString: function() {
@@ -240,7 +268,7 @@ define([
 		},
 
 		setSort: function( sort ) {
-		    this.set('sort', sort, { silent: true });
+		    this.set('sort', sort);
 		},
 
 		getSort: function() {
@@ -253,6 +281,7 @@ define([
 
 		updateFilters: function( new_filters ) {
 		    this.set('filters', new_filters);
+		    this.trigger('change:filters');
 		},
 
 		getFiltersForChanging: function() {

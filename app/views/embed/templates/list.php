@@ -1,4 +1,4 @@
-<h3>{{header}} [{{hits.length}}/{{total}}]</h3>
+<h3>{{header}}</h3>
 <hr />
 {{#hits}}
 <div class="esbb-result clearfix" data-doc-id="{{_id}}">

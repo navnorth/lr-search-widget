@@ -219,6 +219,22 @@
 .lr-search-widget .embed-search-facets .select2-container {
   vertical-align: middle;
 }
+.lr-search-widget .embed-search-pagination {
+  float: right;
+  text-align: right;
+}
+.lr-search-widget .embed-search-pagination .totals {
+  font-weight: bold;
+}
+.lr-search-widget .embed-search-pagination a {
+  border: 1px solid #999;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  padding: 3px 5px;
+}
+.lr-search-widget .embed-search-pagination a:hover {
+  background-color: #eee;
+}
 .lr-search-widget .esbb-result {
   word-wrap: break-word;
   margin-bottom: 10px;

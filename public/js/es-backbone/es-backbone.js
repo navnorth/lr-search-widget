@@ -248,6 +248,23 @@ define([
 			this.options = options
 		},
 
+		_hits: function() {
+			return this.get('hits') || { hits: [], total: 0, max_score: 0};
+		},
+
+		getHits: function() {
+			return this._hits().hits;
+		},
+
+		getTotal: function() {
+			return this._hits().total;
+		},
+
+		getMaxScore: function() {
+			return this._hits().max_score;
+		}
+
+
 	});
 
 	ESBB.SearchResultsView = Backbone.View.extend({
@@ -1291,6 +1308,59 @@ define([
 		}
 
 	});
+
+
+	ESBB.SearchPaginationView = Backbone.View.extend({
+		template: '<div class="totals">View {{ start }} to {{ end }} of {{total}}</div>\
+			{{#prev}}<a href="#" class="prev">&laquo; Previous</a>{{/prev}}\
+			{{#next}}<a href="#" class="next">Next &raquo;</a>{{/next}}\
+			',
+		events: {
+			'click .next': 'nextPage',
+			'click .prev': 'previousPage'
+		},
+		initialize: function(options) {
+			this.options = options;
+			this.queryModel = options.queryModel;
+
+			this.listenTo(this.model, 'change', this.render);
+		},
+		render: function() {
+			var start = ((this.queryModel.get('page') - 1) * this.queryModel.get('limit')) + 1;
+
+			data = {
+				start: start,
+				end: start + this.model.getHits().length - 1,
+				total: this.model.getTotal()
+			}
+
+			data.prev = data.start > 1;
+			data.next = data.end < data.total;
+
+			if(data.total)
+			{
+				this.$el.html(Mustache.render(this.template, data))
+			}
+			else
+			{
+				this.$el.empty()
+			}
+
+			return this;
+		},
+		nextPage: function(e) {
+			e.preventDefault()
+
+			this.queryModel.nextPage()
+			this.queryModel.search();
+		},
+		previousPage: function(e) {
+			e.preventDefault()
+
+			this.queryModel.prevPage()
+			this.queryModel.search();
+		}
+	})
 
 	return ESBB;
 });

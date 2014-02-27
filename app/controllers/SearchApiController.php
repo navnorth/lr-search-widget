@@ -190,12 +190,16 @@ class SearchApiController extends ApiController
 
         }
 
+
         $limit = min(Input::get('limit', 20), 40);
+        $page = max(Input::get('page', 1), 1);
         $facets = Input::get('facets', array());
 
+        $from = ($page - 1) * $limit;
 
         $searchQuery = array(
             'query' => $query,
+            'from' => $from,
             'size' => $limit,
             'sort' => array('_score'),
             'track_scores' => true,

@@ -74,7 +74,7 @@
     <legend>Live Demo</legend>
 
     <div class="container">
-        <div class="lr-search-widget" data-widget-key="{{ $widgetKey }}"></div>
+        <div class="lr-search-widget" data-widget-key="{{ $widgetKey }}" data-demo="true"></div>
     </div>
 </fieldset>
 

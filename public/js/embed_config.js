@@ -107,15 +107,17 @@
       };
       defers = [];
       $('.lr-search-widget').each(function() {
-        var defer, widgetKey;
+        var defer, demo, widgetKey;
         $(this).html('Loading search widget...');
         widgetKey = $(this).data('widgetKey');
+        demo = !!$(this).data('demo');
         defers.push(defer = $.Deferred());
         return $.ajax(WidgetConfig.domain + '/api/embed/widget?jsonp=?', {
           dataType: 'jsonp',
           data: {
             widget_key: widgetKey,
-            api_key: WidgetConfig.api_key
+            api_key: WidgetConfig.api_key,
+            demo: demo
           }
         }).done((function(_this) {
           return function(t) {
@@ -130,7 +132,7 @@
               },
               limit: 10,
               query: '',
-              facets: t.settings.show_facets ? ['url_domain', 'keys', 'publisher_full', 'mediaFeatures'] : [],
+              facets: t.settings.show_facets || demo ? ['url_domain', 'keys', 'publisher_full', 'mediaFeatures'] : [],
               filter_keys: t.settings.filters || [],
               highlight: ['description']
             });
