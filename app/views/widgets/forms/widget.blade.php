@@ -83,7 +83,6 @@
     head.js('/embed/widget/{{ Auth::user()->api_key }}/embed.js',
         function() {
             LRSearchWidgets.ready(function() {
-                console.log(LRSearchWidgets);
 
                 var demo = LRSearchWidgets.widgets['{{ $widgetKey }}'],
                     $form = $('#widget_form');

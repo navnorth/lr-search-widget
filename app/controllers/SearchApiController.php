@@ -143,7 +143,7 @@ class SearchApiController extends ApiController
 
             if($term)
             {
-                $query = array(
+                /*$query = array(
                     'dis_max' => array(
                         'tie_breaker' => 0.7,
                         'boost' => 1.0,
@@ -165,6 +165,21 @@ class SearchApiController extends ApiController
                                 'boost' => 1.2,
                             )),
                         )
+                    )
+                );*/
+
+                $query = array(
+                    'multi_match' => array(
+                        'query' => $term,
+                        'fields' => array(
+                            'title^2',
+                            'keys^1.2',
+                            'description^1.5',
+                            'standards',
+                            'publisher^6',
+                        ),
+                        'tie_breaker' => 1.0,
+                        'use_dis_max' => true,
                     )
                 );
             }
