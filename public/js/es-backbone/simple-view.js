@@ -173,7 +173,7 @@ define([
 				} );
 			}
 
-			if(($facet = this.$('.embed-mediaFeatures-selector')).length)
+			/*if(($facet = this.$('.embed-mediaFeatures-selector')).length)
 			{
 				new ESBB.SearchFacetSelectView( {
 					facetName: 'mediaFeatures',
@@ -182,7 +182,7 @@ define([
 					searchQueryModel: this.query,
 					model: this.model
 				} );
-			}
+			}*/
 		}
 
 		//TODO: instantiate the desired right column elements and connect to the proper element ids

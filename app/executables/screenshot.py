@@ -18,12 +18,28 @@ class browser(QWebView):
         self.timerScreen.setSingleShot(True)
         self.timerScreen.timeout.connect(self.takeScreenshot)
 
+        # timeout if it takes more than 25 seconds to get a screenshot
+        self.rendering = False
+        self.timeoutTimer = QTimer()
+        self.timeoutTimer.singleShot(25000, self.timeout)
+
         self.loadFinished.connect(self.timerScreen.start)
         self.load(QUrl(url))
 
 
+    def timeout(self):
+        if not self.rendering:
+
+            if app is not None:
+                print 'Timed out'
+
+                app.quit()
+
+                sys.exit()
+
 
     def takeScreenshot(self):
+        self.rendering = True
         frame = self.page().mainFrame()
 
         self.page().setViewportSize(QSize(1024, 768))

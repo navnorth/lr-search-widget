@@ -96,8 +96,7 @@
         'jquery-private': {
           'jquery': 'jquery'
         }
-      },
-      urlArgs: "bust=" + new Date().getTime()
+      }
     });
     return require(['jquery', 'underscore', 'backbone', 'esbb/es-backbone', 'esbb/simple-view'], function($, _, Backbone, ESBB, ESBBApp) {
       var WidgetConfig, defers;

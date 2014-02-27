@@ -849,41 +849,40 @@ define([
 
 			var filters = this.model.getFilters();
 			var tags = [];
-			for ( var i in filters ) {
 
-				for(var fld in filters[i])
-				{
+			_.each(filters, function(values, i) {
+
+				_.each(values, function(value) {
 					if(!tags[i])
 					{
 						tags[i] = []
 					}
-					tags[i].push(filters[i][fld])
-				}
-			}
+					tags[i].push(value)
+				});
 
-			for(var name in tags)
-			{
-				var values = tags[name];
+			});
 
-				var $list = $(Mustache.render(t.template, { name: this.avail_fields[name] }));
+			_.each(_.keys(tags), function(facet_name) {
 
-				for(var i in values)
-				{
+				var values = tags[facet_name],
+					$list = $(Mustache.render(t.template, { name: t.avail_fields[facet_name] }));
+
+				_.each(values, function(facet_value, i) {
 					var itemModel = new Backbone.Model({
-						facet_type: name,
+						facet_type: facet_name,
 						facet_value: values[i]
 					});
 
 					var itemView = new ESBB.ActiveFacetListItem({
 						model: itemModel,
-						searchModel: this.model,
+						searchModel: t.model,
 					});
 
 					$list.append(itemView.render().$el);
-				}
+				});
 
 				t.$el.append($list)
-			}
+			});
 
 			return this;
 		},

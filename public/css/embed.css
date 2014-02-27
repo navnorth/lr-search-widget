@@ -1,6 +1,7 @@
 .lr-search-widget {
   font-family: 'Open Sans', helvetica, sans-serif;
   font-size: 14px;
+  line-height: normal !important;
 /**
      * Kayako search
      */
@@ -119,6 +120,7 @@
   font-weight: bold;
   margin-top: 0.75em;
   margin-bottom: 0.25em;
+  line-height: normal;
 }
 .lr-search-widget h1 {
   font-size: 175%;
@@ -143,7 +145,7 @@
 }
 .lr-search-widget .embed-header {
   border-bottom: 1px solid #ccc;
-  padding: 20px 30px;
+  padding: 2% 3%;
 }
 .lr-search-widget .embed-left-col,
 .lr-search-widget .embed-center-col,
@@ -176,7 +178,7 @@
   display: none;
 }
 .lr-search-widget .embed-col .col-wrapper {
-  padding: 20px 30px;
+  padding: 2% 3%;
 }
 .lr-search-widget a.esbb-search-button {
   border: 1px solid #ccc;

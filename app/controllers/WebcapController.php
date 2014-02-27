@@ -42,6 +42,12 @@ class WebcapController extends BaseController
 		}
 
 
+		if(!$file)
+		{
+			App::abort('404', 'Failed to render screenshot');
+		}
+
+
 		if($size)
 		{
 			$file = $this->_resizeScreenshot($file, $size);
@@ -49,7 +55,13 @@ class WebcapController extends BaseController
 
 		if(file_exists($file))
 		{
-			return Response::make(file_get_contents($file), 200, array('content-type' => 'image/jpeg'));
+			$headers = array(
+				'content-type' => 'image/jpeg',
+				'expires' => gmdate ("D, d M Y H:i:s", time() + 7200),
+                'header' => 'cache-control: must-revalidate',
+			);
+
+			return Response::make(file_get_contents($file), 200, $headers);
 		}
 		else
 		{

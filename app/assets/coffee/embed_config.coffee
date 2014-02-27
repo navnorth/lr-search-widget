@@ -91,8 +91,8 @@
 
             },
             'jquery-private': { 'jquery': 'jquery' }
-        },
-        urlArgs: "bust="+new Date().getTime()
+        }
+        #urlArgs: "bust="+new Date().getTime()
     })
 
     require(['jquery', 'underscore', 'backbone', 'esbb/es-backbone', 'esbb/simple-view'], ($, _, Backbone, ESBB, ESBBApp)->
