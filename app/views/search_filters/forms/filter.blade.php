@@ -61,7 +61,10 @@
             {
                 $values = isset($settings[SF::FILTER_INCLUDE][$type]) ? $settings[SF::FILTER_INCLUDE][$type] : array();
 
-                $values = array_combine(array_values($values), array_values($values));
+                if($values)
+                {
+                    $values = array_combine(array_values($values), array_values($values));
+                }
 
                 echo Former::select(SF::FILTER_INCLUDE.'['.$type.'][]', $displayName)
                     ->multiple()
@@ -87,7 +90,10 @@
             {
                 $values = isset($settings[SF::FILTER_EXCLUDE][$type]) ? $settings[SF::FILTER_EXCLUDE][$type] : array();
 
-                $values = array_combine(array_values($values), array_values($values));
+                if($values)
+                {
+                    $values = array_combine(array_values($values), array_values($values));
+                }
 
                 echo Former::select(SF::FILTER_EXCLUDE.'['.$type.'][]', $displayName)
                     ->multiple()
@@ -113,7 +119,10 @@
             {
                 $values = isset($settings[SF::FILTER_DISCOURAGE][$type]) ? $settings[SF::FILTER_DISCOURAGE][$type] : array();
 
-                $values = array_combine(array_values($values), array_values($values));
+                if($values)
+                {
+                    $values = array_combine(array_values($values), array_values($values));
+                }
 
                 echo Former::select(SF::FILTER_DISCOURAGE.'['.$type.'][]', $displayName)
                     ->multiple()
