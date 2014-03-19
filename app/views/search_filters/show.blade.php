@@ -81,12 +81,15 @@
 
         </dl>
 
+        <a class="btn btn-info" href="/embed?filter={{ $filter->filter_key }}">
+            Test <strong>{{ $filter->name }}</strong> Filter
+        </a>
+
     </div>
     <div class="col-md-7">
+        {{--
         <fieldset>
-            <legend>Create Widget with this Filter
-                <a class="btn btn-default btn-sm" href="/embed?filter={{ $filter->filter_key }}">Test Filter</a>
-            </legend>
+            <legend>Create Widget with this Filter</legend>
             {{ Former::horizontal_open() }}
 
                 {{ Former::text('title', 'Widget Title')->placeholder('Text used in main header/title of widget') }}
@@ -125,31 +128,7 @@
             {{ Form::close() }}
         </fieldset>
 
-
-        <!-- <h4>Search Using this Filter</h4>
-
-
-        <p>
-            <?php
-                echo Former::open_horizontal();
-
-                echo Former::search('search')
-                    ->placeholder('Find Resources!')
-                    ->prepend_icon('search');
-
-                echo Former::close();
-            ?>
-        </p>
-        <div class="well clearfix">
-
-            @for($i = 0; $i < 10; $i++)
-            <div style="width: 32%; float: left; border: 1px solid black; height: 150px; margin-right: 1%; margin-bottom: 1%" class="text-center">
-                <strong>Resource</strong>
-            </div>
-            @endfor
-
-
-        </div> -->
+        --}}
 
     </div>
 

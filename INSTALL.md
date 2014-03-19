@@ -29,11 +29,13 @@ Installation Instructions for Ubuntu 12.04
                          php5-mysql \
                          php5-cli \
                          python-dev \
+                         python-qt4 \
                          python-setuptools \
                          python-virtualenv \
                          rabbitmq-server \
                          redis-server \
                          vim \
+                         xvfb \
                          zip \
                          zlib1g-dev
 
@@ -45,6 +47,5 @@ Installation Instructions for Ubuntu 12.04
     curl -sS https://getcomposer.org/installer | php
     sudo mv composer.phar /usr/local/bin/composer
 
-
-    # Setup apache
+    # Enable required apache modules
     sudo a2enmod deflate rewrite
