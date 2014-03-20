@@ -62,7 +62,8 @@ define([
 			this.listenTo(this.widgetConfig, 'change:show_facets change:enable_flagging', this.configChange)
 
 			this.modalView = new ESBBApp.ResourceModalView({
-				template: this.templates.modal
+				template: this.templates.modal,
+				globalConfig: this.globalConfig
 			});
 
 			this.query = this.options.query;
