@@ -1,5 +1,9 @@
 ((context)->
 
+    if(window.location.protocol == 'file:')
+        document.write('Error: Cannot load search widget in local file due to Javascript restrictions')
+        return
+
     LRSearchWidgets = context.LRSearchWidgets = {
         loaded: false
         widgets: {}
