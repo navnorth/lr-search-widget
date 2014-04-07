@@ -88,6 +88,7 @@
 
             esbb: window.LRWidget.domain+'/js/es-backbone'
             magnific: 'magnific-popup.js/0.9.9/jquery.magnific-popup.min'
+            perfectScrollbar: window.LRWidget.domain+'/vendor/perfect-scrollbar/min/perfect-scrollbar-0.4.8.with-mousewheel.min'
 
         },
         map: {
@@ -99,8 +100,15 @@
         #urlArgs: "bust="+new Date().getTime()
     })
 
-    require(['jquery', 'underscore', 'backbone', 'esbb/es-backbone', 'esbb/simple-view'], ($, _, Backbone, ESBB, ESBBApp)->
-
+    require([
+        'jquery',
+        'underscore',
+        'backbone',
+        'esbb/es-backbone',
+        'esbb/simple-view',
+        'perfectScrollbar'
+    ],
+    ($, _, Backbone, ESBB, ESBBApp) ->
 
         WidgetConfig = window.LRWidget || {
             api_key: '',
@@ -162,7 +170,6 @@
                     model: resultsModel,
                     query: queryModel,
                     el: $(this),
-                    id_prefix: 'esbb-simple',
                     globalConfig: WidgetConfig,
                     widgetConfig: widgetConfigModel,
                     templates: t.templates
@@ -184,6 +191,8 @@
 
         $.when.apply($, defers).then(->
             LRSearchWidgets.start()
+
+            require(['esbb/features']);
         )
 
     )

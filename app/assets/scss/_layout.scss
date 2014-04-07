@@ -1,0 +1,58 @@
+/* Layout */
+
+/* Wrapping container */
+div.lr-embed {
+  margin: 0 auto;
+  overflow: hidden; // Prevent listview animation from showing content outside of widget.
+  min-width: 280px;
+  max-width: 800px;
+}
+
+/* Branding */
+header.lr-branding {
+  @include clearfix;
+  clear: both;
+  margin-bottom: rem-calc(10);
+}
+h1.lr-branding__title {
+  float: left;
+}
+figure.lr-branding__logo {
+  float: right;
+}
+
+div.lr-tab-pane {
+  display: none;
+}
+
+/* Navigation */
+nav.lr-nav {
+  width: 100%;
+  clear: both;
+  margin-bottom: rem-calc(20);
+}
+ul.lr-nav__list {
+  @include horizontal-list($padding: 0);
+  width: auto;
+}
+li.lr-nav__item {
+  width: 33.3333%;
+  text-align: center;
+}
+@media (max-width: 520px) {
+  ul.lr-nav__list li {
+    float: none;
+    width: 98%;
+    margin: 0 auto rem-calc(5) auto;
+  }
+}
+a.lr-nav__link {
+  display: block;
+}
+/* Search results */
+ul.lr-results__list {
+  /* Rules needed for Perfect Scrollbar plugin. */
+  position: relative;
+  overflow: hidden;
+  height: 500px;
+}

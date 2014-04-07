@@ -274,6 +274,7 @@ define([
 		default_data: {},
 		queryModel: null,
 		modalView: null,
+		id: 'lr-results-list',
 		template: '\
 			<h4>{{total}} Results</h4>\
 			{{#hits}}\
@@ -284,9 +285,7 @@ define([
 			</p>\
 			{{/hits}}\
 			',
-		templateNoResults: '\
-			<h4>No Results</h4>\
-			',
+		templateNoResults: '',
 		templateError: '\
 			<h4>Error connecting to Search Service</h4>\
 			<p>{{& error}}</p>\
@@ -327,7 +326,7 @@ define([
 			{
 				e.preventDefault()
 
-				var docId = $(e.target).closest('.esbb-result').data('docId'),
+				var docId = $(e.target).closest('.lr-result').data('docId'),
 					doc = _.findWhere(this.model.get('hits').hits, { _id: docId })
 
 				this.modalView.renderResource(new Backbone.Model(doc))
@@ -582,9 +581,11 @@ define([
 		searchQueryModel: null,
 		facetType: 'terms',
 		seriesData: [],
-		template: '<h4>{{headerName}}</h4>\
-		<div class="canvas-wrapper"></div>\
-		<div class="esbb-pie-hover"></div>',
+		template: '<h3 class="lr-results-filter__facets__title">{{headerName}}</3>\
+		<figure class="lr-piechart">\
+			<div class="canvas-wrapper"></div>\
+			<figcaption class="lr-piechart__selection"></figcaption>\
+		</figure>',
 
 		initialize: function(options) {
 			this.options = options;
@@ -614,7 +615,7 @@ define([
 			this.$el.html( Mustache.render( this.template, data ) );
 
 			$canvas = this.$el.find('.canvas-wrapper');
-			$helperText = this.$el.find('.esbb-pie-hover');
+			$helperText = this.$el.find('figcaption');
 
 			this.$el.show();
 
@@ -732,21 +733,27 @@ define([
 		facetName: '',
 		headerName: '',
 		searchQueryModel: null,
+		className: function() {
+			return 'lr-results-filter__'+this.facetName;
+		},
 		template: '\
-			<h4>{{header}}</h4>\
-			<table class="esbb-facet-selector-table">\
+			<h3 class="lr-results-filter__facets__title">{{header}}</h3>\
+			<table class="lr-facet-table">\
+			<tbody>\
 			{{#items}}\
-				<tr><td><a class="esbb-facet-item" href="{{name}}"><b>{{name}}</b></a></td><td align="right" width="100" class="esbb-count">{{count}}</td><td align="right" width="100" class="esbb-count">{{perc}}%</td></tr>\
+				<tr>\
+					<td><a href="{{name}}" class="esbb-facet-item">{{name}}</a></td>\
+					<td>{{count}}</td>\
+					<td>{{perc}}%</td>\
+				</tr>\
 			{{/items}}\
 			{{^items}}\
 				<tr><td>None</td></tr>\
 			{{/items}}\
+			</tbody>\
 			</table>\
 			',
-		templateNoResults: '\
-			<h4>{{header}}</h4>\
-			<p>No results.</p>\
-			',
+		templateNoResults: '',
 
 		events: {
 			'click a.esbb-facet-item' : 'select'
@@ -805,9 +812,9 @@ define([
 	});
 
 	ESBB.ActiveFacetListItem = Backbone.View.extend({
-		tagName: 'span',
-		className: 'facet-item',
-		template: '{{ facet_value }} <a href="#">&times;</a>',
+		tagName: 'li',
+		className: 'lr-active-facets__facet',
+		template: '{{ facet_value }} <a href="#"><i class="fa fa-times"></i></a>',
 		events: {
 			'click a': 'removeFacet'
 		},
@@ -829,7 +836,7 @@ define([
 	})
 
 	ESBB.ActiveFacetList = Backbone.View.extend({
-		template: '<div class="active-facets"><span class="facet-name">{{ name }}:</span></div>',
+		template: '<ul class="lr-active-facets"></ul>',
 
 		events: {
 		},
@@ -1144,11 +1151,23 @@ define([
 		headerName: '',
 		buttonText: 'Search',
 		spin_it: false,
-		template: '<label>{{headerName}} <input class="esbb-search-query" type="text" placeholder="Search for keywords, topics, and more"  /></label> <button type="button" class="esbb-search-button">{{buttonText}}</button>',
+		template: '\
+			<div class="lr-form-item lr-form__textfield">\
+              <label class="lr-form-item__label" for="lr-search-term">Enter a Keyword</label>\
+              <input type="search" id="lr-search-term" class="lr-search-form__term lr-form__input--textfield" placeholder="Search for a learning topic" />\
+            </div>\
+            <div class="lr-form-item lr-form__checkbox">\
+              <label class="lr-form-item__label" for="lr-search-federal">Search federal resources only</label>\
+              <input type="checkbox" id="lr-search-federal" class="lr-form__input--checkbox" />\
+              <div class="lr-form-item__description">Federal Resources Only</div>\
+            </div>\
+            <button id="lr-search-button" class="lr-search-form__submit" type="button" title="Search"><span>Search</span><i class="fa fa-search"></i></button>\
+            <button id="lr-clear-keyword" class="lr-search-form__clear" type="button" title="Clear search field"><span>Clear</span><i class="fa fa-times"></i></button>\
+		',
 
 		events : {
-			'click .esbb-search-button' : 'search',
-			'keypress .esbb-search-query' : 'checkKey'
+			'click .lr-search-form__submit' : 'search',
+			'keypress .lr-search-form__term' : 'checkKey'
 		},
 
 		initialize: function(options) {
@@ -1168,7 +1187,7 @@ define([
 		render: function( note ) {
 			this.$el.empty();
 			this.$el.append( Mustache.render( this.template, { headerName: this.headerName, buttonText: this.buttonText } ) );
-			this.$el.find( '.esbb-search-query' ).attr( 'value', this.model.getQueryString() ).focus();
+			this.$el.find( '.lr-search-form__term' ).attr( 'value', this.model.getQueryString() ).focus();
 
 			this.spinner = $( '<div/>', { style: 'left:640px; top: -28px;' } );
 			/*this.spinner.spin( 'medium' );
@@ -1205,7 +1224,7 @@ define([
 		},
 
 		setQuery: function() {
-			var query = this.$el.find( '.esbb-search-query' ).val();
+			var query = this.$el.find( '.lr-search-form__term' ).val();
 			this.model.setQueryString( query );
 			this.model.trigger( 'change' );
 		}
@@ -1310,9 +1329,16 @@ define([
 
 
 	ESBB.SearchPaginationView = Backbone.View.extend({
-		template: '<div class="totals">View {{ start }} to {{ end }} of {{total}}</div>\
-			{{#prev}}<a href="#" class="prev">&laquo; Previous</a>{{/prev}}\
-			{{#next}}<a href="#" class="next">Next &raquo;</a>{{/next}}\
+		template: '\
+			<div class="lr-pager__counter">\
+				Showing <strong>{{start}} to {{end}}</strong> of <strong>{{total}}</strong> results for <strong>"{{{queryTerm}}}"</strong>\
+			</div>\
+            <nav class="lr-pager__links">\
+            	<ul>\
+                  {{#prev}}<li><a href="#" class="prev" title="View the previous page of results">Previous</a></li>{{/prev}}\
+                  {{#next}}<li><a href="#" class="next" title="View the next page of results">Next</a></li>{{/next}}\
+                </ul>\
+            </nav>\
 			',
 		events: {
 			'click .next': 'nextPage',
@@ -1330,7 +1356,8 @@ define([
 			data = {
 				start: start,
 				end: start + this.model.getHits().length - 1,
-				total: this.model.getTotal()
+				total: this.model.getTotal(),
+				queryTerm: this.queryModel.getQueryString()
 			}
 
 			data.prev = data.start > 1;

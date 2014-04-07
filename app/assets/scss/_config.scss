@@ -1,0 +1,73 @@
+/* NOTE: This file is not used anymore. All of these style are applied in assets/js/styles.js. */
+
+/* Styles that the user can configure through the widget UI */
+
+/* Font style */
+html {
+  font-family: $base-font-family;
+}
+
+/* Link colors */
+a {
+  &:link,
+  &:visited {
+    color: $blue-medium;
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: $blue-dark;
+  }
+}
+
+/* Navigation colors */
+.lr-nav__link {
+  background-color: $blue-lightest;
+  &:link,
+  &:visited {
+    color: $blue-light;
+  }
+  &:hover,
+  &:focus,
+  &:active,
+  &.active {
+    color: $blue-medium;
+    border-bottom-color: 3px solid $blue-medium;
+  }
+}
+
+/* Section colors */
+.lr-section__title {
+  color: $orange;
+}
+
+/* Tag colors */
+.lr-tags__link {
+  background-color: $blue-lightest;
+}
+
+/* Listview colors */
+.listview-list-item__title {
+  color: $blue-medium;
+  &:hover {
+    background-color: $blue-lightest;
+  }
+}
+
+.lr-listview__breadcrumbs__link {
+  &:last-child {
+    &:hover {
+      color: $orange;
+    }
+  }
+}
+
+/* Result filters */
+.lr-piechart__selection {
+  color: $blue-medium;
+}
+
+.lr-footer {
+  background-color: $blue-medium;
+}

@@ -106,8 +106,9 @@ class WebcapController extends BaseController
 			$lines = array();
 			$val = 0;
 
-			//dd(implode(' ', $params));
 			$output = exec(implode(' ', $params), $lines, $val);
+			/*var_dump(implode(' ', $params));
+			dd(array($lines, $val));*/
 		}
 
 		return $file;

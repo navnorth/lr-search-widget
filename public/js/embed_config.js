@@ -93,7 +93,8 @@
         'jquery.flot.selection': 'flot/0.8.2/jquery.flot.selection.min',
         select2: 'select2/3.4.5/select2.min',
         esbb: window.LRWidget.domain + '/js/es-backbone',
-        magnific: 'magnific-popup.js/0.9.9/jquery.magnific-popup.min'
+        magnific: 'magnific-popup.js/0.9.9/jquery.magnific-popup.min',
+        perfectScrollbar: window.LRWidget.domain + '/vendor/perfect-scrollbar/min/perfect-scrollbar-0.4.8.with-mousewheel.min'
       },
       map: {
         '*': {},
@@ -102,7 +103,7 @@
         }
       }
     });
-    return require(['jquery', 'underscore', 'backbone', 'esbb/es-backbone', 'esbb/simple-view'], function($, _, Backbone, ESBB, ESBBApp) {
+    return require(['jquery', 'underscore', 'backbone', 'esbb/es-backbone', 'esbb/simple-view', 'perfectScrollbar'], function($, _, Backbone, ESBB, ESBBApp) {
       var WidgetConfig, defers;
       WidgetConfig = window.LRWidget || {
         api_key: '',
@@ -148,7 +149,6 @@
               model: resultsModel,
               query: queryModel,
               el: $(_this),
-              id_prefix: 'esbb-simple',
               globalConfig: WidgetConfig,
               widgetConfig: widgetConfigModel,
               templates: t.templates
@@ -168,7 +168,8 @@
         })(this));
       });
       return $.when.apply($, defers).then(function() {
-        return LRSearchWidgets.start();
+        LRSearchWidgets.start();
+        return require(['esbb/features']);
       });
     });
   })(this);
