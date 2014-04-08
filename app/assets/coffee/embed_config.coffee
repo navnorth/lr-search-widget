@@ -192,7 +192,29 @@
         $.when.apply($, defers).then(->
             LRSearchWidgets.start()
 
-            require(['esbb/features']);
+            require(['esbb/features'], (Features) ->
+
+                _.each(LRSearchWidgets.widgets, (widget, widgetKey) ->
+
+                    # watch for style changes to trigger style updates
+                    widget.configModel.on('change:font change:main_color change:support_color', ->
+                        Features.createWidgetStyles(
+                            widgetKey,
+                            widget.configModel.get('font'),
+                            widget.configModel.get('main_color'),
+                            widget.configModel.get('support_color'),
+                        )
+                    );
+
+                    # trigger to create initial styles
+                    widget.configModel.trigger('change:font')
+
+                )
+
+
+
+                return;
+            );
         )
 
     )

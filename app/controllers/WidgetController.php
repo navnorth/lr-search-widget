@@ -123,12 +123,7 @@ class WidgetController extends \BaseController {
 	protected function _applyWidgetSettings(Widget $widget)
 	{
 		$widget->name = Input::get('name');
-		$widget->widget_settings = Input::only(array(
-			Widget::SETTINGS_FILTERS,
-			Widget::SETTINGS_SHOW_FACETS,
-			Widget::SETTINGS_SHOW_RESOURCE_MODAL,
-			Widget::SETTINGS_ENABLE_FLAGGING,
-		));
+		$widget->widget_settings = Input::only(array_keys(Widget::$DEFAULT_WIDGET_SETTINGS));
 	}
 
 	protected function _loadWidget($id)

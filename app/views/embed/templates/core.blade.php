@@ -13,14 +13,13 @@
 <link type="text/css" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/0.9.9/magnific-popup.css" />
 <link type="text/css" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" />
 
-<div class="lr-embed
+<div class="lr-embed lr-embed-{{$widget->widget_key}}
     {{ $facets ? '' : 'no-facets' }}
     {{ $modal ? '' : 'no-modal' }}
     {{ $flagging ? '' : 'no-flagging' }}
+    {{ $flagging ? '' : 'no-flagging' }}
     ">
-    <header class="lr-branding" role="banner">
-        <figure id="lr-logo" class="lr-branding__logo">Logo</figure>
-        <h1 id="lr-branding-title" class="lr-branding__title">Resource Widget</h1>
+    <header class="lr-branding embed-heading" role="banner">
     </header>
     <nav id="lr-nav" class="lr-nav" role="navigation">
         <ul class="lr-nav__list">

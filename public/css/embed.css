@@ -383,7 +383,7 @@ h1.lr-branding__title {
 }
 
 /* line 20, ../scss/_layout.scss */
-figure.lr-branding__logo {
+.lr-branding__logo {
   float: right;
 }
 

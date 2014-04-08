@@ -56,11 +56,27 @@
         ->select($settings[W::SETTINGS_FILTERS]);
 
 
-    echo Former::checkboxes('stuff')->checkboxes(array(
+    echo Former::text(W::SETTINGS_WIDGET_HEADING, 'Widget Heading / Title')
+        ->value($settings[W::SETTINGS_WIDGET_HEADING]);
+
+    echo Former::url(W::SETTINGS_WIDGET_LOGO, 'Widget Logo')
+        ->value($settings[W::SETTINGS_WIDGET_LOGO])
+        ->helperText('Please provide the url to the logo you would like to include for branding/identification purposes');
+
+    echo Former::checkboxes('features')->checkboxes(array(
         'Show Facets / Filtering' => array('name' => W::SETTINGS_SHOW_FACETS, 'value' => true),
         'Show Resource Modal' => array('name' => W::SETTINGS_SHOW_RESOURCE_MODAL, 'value' => true),
-        'Enable Flagging' => array('name' => W::SETTINGS_ENABLE_FLAGGING, 'value' => true),
+        //'Enable Flagging' => array('name' => W::SETTINGS_ENABLE_FLAGGING, 'value' => true),
     ));
+
+    echo Former::color(W::SETTINGS_WIDGET_MAIN_COLOR, 'Widget Main Color')
+        ->value($settings[W::SETTINGS_WIDGET_MAIN_COLOR]);
+
+    echo Former::color(W::SETTINGS_WIDGET_SUPPORT_COLOR, 'Widget Support Color')
+        ->value($settings[W::SETTINGS_WIDGET_SUPPORT_COLOR]);
+
+    echo Former::text(W::SETTINGS_WIDGET_FONT, 'Widget Font')
+        ->value($settings[W::SETTINGS_WIDGET_FONT]);
 
 
     echo Former::actions(Former::primary_submit('Save Widget'));

@@ -1,5 +1,9 @@
-(function($) {
+define([
+  'jquery'
+], function($) {
   'use strict';
+
+  var Features = {};
 
   $.fn.slideFadeToggle = function(speed, easing, callback) {
     return this.animate({opacity: 'toggle', height: 'toggle'}, speed, easing, callback);
@@ -51,38 +55,42 @@
     return "#"+(0x1000000+(Math.round((t-R)*p)+R)*0x10000+(Math.round((t-G)*p)+G)*0x100+(Math.round((t-B)*p)+B)).toString(16).slice(1);
   }
 
-  $(function() {
-
+  Features.createWidgetStyles = function(widgetKey, fontFamily, mainColorMedium, supportColor) {
     // Set up style variables.
-    var fontFamily = 'Helvetica, Arial, "Nimbus Sans L", sans-serif'; // Picked by user.
-    var mainColorMedium = '#2e7fa4'; // Picked by user.
+    fontFamily = fontFamily || 'Helvetica, Arial, "Nimbus Sans L", sans-serif'; // Picked by user.
+    mainColorMedium = mainColorMedium || '#2e7fa4'; // Picked by user.
+    supportColor = supportColor || '#dd9a27'; // Picked by user.
+
     var mainColorDark = shadeColor(mainColorMedium, -0.4);
     var mainColorLight = shadeColor(mainColorDark, 0.5);
     var mainColorLightest = shadeColor(mainColorDark, 0.9);
-    var supportColor = '#dd9a27'; // Picked by user.
+
+    var stylePrefix = 'div.lr-embed-'+widgetKey;
+
+    // if styles are already defined, remove it before creating new styles
+    $('#widget-style-'+widgetKey).remove()
 
     // Inline style block.
-    var colorStyles = '<style type="text/css">'+
-      'div.lr-embed { font-family: Helvetica,Arial,"Nimbus Sans L",sans-serif; }'+
-      'div.lr-embed a:link, div.lr-embed a:visited { color: ' + mainColorMedium + '; }'+
-      'div.lr-embed a:hover, div.lr-embed a:focus, div.lr-embed a:active { color: ' + mainColorDark + '; }'+
-      'div.lr-embed a.lr-nav__link { background-color: ' + mainColorLightest + '; }'+
-      'div.lr-embed a.lr-nav__link:link, div.lr-embed a.lr-nav__link:visited { color: ' + mainColorLight + '; }'+
-      'div.lr-embed a.lr-nav__link:hover, div.lr-embed a.lr-nav__link:focus, div.lr-embed a.lr-nav__link:active, div.lr-embed a.lr-nav__link.active { color: ' + mainColorMedium + '; }'+
-      'h2.lr-section__title { color: ' + supportColor + ';}' +
-      'a.lr-tags__link { background-color: ' + mainColorLightest + '; }'+
-      'span.listview-list-item__title { color: ' + mainColorMedium + '; }'+
-      'span.listview-list-item__title:hover { background-color: ' + mainColorLightest + '; }'+
-      'a.lr-listview__breadcrumbs__link { color: ' + supportColor + ';}'+
-      'a.lr-listview__breadcrumbs__link:last-child:hover { color: ' + supportColor + ';}'+
-      'figcaption.lr-piechart__selection { color: ' + mainColorMedium + ';}'+
-      'footer.lr-footer { background-color: ' + mainColorMedium + ';'+
+    var colorStyles = '<style type="text/css" id="widget-style-'+widgetKey+'">'+
+      stylePrefix+' { font-family: '+fontFamily+' }'+
+      stylePrefix+' a:link, div.lr-embed a:visited { color: ' + mainColorMedium + '; }'+
+      stylePrefix+' a:hover, div.lr-embed a:focus, div.lr-embed a:active { color: ' + mainColorDark + '; }'+
+      stylePrefix+' a.lr-nav__link { background-color: ' + mainColorLightest + '; }'+
+      stylePrefix+' a.lr-nav__link:link, div.lr-embed a.lr-nav__link:visited { color: ' + mainColorLight + '; }'+
+      stylePrefix+' a.lr-nav__link:hover, div.lr-embed a.lr-nav__link:focus, div.lr-embed a.lr-nav__link:active, div.lr-embed a.lr-nav__link.active { color: ' + mainColorMedium + '; }'+
+      stylePrefix+' h2.lr-section__title { color: ' + supportColor + ';}' +
+      stylePrefix+' a.lr-tags__link { background-color: ' + mainColorLightest + '; }'+
+      stylePrefix+' span.listview-list-item__title { color: ' + mainColorMedium + '; }'+
+      stylePrefix+' span.listview-list-item__title:hover { background-color: ' + mainColorLightest + '; }'+
+      stylePrefix+' a.lr-listview__breadcrumbs__link { color: ' + supportColor + ';}'+
+      stylePrefix+' a.lr-listview__breadcrumbs__link:last-child:hover { color: ' + supportColor + ';}'+
+      stylePrefix+' figcaption.lr-piechart__selection { color: ' + mainColorMedium + ';}'+
+      stylePrefix+' footer.lr-footer { background-color: ' + mainColorMedium + ';'+
       '}' +
       '</style>';
 
     $('head').append(colorStyles);
-
-  });
+  };
 
   $.fn.listview = function(options) {
     // Plugin options.
@@ -311,6 +319,8 @@
     });
   });
 
-})(jQuery);
+  return Features;
+
+});
 
 

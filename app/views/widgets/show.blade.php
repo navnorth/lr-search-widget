@@ -41,8 +41,20 @@
         <dt>Show Resource Modal</dt>
         <dd>{{ $widgetSettings[W::SETTINGS_SHOW_RESOURCE_MODAL] ? 'True' : 'False' }}</dd>
 
-        <dt>Enable Flagging</dt>
-        <dd>{{ $widgetSettings[W::SETTINGS_ENABLE_FLAGGING] ? 'True' : 'False' }}</dd>
+        <!-- <dt>Enable Flagging</dt>
+        <dd>{{ $widgetSettings[W::SETTINGS_ENABLE_FLAGGING] ? 'True' : 'False' }}</dd> -->
+
+        <dt>Widget Heading</dt>
+        <dd>{{ $widgetSettings[W::SETTINGS_WIDGET_HEADING] }}</dd>
+
+        <dt>Widget Main Color</dt>
+        <dd>{{ $widgetSettings[W::SETTINGS_WIDGET_MAIN_COLOR] }}</dd>
+
+        <dt>Widget Support Color</dt>
+        <dd>{{ $widgetSettings[W::SETTINGS_WIDGET_SUPPORT_COLOR] }}</dd>
+
+        <dt>Widget Font</dt>
+        <dd>{{ $widgetSettings[W::SETTINGS_WIDGET_FONT] }}</dd>
 
     </dl>
 </fieldset>

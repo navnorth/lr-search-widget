@@ -41,6 +41,29 @@ define([
 		}
 	});
 
+	ESBBApp.HeadingView = Backbone.View.extend({
+		template: '\
+		{{#logo}}\
+			<img id="lr-logo" class="lr-branding__logo" src="{{ logo }}" style="height: 4em">\
+		{{/logo}}\
+        <h1 id="lr-branding-title" class="lr-branding__title">{{heading}}</h1>\
+        ',
+
+        initialize: function (opts) {
+        	this.globalConfig = opts.globalConfig;
+        	this.widgetConfig = opts.widgetConfig;
+
+        	this.listenTo(this.widgetConfig, 'change:heading change:logo', this.render);
+        },
+
+        render: function() {
+        	this.$el.html(Mustache.render(this.template, this.widgetConfig.toJSON()));
+
+        	return this;
+        }
+
+	});
+
 	ESBBApp.SimpleAppView = Backbone.View.extend({
 		query: null,
 
@@ -102,6 +125,13 @@ define([
 		render: function() {
 
 			var $facet;
+
+			new ESBBApp.HeadingView({
+				model: this.query,
+				globalConfig: this.globalConfig,
+				widgetConfig: this.widgetConfig,
+				el: this.$('.embed-heading')
+			}).render();
 
 			new ESBB.SearchBarView( {
 				model: this.query,
