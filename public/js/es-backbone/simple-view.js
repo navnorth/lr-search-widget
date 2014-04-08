@@ -44,7 +44,7 @@ define([
 	ESBBApp.HeadingView = Backbone.View.extend({
 		template: '\
 		{{#logo}}\
-			<img id="lr-logo" class="lr-branding__logo" src="{{ logo }}" style="height: 4em">\
+			<img id="lr-logo" class="lr-branding__logo" src="{{ logo }}" style="height: 3em">\
 		{{/logo}}\
         <h1 id="lr-branding-title" class="lr-branding__title">{{heading}}</h1>\
         ',

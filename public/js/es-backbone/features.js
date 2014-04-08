@@ -55,11 +55,12 @@ define([
     return "#"+(0x1000000+(Math.round((t-R)*p)+R)*0x10000+(Math.round((t-G)*p)+G)*0x100+(Math.round((t-B)*p)+B)).toString(16).slice(1);
   }
 
-  Features.createWidgetStyles = function(widgetKey, fontFamily, mainColorMedium, supportColor) {
+  Features.createWidgetStyles = function(widgetKey, fontFamily, mainColorMedium, supportColor, bgColor) {
     // Set up style variables.
     fontFamily = fontFamily || 'Helvetica, Arial, "Nimbus Sans L", sans-serif'; // Picked by user.
     mainColorMedium = mainColorMedium || '#2e7fa4'; // Picked by user.
     supportColor = supportColor || '#dd9a27'; // Picked by user.
+    bgColor = bgColor || '#ffffff'
 
     var mainColorDark = shadeColor(mainColorMedium, -0.4);
     var mainColorLight = shadeColor(mainColorDark, 0.5);
@@ -72,7 +73,7 @@ define([
 
     // Inline style block.
     var colorStyles = '<style type="text/css" id="widget-style-'+widgetKey+'">'+
-      stylePrefix+' { font-family: '+fontFamily+' }'+
+      stylePrefix+' { font-family: '+fontFamily+'; background-color: '+bgColor+' }'+
       stylePrefix+' a:link, div.lr-embed a:visited { color: ' + mainColorMedium + '; }'+
       stylePrefix+' a:hover, div.lr-embed a:focus, div.lr-embed a:active { color: ' + mainColorDark + '; }'+
       stylePrefix+' a.lr-nav__link { background-color: ' + mainColorLightest + '; }'+

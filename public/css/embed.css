@@ -366,6 +366,10 @@ div.lr-embed {
   overflow: hidden;
   min-width: 280px;
   max-width: 800px;
+  padding: 15px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
 }
 
 /* Branding */
@@ -470,7 +474,7 @@ figure.lr-branding__logo {
 
 /* line 9, ../scss/_style.scss */
 h1.lr-branding__title {
-  margin-top: 1.5em;
+  margin-top: 1em;
   margin-bottom: 0;
   font-size: 1.5em;
   font-weight: bold;

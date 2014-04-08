@@ -197,12 +197,13 @@
                 _.each(LRSearchWidgets.widgets, (widget, widgetKey) ->
 
                     # watch for style changes to trigger style updates
-                    widget.configModel.on('change:font change:main_color change:support_color', ->
+                    widget.configModel.on('change:font change:main_color change:support_color change:bg_color', ->
                         Features.createWidgetStyles(
                             widgetKey,
                             widget.configModel.get('font'),
                             widget.configModel.get('main_color'),
                             widget.configModel.get('support_color'),
+                            widget.configModel.get('bg_color'),
                         )
                     );
 

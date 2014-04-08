@@ -171,8 +171,8 @@
         LRSearchWidgets.start();
         return require(['esbb/features'], function(Features) {
           _.each(LRSearchWidgets.widgets, function(widget, widgetKey) {
-            widget.configModel.on('change:font change:main_color change:support_color', function() {
-              return Features.createWidgetStyles(widgetKey, widget.configModel.get('font'), widget.configModel.get('main_color'), widget.configModel.get('support_color'));
+            widget.configModel.on('change:font change:main_color change:support_color change:bg_color', function() {
+              return Features.createWidgetStyles(widgetKey, widget.configModel.get('font'), widget.configModel.get('main_color'), widget.configModel.get('support_color'), widget.configModel.get('bg_color'));
             });
             return widget.configModel.trigger('change:font');
           });

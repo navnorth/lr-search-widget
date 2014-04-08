@@ -23,6 +23,7 @@ class Widget extends Eloquent {
     const SETTINGS_WIDGET_FONT = 'font';
     const SETTINGS_WIDGET_MAIN_COLOR = 'main_color';
     const SETTINGS_WIDGET_SUPPORT_COLOR = 'support_color';
+    const SETTINGS_WIDGET_BG_COLOR = 'bg_color';
 
     public static $DEFAULT_WIDGET_SETTINGS = array(
         self::SETTINGS_FILTERS => array(),
@@ -34,6 +35,7 @@ class Widget extends Eloquent {
         self::SETTINGS_WIDGET_FONT => 'Helvetica, Arial, "Nimbus Sans L", sans-serif',
         self::SETTINGS_WIDGET_MAIN_COLOR => '#2e7fa4',
         self::SETTINGS_WIDGET_SUPPORT_COLOR => '#dd9a27',
+        self::SETTINGS_WIDGET_BG_COLOR => '#ffffff',
 
     );
 

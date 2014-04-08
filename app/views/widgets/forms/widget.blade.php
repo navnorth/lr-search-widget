@@ -75,6 +75,9 @@
     echo Former::color(W::SETTINGS_WIDGET_SUPPORT_COLOR, 'Widget Support Color')
         ->value($settings[W::SETTINGS_WIDGET_SUPPORT_COLOR]);
 
+    echo Former::color(W::SETTINGS_WIDGET_BG_COLOR, 'Widget Background Color')
+        ->value($settings[W::SETTINGS_WIDGET_BG_COLOR]);
+
     echo Former::text(W::SETTINGS_WIDGET_FONT, 'Widget Font')
         ->value($settings[W::SETTINGS_WIDGET_FONT]);
 
