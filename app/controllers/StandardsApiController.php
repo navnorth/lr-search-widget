@@ -90,15 +90,15 @@ class StandardsApiController extends ApiController
 
             // don't need results
             $query['size'] = 0;
-            $query['facets'] = [
-                'standards' => [
-                    'terms' => [
+            $query['facets'] = array(
+                'standards' => array(
+                    'terms' => array(
                         'field' => 'standards',
                         'size' => 32000,
                         'regex' => '^s[a-z0-9]+$',
-                    ]
-                ]
-            ];
+                    )
+                )
+            );
 
             $results = $this->searchClient()->search($query);
 

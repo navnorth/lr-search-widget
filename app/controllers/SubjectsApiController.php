@@ -138,15 +138,15 @@ class SubjectsApiController extends ApiController
 
             // don't need results
             $query['size'] = 0;
-            $query['facets'] = [
-                'subjects' => [
-                    'terms' => [
+            $query['facets'] = array(
+                'subjects' => array(
+                    'terms' => array(
                         'field' => 'subjects',
                         'size' => 32000,
                         'regex' => '^s[a-z0-9]+$',
-                    ]
-                ]
-            ];
+                    )
+                )
+            );
 
             $results = $this->searchClient()->search($query);
 
