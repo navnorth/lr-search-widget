@@ -21,6 +21,12 @@
 
     }
 
+    WidgetConfig = window.LRWidget || {
+        api_key: '',
+        domain: '',
+        production: true,
+    };
+
     require.config({
         baseUrl: '//cdnjs.cloudflare.com/ajax/libs/',
         shim: {
@@ -98,7 +104,7 @@
             },
             'jquery-private': { 'jquery': 'jquery' }
         }
-        urlArgs: "bust="+new Date().getTime()
+        urlArgs: if WidgetConfig.production then null else "bust="+new Date().getTime()
     })
 
     require([
@@ -110,11 +116,6 @@
         'perfectScrollbar'
     ],
     ($, _, Backbone, ESBB, ESBBApp) ->
-
-        WidgetConfig = window.LRWidget || {
-            api_key: '',
-            domain: '',
-        };
 
         defers = []
 

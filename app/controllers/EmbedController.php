@@ -45,6 +45,7 @@ class EmbedController extends \BaseController {
 		$vars = array(
 			'api_key' => $apiKey,
 			'domain' => URL::to('/'),
+			'production' => Config::get('app.production', true),
 		);
 
 		$content = 'window.LRWidget = '.json_encode($vars)."\n\n";

@@ -43,7 +43,7 @@ class StandardsApiController extends ApiController
             $cache->put('base', $standards, self::CACHE_TIME);
         }
 
-        return Response::json($standards);
+        return $this->_applyCacheControl(Response::json($standards), 2592000 /* 30 days */);
     }
 
     public function getWidget($widgetKey = null)
@@ -112,7 +112,7 @@ class StandardsApiController extends ApiController
             $cache->put($widgetCacheKey, $counts, self::CACHE_TIME);
         }
 
-        return Response::json($counts);
+        return $this->_applyCacheControl(Response::json($counts));
     }
 
     public function getClearCache()

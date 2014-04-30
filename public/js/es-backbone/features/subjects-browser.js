@@ -21,14 +21,16 @@
           data: {
             api_key: globalConfig.api_key
           },
-          jsonpCallback: 'subjectsCallback'
+          jsonpCallback: 'subjectsCallback',
+          cache: true
         });
         countsReq = $.ajax(globalConfig.domain + '/api/subjects/counts/' + widget.widgetKey + '?jsonp=?', {
           dataType: 'jsonp',
           data: {
             api_key: globalConfig.api_key
           },
-          jsonpCallback: 'subjectsCountCallback'
+          jsonpCallback: 'subjectsCountCallback',
+          cache: true
         });
         return $.when.apply($, [subjectsReq, countsReq]).done(function(subjectsResult, countsResult) {
           var counts, subjects;

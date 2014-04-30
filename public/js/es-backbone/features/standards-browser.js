@@ -21,14 +21,16 @@
           data: {
             api_key: globalConfig.api_key
           },
-          jsonpCallback: 'standardsCallback'
+          jsonpCallback: 'standardsCallback',
+          cache: true
         });
         countsReq = $.ajax(globalConfig.domain + '/api/standards/counts/' + widget.widgetKey + '?jsonp=?', {
           dataType: 'jsonp',
           data: {
             api_key: globalConfig.api_key
           },
-          jsonpCallback: 'standardsCountCallback'
+          jsonpCallback: 'standardsCountCallback',
+          cache: true
         });
         return $.when.apply($, [standardsReq, countsReq]).done(function(standardsResult, countsResult) {
           var counts, standards;

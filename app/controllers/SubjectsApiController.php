@@ -84,14 +84,14 @@ class SubjectsApiController extends ApiController
     {
         $cache = Cache::tags(self::CACHE_KEY, 'json');
 
-        if(true || !($subjects = $cache->get('base')))
+        if(!($subjects = $cache->get('base')))
         {
             $subjects = $this->_compileSubjects();
 
             $cache->put('base', $subjects, self::CACHE_TIME);
         }
 
-        return Response::json($subjects);
+        return $this->_applyCacheControl(Response::json($subjects), 2592000 /* 30 days */);
     }
 
     public function getWidget($widgetKey = null)
@@ -160,7 +160,7 @@ class SubjectsApiController extends ApiController
             $cache->put($widgetCacheKey, $counts, self::CACHE_TIME);
         }
 
-        return Response::json($counts);
+        return $this->_applyCacheControl(Response::json($counts));
     }
 
     public function getClearCache()

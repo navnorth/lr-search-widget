@@ -38,6 +38,7 @@ define([
                 data:
                     api_key: globalConfig.api_key
                 jsonpCallback: 'subjectsCallback'
+                cache: true
             })
 
             countsReq = $.ajax(globalConfig.domain+'/api/subjects/counts/'+widget.widgetKey+'?jsonp=?', {
@@ -45,6 +46,7 @@ define([
                 data:
                     api_key: globalConfig.api_key
                 jsonpCallback: 'subjectsCountCallback'
+                cache: true
             })
 
             $.when.apply($, [subjectsReq, countsReq]).done( (subjectsResult, countsResult) ->
