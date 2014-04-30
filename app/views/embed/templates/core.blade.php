@@ -66,7 +66,7 @@
           </div>
 
           <div id="lr-section-subjects" class="lr-tab-pane">
-            <div id="lr-subjects">
+            <div id="lr-subjects" class="lr-subjects">
               <ul>
                 <li>
                   Arts & Music (2,028)
@@ -139,7 +139,7 @@
             </div>
           </div>
           <div id="lr-section-standards" class="lr-tab-pane">
-            <div id="lr-standards">
+            <div id="lr-standards" class="lr-standards">
               <ul>
                 <li>Mathematics
                   <ul>

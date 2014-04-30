@@ -69,4 +69,27 @@ class AuthController extends BaseController {
 		return $this->layout->with('content', View::make('auth.update_profile'));
 	}
 
+
+	public function postDevLogin()
+	{
+		if(!Config::get('app.production', true))
+		{
+			$apiKey = Input::get('api_key');
+
+			$apiUser = ApiUser::where('api_key', $apiKey)->first();
+
+			if($apiUser)
+			{
+				Auth::login($apiUser);
+				return Redirect::to('/')->with('notice', 'Logged in');
+			}
+			else
+			{
+				return Redirect::to('/')->with('error', 'Could not find matching API key');
+			}
+
+		}
+
+		return Redirect::to('/');
+	}
 }

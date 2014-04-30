@@ -85,6 +85,7 @@
         jquery: 'jquery/1.11.0/jquery',
         jqueryMigrate: 'jquery-migrate/1.2.1/jquery-migrate.min',
         mustache: 'mustache.js/0.7.2/mustache.min',
+        hogan: 'hogan.js/3.0.0/hogan.min.amd',
         underscore: 'underscore.js/1.5.2/underscore-min',
         backbone: 'backbone.js/1.1.0/backbone-min',
         excanvas: 'flot/0.8.2/excanvas.min',
@@ -101,7 +102,8 @@
         'jquery-private': {
           'jquery': 'jquery'
         }
-      }
+      },
+      urlArgs: "bust=" + new Date().getTime()
     });
     return require(['jquery', 'underscore', 'backbone', 'esbb/es-backbone', 'esbb/simple-view', 'perfectScrollbar'], function($, _, Backbone, ESBB, ESBBApp) {
       var WidgetConfig, defers;
@@ -157,7 +159,8 @@
               queryModel: queryModel,
               resultsModel: resultsModel,
               view: esbbSimpleApp,
-              configModel: widgetConfigModel
+              configModel: widgetConfigModel,
+              widgetKey: widgetKey
             };
             return defer.resolve();
           };
@@ -169,12 +172,14 @@
       });
       return $.when.apply($, defers).then(function() {
         LRSearchWidgets.start();
-        return require(['esbb/features'], function(Features) {
+        return require(['esbb/features', 'esbb/features/standards-browser', 'esbb/features/subjects-browser'], function(Features, StandardsBrowser, SubjectsBrowser) {
           _.each(LRSearchWidgets.widgets, function(widget, widgetKey) {
             widget.configModel.on('change:font change:main_color change:support_color change:bg_color', function() {
               return Features.createWidgetStyles(widgetKey, widget.configModel.get('font'), widget.configModel.get('main_color'), widget.configModel.get('support_color'), widget.configModel.get('bg_color'));
             });
-            return widget.configModel.trigger('change:font');
+            widget.configModel.trigger('change:font');
+            StandardsBrowser.start(WidgetConfig, widget);
+            return SubjectsBrowser.start(WidgetConfig, widget);
           });
         });
       });

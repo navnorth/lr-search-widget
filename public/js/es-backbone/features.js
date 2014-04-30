@@ -245,7 +245,7 @@ define([
       });
 
       // Toggle standards info.
-      if (settings.type === 'Standards') {
+      if (false && settings.type === 'Standards') {
         $('.lr-standards__info').hide();
         elem.on('click', '.no-children', function() {
           $(this).children('.lr-standards__info').slideFadeToggle();
@@ -276,16 +276,6 @@ define([
       $.fn.tabs.resetTabs($('.lr-tab-pane'), $('#lr-nav'));
       $('#lr-section-search').fadeIn();
       $('#lr-nav a:first').addClass('active');
-    });
-
-    // Implement listview plugin for sujects and standards lists.
-    $('#lr-subjects').listview({
-      type: 'Subjects',
-      listViewTitle: 'Browse by Subject'
-    });
-    $('#lr-standards').listview({
-      type: 'Standards',
-      listViewTitle: 'Browse Standards'
     });
 
     // Search filter control: expand and collapse.

@@ -78,6 +78,7 @@
             jqueryMigrate: 'jquery-migrate/1.2.1/jquery-migrate.min'
             #jqueryUi: 'jqueryui/1.10.3/jquery-ui.min'
             mustache: 'mustache.js/0.7.2/mustache.min'
+            hogan: 'hogan.js/3.0.0/hogan.min.amd'
             underscore: 'underscore.js/1.5.2/underscore-min'
             backbone: 'backbone.js/1.1.0/backbone-min'
             excanvas: 'flot/0.8.2/excanvas.min',
@@ -97,7 +98,7 @@
             },
             'jquery-private': { 'jquery': 'jquery' }
         }
-        #urlArgs: "bust="+new Date().getTime()
+        urlArgs: "bust="+new Date().getTime()
     })
 
     require([
@@ -177,10 +178,11 @@
 
 
                 LRSearchWidgets.widgets[widgetKey] = {
-                    queryModel: queryModel,
-                    resultsModel: resultsModel,
+                    queryModel: queryModel
+                    resultsModel: resultsModel
                     view: esbbSimpleApp
                     configModel: widgetConfigModel
+                    widgetKey: widgetKey
                 }
 
                 defer.resolve()
@@ -192,7 +194,11 @@
         $.when.apply($, defers).then(->
             LRSearchWidgets.start()
 
-            require(['esbb/features'], (Features) ->
+            require([
+                'esbb/features',
+                'esbb/features/standards-browser',
+                'esbb/features/subjects-browser'
+            ], (Features, StandardsBrowser, SubjectsBrowser) ->
 
                 _.each(LRSearchWidgets.widgets, (widget, widgetKey) ->
 
@@ -210,8 +216,9 @@
                     # trigger to create initial styles
                     widget.configModel.trigger('change:font')
 
+                    StandardsBrowser.start(WidgetConfig, widget)
+                    SubjectsBrowser.start(WidgetConfig, widget)
                 )
-
 
 
                 return;

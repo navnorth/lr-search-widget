@@ -2,6 +2,9 @@
 
 return array(
 
+	'production' => true,
+
+
 	/*
 	|--------------------------------------------------------------------------
 	| Application Debug Mode
