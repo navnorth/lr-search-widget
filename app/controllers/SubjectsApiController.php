@@ -93,11 +93,11 @@ class SubjectsApiController extends ApiController
             }
         };
 
-        foreach(glob(base_path('data/subjects/*.csv')) as $file)
-        {
-            $parsed = new Keboola\Csv\CsvFile($file);
+        $subjectData = Excel::load(base_path('data/subjects/all_subjects.xlsx'))->toArray();
 
-            foreach($parsed as $line)
+        foreach($subjectData as $sheetName => $rows)
+        {
+            foreach($rows as $line)
             {
                 $text = $getText($line);
 
