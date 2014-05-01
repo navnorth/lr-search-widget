@@ -63,6 +63,7 @@
   font-family: inherit;
   font-size: 100%;
   vertical-align: baseline;
+  clear: none;
 }
 
 /* HTML5 display definitions
