@@ -179,8 +179,16 @@
               return Features.createWidgetStyles(widgetKey, widget.configModel.get('font'), widget.configModel.get('main_color'), widget.configModel.get('support_color'), widget.configModel.get('bg_color'));
             });
             widget.configModel.trigger('change:font');
-            StandardsBrowser.start(WidgetConfig, widget);
-            return SubjectsBrowser.start(WidgetConfig, widget);
+            StandardsBrowser.start(WidgetConfig, widget, function(filterValue) {
+              widget.view.$el.find('a.lr-nav-link__search').trigger('click');
+              widget.queryModel.clearSearch().addTermFilter('standards', filterValue.toLowerCase()).search();
+              return widget.queryModel.trigger('change');
+            });
+            return SubjectsBrowser.start(WidgetConfig, widget, function(filterValue) {
+              widget.view.$el.find('a.lr-nav-link__search').trigger('click');
+              widget.queryModel.clearSearch().addTermFilter('keys', filterValue.toLowerCase()).search();
+              return widget.queryModel.trigger('change');
+            });
           });
         });
       });

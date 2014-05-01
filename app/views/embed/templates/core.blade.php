@@ -17,7 +17,6 @@
     {{ $facets ? '' : 'no-facets' }}
     {{ $modal ? '' : 'no-modal' }}
     {{ $flagging ? '' : 'no-flagging' }}
-    {{ $flagging ? '' : 'no-flagging' }}
     ">
 
     <div class="lr-embed-wrapper">
@@ -26,13 +25,13 @@
       <nav id="lr-nav" class="lr-nav" role="navigation">
           <ul class="lr-nav__list">
               <li class="lr-nav__item">
-                  <a title="Search the Learning Registry" class="lr-nav__link" href="#lr-section-search">Search</a>
+                  <a title="Search the Learning Registry" class="lr-nav__link lr-nav-link__search" href="#lr-section-search">Search</a>
               </li>
               <li class="lr-nav__item">
-                  <a title="Browse by Subject" class="lr-nav__link" href="#lr-section-subjects">Browse by Subject</a>
+                  <a title="Browse by Subject" class="lr-nav__link lr-nav-link__subjects" href="#lr-section-subjects">Browse by Subject</a>
               </li>
               <li class="lr-nav__item">
-                  <a title="Browse by Standard" class="lr-nav__link" href="#lr-section-standards">Browse by Standard</a>
+                  <a title="Browse by Standard" class="lr-nav__link lr-nav-link__standards" href="#lr-section-standards">Browse by Standard</a>
               </li>
           </ul>
       </nav>
@@ -46,9 +45,9 @@
             <div class="lr-search-form lr-form embed-search-bar" role="search"></div>
             <div class="lr-results">
               <div class="lr-pager embed-search-pagination"></div>
+              <div class="embed-search-facets"></div>
               @if($facets || $demo)
                   <div class="embed-facets">
-                      <div class="embed-search-facets"></div>
                       <div class="lr-results-filter">
                         <h2 id="lr-results-filter__title" class="lr-results-filter__title" title="Filter search results">Filter by<i title="Expand search filters" id="lr-results-expand" class="fa fa-caret-down"></i></h2>
                         <div id="lr-results-facets" class="lr-results-filter__facets">

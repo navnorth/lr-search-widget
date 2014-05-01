@@ -188,19 +188,50 @@ define([
 
       // Add classes, inner wrapper and icon to list items.
       elem.find('li').each(function(index, value) {
-        $(this).addClass('listview-list-item');
-        var listItemText = $(this).contents().eq(0);
-        listItemText.wrap('<span class="listview-list-item__title" data-breadcrumb-label="' + listItemText.text() + '"></span>');
-        if ($(this).contents().eq(1).is('ul')) {
-          $(this).children('.listview-list-item__title')
-          .addClass('has-children')
-          .append('<i class="fa fa-caret-right"></i>');
+        var $li = $(this),
+            $listItemText = $li.children('span'),
+            resourceCount = $li.data('resourceCount'),
+            resourceFilter = $li.data('resourceFilter');
+
+        $li.addClass('listview-list-item');
+
+        $listItemText.data('breadcrumb-label', $listItemText.text())
+                     .addClass('listview-list-item__title')
+
+        if ($li.has('ul')) {
+          $listItemText
+            .addClass('has-children')
+            .append('<i class="fa fa-caret-right"></i>');
         }
         else {
-          $(this).children('.listview-list-item__title')
+          $listItemText
             .addClass('no-children');
         }
-        if (settings.type === 'Subjects') {
+
+
+
+        if(resourceCount && resourceFilter) {
+          var $link =
+            $('<a href="#" />')
+              .text(resourceCount)
+              .attr('title', 'Find Matching Resources')
+              .click(function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                if(settings.filterCallback)
+                {
+                  settings.filterCallback(resourceFilter);
+                }
+
+              });
+
+          $listItemText.append('(', $link, ')');
+        }
+
+
+
+        /*if (settings.type === 'Subjects') {
           $(this).children('.has-children')
             .append('<span class="listview-list-item__tip">Filter more</span>');
           $(this).children('.no-children')
@@ -211,7 +242,7 @@ define([
           $(this).children('.no-children')
             .prepend('<i class="fa fa-caret-right"></i>')
             .append(standardsInfo);
-        }
+        }*/
       });
 
       // Add class and level data attribute to lists.

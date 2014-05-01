@@ -27,7 +27,7 @@ define([
 			this.trigger( 'search:start' );
 			this.searching = true;
 
-			$.ajax( {
+			return $.ajax( {
 				url: t.ajax_url,
 				type: 'POST',
 				dataType: 'json',
@@ -63,6 +63,8 @@ define([
 			var curr = this.toJSON();
 			curr.query.filtered.query.query_string.query = str;
 			this.set( curr, { silent: true } );
+
+			return this;
 		},
 
 		getQueryString: function() {
@@ -74,6 +76,8 @@ define([
 			var curr = this.toJSON();
 			curr.sort = sort;
 			this.set( curr, { silent: true } );
+
+			return this;
 		},
 
 		getSort: function() {
@@ -85,6 +89,8 @@ define([
 			var curr = this.toJSON();
 			curr.facets[facet_name].date_histogram.interval = interval;
 			this.set( curr, { silent: true } );
+
+			return this;
 		},
 
 		updateFilters: function( new_filters ) {
@@ -97,6 +103,8 @@ define([
 				curr.query.filtered.filter = { and: new_filters };
 			}
 			this.set( curr );
+
+			return this;
 		},
 
 		getFiltersForChanging: function() {
@@ -141,6 +149,8 @@ define([
 				curr_filt.push( { term: a } );
 			} );
 			this.updateFilters( curr_filt );
+
+			return this;
 		},
 
 		setTermFilters: function( facetName, list ) {
@@ -161,6 +171,8 @@ define([
 			});
 
 			this.updateFilters( new_filt );
+
+			return this;
 		},
 
 		addTermFilter: function( field, term ) {
@@ -169,6 +181,8 @@ define([
 			a[ field ] = term;
 			curr_filt.push( { term: a } );
 			this.updateFilters( curr_filt );
+
+			return this;
 		},
 
 		addRangeFilter: function( field, from, to ) {
@@ -181,9 +195,11 @@ define([
 			else if ( to )
 				a[ field ] = { to: to, include_upper: false };
 			else
-				return;
+				return this;
 			curr_filt.push( { range: a } );
 			this.updateFilters( curr_filt );
+
+			return this;
 		},
 
 		removeFilter: function( facet_name, facet_type, facet_value ) {
@@ -197,6 +213,8 @@ define([
 				}
 			}
 			this.updateFilters( curr_filt );
+
+			return this;
 		},
 
 		getFacet: function( facet_name ) {
@@ -214,6 +232,8 @@ define([
 				this.updateFilters( filts );
 				this.trigger( 'change' );
 			}
+
+			return this;
 		},
 
 		getURLQueryString: function() {
@@ -235,6 +255,18 @@ define([
 				return '';
 			}
 			return $.param( { f: curr_filt.and } );
+		},
+
+		clearSearch: function() {
+			console.log(this);
+			this.set({
+				query: '',
+				page: 1,
+				facets: [],
+				filters: {}
+			}, { silent: true });
+
+			return this;
 		}
 
 
@@ -1331,7 +1363,10 @@ define([
 	ESBB.SearchPaginationView = Backbone.View.extend({
 		template: '\
 			<div class="lr-pager__counter">\
-				Showing <strong>{{start}} to {{end}}</strong> of <strong>{{total}}</strong> results for <strong>"{{{queryTerm}}}"</strong>\
+				Showing <strong>{{start}} to {{end}}</strong> of <strong>{{total}}</strong> results \
+				{{#queryTerm}} \
+					for <strong>"{{{queryTerm}}}"</strong>\
+				{{/queryTerm}} \
 			</div>\
             <nav class="lr-pager__links">\
             	<ul>\

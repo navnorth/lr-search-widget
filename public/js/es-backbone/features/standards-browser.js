@@ -8,12 +8,12 @@
       return Browser;
 
     })();
-    standardTreeTmpl = Hogan.compile('{{#children.length}} <ul> {{#children}} <li data-resource-count="{{ count }}"> {{ asn_listID }} {{{ title }}} {{> standard }} </li> {{/children}} </ul> {{/children.length}}');
+    standardTreeTmpl = Hogan.compile('{{#children.length}} <ul> {{#children}} <li data-resource-count="{{ count }}" data-resource-filter="{{ id }}"> <span><strong>{{ asn_listID }}</strong> {{{ title }}}</span> {{> standard }} </li> {{/children}} </ul> {{/children.length}}');
     StandardsBrowser = {
       create: function(opts) {
         return new Browser(opts);
       },
-      start: function(globalConfig, widget) {
+      start: function(globalConfig, widget, filterCallback) {
         var $standards, countsReq, standardsReq;
         $standards = widget.view.$el.find('.lr-standards');
         standardsReq = $.ajax(globalConfig.domain + '/api/standards/widget/' + widget.widgetKey + '?jsonp=?', {
@@ -42,7 +42,8 @@
           }));
           return $standards.listview({
             type: 'Standards',
-            listViewTitle: 'Browse Standards'
+            listViewTitle: 'Browse Standards',
+            filterCallback: filterCallback
           });
         });
       }

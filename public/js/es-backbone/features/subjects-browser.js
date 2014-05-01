@@ -8,12 +8,12 @@
       return Browser;
 
     })();
-    subjectTreeTmpl = Hogan.compile('{{#children.length}} <ul> {{#children}} <li data-resource-count="{{ count }}"> {{{ title }}} {{#count}} ({{ count }}) {{/count}} {{> subject }} </li> {{/children}} </ul> {{/children.length}}');
+    subjectTreeTmpl = Hogan.compile('{{#children.length}} <ul> {{#children}} <li data-resource-count="{{ count }}" data-resource-filter="{{ title }}"> <span> {{{ title }}} </span> {{> subject }} </li> {{/children}} </ul> {{/children.length}}');
     SubjectsBrowser = {
       create: function(opts) {
         return new Browser(opts);
       },
-      start: function(globalConfig, widget) {
+      start: function(globalConfig, widget, filterCallback) {
         var $subjects, countsReq, subjectsReq;
         $subjects = widget.view.$el.find('.lr-subjects');
         subjectsReq = $.ajax(globalConfig.domain + '/api/subjects/widget/' + widget.widgetKey + '?jsonp=?', {
@@ -44,7 +44,8 @@
           }));
           return $subjects.listview({
             type: 'Subjects',
-            listViewTitle: 'Browse by Subject'
+            listViewTitle: 'Browse by Subject',
+            filterCallback: filterCallback
           });
         });
       }

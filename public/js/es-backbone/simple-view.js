@@ -280,18 +280,22 @@ define([
 
 		resetPage: function() {
 			this.set('page', 1);
+			return this;
 		},
 
 		nextPage: function() {
-			this.set('page', this.get('page') + 1)
+			this.set('page', this.get('page') + 1);
+			return this;
 		},
 
 		prevPage: function() {
-			this.set('page', this.get('page') - 1)
+			this.set('page', this.get('page') - 1);
+			return this;
 		},
 
 		setQueryString: function(str) {
-		    this.set('query', str)
+		    this.set('query', str);
+		    return this;
 		},
 
 		getQueryString: function() {
@@ -300,10 +304,12 @@ define([
 
 		setSort: function( sort ) {
 		    this.set('sort', sort);
+
+		    return this;
 		},
 
 		getSort: function() {
-		    this.get('sort');
+		    return this.get('sort');
 		},
 
 		setDateHistInterval: function( facet_name, interval ) {
@@ -313,6 +319,8 @@ define([
 		updateFilters: function( new_filters ) {
 		    this.set('filters', new_filters);
 		    this.trigger('change:filters');
+
+		    return this;
 		},
 
 		getFiltersForChanging: function() {
@@ -355,6 +363,8 @@ define([
 			    curr_filt[val.field].push(val.term)
 		    } );
 		    this.updateFilters( curr_filt );
+
+		    return this;
 		},
 
 		addTermFilter: function( field, term ) {
@@ -370,11 +380,15 @@ define([
 		    curr_filt[field] = _.unique(curr_filt[field]);
 
 		    this.updateFilters( curr_filt );
+
+		    return this;
 		},
 
 		addRangeFilter: function( field, from, to ) {
 
 		    console.log('not supporting range filter at the moment');
+
+		    return this;
 		},
 
 		removeFilter: function( facet_name, facet_value ) {
@@ -394,6 +408,8 @@ define([
 		    }
 
 		    this.updateFilters( curr_filt );
+
+		    return this;
 		},
 
 		getFacets: function() {
@@ -416,6 +432,8 @@ define([
 		        this.updateFilters( filts );
 		        this.trigger( 'change' );
 		    }
+
+		    return this;
 		},
 
 		getURLQueryString: function() {

@@ -13,11 +13,10 @@ define([
     {{#children.length}}
     <ul>
         {{#children}}
-            <li data-resource-count="{{ count }}">
-                {{{ title }}}
-                {{#count}}
-                    ({{ count }})
-                {{/count}}
+            <li data-resource-count="{{ count }}" data-resource-filter="{{ title }}">
+                <span>
+                    {{{ title }}}
+                </span>
                 {{> subject }}
             </li>
         {{/children}}
@@ -29,7 +28,7 @@ define([
         create: (opts) ->
             new Browser(opts)
 
-        start: (globalConfig, widget) ->
+        start: (globalConfig, widget, filterCallback) ->
 
             $subjects = widget.view.$el.find('.lr-subjects')
 
@@ -60,7 +59,8 @@ define([
 
                 $subjects.listview({
                   type: 'Subjects',
-                  listViewTitle: 'Browse by Subject'
+                  listViewTitle: 'Browse by Subject',
+                  filterCallback: filterCallback
                 });
 
             )

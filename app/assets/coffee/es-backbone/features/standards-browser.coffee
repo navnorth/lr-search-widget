@@ -13,8 +13,8 @@ define([
     {{#children.length}}
     <ul>
         {{#children}}
-            <li data-resource-count="{{ count }}">
-                {{ asn_listID }} {{{ title }}}
+            <li data-resource-count="{{ count }}" data-resource-filter="{{ id }}">
+                <span><strong>{{ asn_listID }}</strong> {{{ title }}}</span>
                 {{> standard }}
             </li>
         {{/children}}
@@ -26,7 +26,7 @@ define([
         create: (opts) ->
             new Browser(opts)
 
-        start: (globalConfig, widget) ->
+        start: (globalConfig, widget, filterCallback) ->
 
             $standards = widget.view.$el.find('.lr-standards')
 
@@ -57,7 +57,8 @@ define([
 
                 $standards.listview({
                   type: 'Standards',
-                  listViewTitle: 'Browse Standards'
+                  listViewTitle: 'Browse Standards',
+                  filterCallback: filterCallback
                 });
 
             )
