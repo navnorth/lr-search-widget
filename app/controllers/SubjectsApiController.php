@@ -31,18 +31,18 @@ class SubjectsApiController extends ApiController
         $getLevel = function($line) {
             foreach($line as $level => $text)
             {
-                if(trim($text))
+                if($text)
                 {
-                    return array($level, $text);
+                    return array($level - 1, $text);
                 }
             }
         };
 
-        foreach(glob(base_path('data/subjects/*.csv')) as $file)
-        {
-            $parsed = new Keboola\Csv\CsvFile($file);
+        $subjectData = Excel::load(base_path('data/subjects/all_subjects.xlsx'))->toArray();
 
-            foreach($parsed as $line)
+        foreach($subjectData as $sheetName => $rows)
+        {
+            foreach($rows as $line)
             {
                 list($level, $text) = $getLevel($line);
 

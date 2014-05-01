@@ -27,7 +27,7 @@ class StandardsApiController extends ApiController
 
     protected function _baseStandards()
     {
-        $standards = json_decode(file_get_contents(public_path('/common_standards.json')), true);
+        $standards = json_decode(file_get_contents(base_path('data/standards/all_standards.json')), true);
 
         return $this->_stripStandardsJson($standards['data']);
     }
