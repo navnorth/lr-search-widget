@@ -262,7 +262,6 @@ define([
 			this.set({
 				query: '',
 				page: 1,
-				facets: [],
 				filters: {}
 			}, { silent: true });
 
