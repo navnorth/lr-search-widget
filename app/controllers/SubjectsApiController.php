@@ -23,7 +23,7 @@ class SubjectsApiController extends ApiController
         return ElasticSearch\Client::connection($config);
     }
 
-    protected function _compileSubjects()
+    protected function _compileSubjectsTree()
     {
         $subjectsTree = array();
         $stack = new SplStack;
@@ -79,6 +79,38 @@ class SubjectsApiController extends ApiController
         return $subjectsTree;
     }
 
+    protected function _compileSubjectsList()
+    {
+        $subjectsList = array();
+
+        $getText = function($line) {
+            foreach($line as $level => $text)
+            {
+                if($t = trim($text))
+                {
+                    return $t;
+                }
+            }
+        };
+
+        foreach(glob(base_path('data/subjects/*.csv')) as $file)
+        {
+            $parsed = new Keboola\Csv\CsvFile($file);
+
+            foreach($parsed as $line)
+            {
+                $text = $getText($line);
+
+                if($text)
+                {
+                    $subjectsList[] = $text;
+                }
+            }
+        }
+
+        return $subjectsList;
+    }
+
 
     public function getIndex()
     {
@@ -86,7 +118,7 @@ class SubjectsApiController extends ApiController
 
         if(!($subjects = $cache->get('base')))
         {
-            $subjects = $this->_compileSubjects();
+            $subjects = $this->_compileSubjectsTree();
 
             $cache->put('base', $subjects, self::CACHE_TIME);
         }
@@ -136,25 +168,31 @@ class SubjectsApiController extends ApiController
             $query = $sb->buildQuery('', $this->getUserId(), $widgetSettings[Widget::SETTINGS_FILTERS]);
 
 
+            $allSubjects = $this->_compileSubjectsList();
+
+            $count = new StdClass;
+            $count->count = 0;
+
             // don't need results
             $query['size'] = 0;
-            $query['facets'] = array(
-                'subjects' => array(
-                    'terms' => array(
-                        'field' => 'subjects',
-                        'size' => 32000,
-                        'regex' => '^s[a-z0-9]+$',
+            $query['facets'] = array();
+
+            foreach($allSubjects as $id => $subject)
+            {
+                $query['facets']['key_'.$id] = array(
+                    'filter' => array(
+                        'term' => array('keys' => strtolower($subject)),
                     )
-                )
-            );
+                );
+            }
 
             $results = $this->searchClient()->search($query);
 
             $counts = array();
 
-            foreach($results['facets']['subjects']['terms'] as $term)
+            foreach($allSubjects as $id => $subject)
             {
-                $counts[$term['term']] = $term['count'];
+                $counts[$subject] = $results['facets']['key_'.$id]['count'];
             }
 
             $cache->put($widgetCacheKey, $counts, self::CACHE_TIME);

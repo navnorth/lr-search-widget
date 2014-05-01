@@ -8,7 +8,7 @@
       return Browser;
 
     })();
-    subjectTreeTmpl = Hogan.compile('{{#children.length}} <ul> {{#children}} <li data-resource-count="{{ count }}"> {{{ title }}} {{#count}} ({{ . }}) {{/count}} {{> subject }} </li> {{/children}} </ul> {{/children.length}}');
+    subjectTreeTmpl = Hogan.compile('{{#children.length}} <ul> {{#children}} <li data-resource-count="{{ count }}"> {{{ title }}} {{#count}} ({{ count }}) {{/count}} {{> subject }} </li> {{/children}} </ul> {{/children.length}}');
     SubjectsBrowser = {
       create: function(opts) {
         return new Browser(opts);
@@ -50,7 +50,7 @@
       }
     };
     applyCounts = function(subject, counts) {
-      subject.count = counts[subject.id];
+      subject.count = counts[subject.title];
       if (subject.children) {
         return _.each(subject.children, function(sub) {
           return applyCounts(sub, counts);

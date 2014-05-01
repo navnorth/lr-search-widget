@@ -16,7 +16,7 @@ define([
             <li data-resource-count="{{ count }}">
                 {{{ title }}}
                 {{#count}}
-                    ({{ . }})
+                    ({{ count }})
                 {{/count}}
                 {{> subject }}
             </li>
@@ -68,10 +68,9 @@ define([
 
     applyCounts = (subject, counts) ->
 
-        subject.count = counts[subject.id]
+        subject.count = counts[subject.title]
 
         if(subject.children)
-
             _.each(subject.children, (sub) ->
                 applyCounts(sub, counts)
             )
