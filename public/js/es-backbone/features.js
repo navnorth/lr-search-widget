@@ -23,17 +23,17 @@ define([
 
     // Initial state.
     tabPane.hide();
-    tabContainer.find('a:first').addClass('active');
+    tabContainer.find('a:first').addClass('lr-nav__active');
     startTab.fadeIn();
 
     tabContainer.find('a').on('click', function(e) {
         e.preventDefault();
-        if ($(this).hasClass('active')) {
+        if ($(this).hasClass('lr-nav__active')) {
           return;
         }
         else {
           $.fn.tabs.resetTabs(tabPane, tabContainer);
-          $(this).addClass('active');
+          $(this).addClass('lr-nav__active');
           $($(this).attr('href')).fadeIn();
         }
     });
@@ -43,7 +43,7 @@ define([
 
   $.fn.tabs.resetTabs = function(tabPane, tabContainer) {
     tabPane.hide();
-    tabContainer.find('a').removeClass('active');
+    tabContainer.find('a').removeClass('lr-nav__active');
   };
 
 
@@ -78,7 +78,7 @@ define([
       stylePrefix+' a:hover, div.lr-embed a:focus, div.lr-embed a:active { color: ' + mainColorDark + '; }'+
       stylePrefix+' a.lr-nav__link { background-color: ' + mainColorLightest + '; }'+
       stylePrefix+' a.lr-nav__link:link, div.lr-embed a.lr-nav__link:visited { color: ' + mainColorLight + '; }'+
-      stylePrefix+' a.lr-nav__link:hover, div.lr-embed a.lr-nav__link:focus, div.lr-embed a.lr-nav__link:active, div.lr-embed a.lr-nav__link.active { color: ' + mainColorMedium + '; }'+
+      stylePrefix+' a.lr-nav__link:hover, div.lr-embed a.lr-nav__link:focus, div.lr-embed a.lr-nav__link:active, div.lr-embed a.lr-nav__link.lr-nav__active { color: ' + mainColorMedium + '; }'+
       stylePrefix+' h2.lr-section__title { color: ' + supportColor + ';}' +
       stylePrefix+' a.lr-tags__link { background-color: ' + mainColorLightest + '; }'+
       stylePrefix+' span.listview-list-item__title { color: ' + mainColorMedium + '; }'+
@@ -306,7 +306,7 @@ define([
     $('#lr-logo, #lr-branding-title').click(function() {
       $.fn.tabs.resetTabs($('.lr-tab-pane'), $('#lr-nav'));
       $('#lr-section-search').fadeIn();
-      $('#lr-nav a:first').addClass('active');
+      $('#lr-nav a:first').addClass('lr-nav__active');
     });
 
     // Search filter control: expand and collapse.

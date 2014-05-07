@@ -508,14 +508,14 @@ a.lr-nav__link {
   font-weight: bold;
 }
 /* line 36, ../scss/_style.scss */
-a.lr-nav__link:hover, a.lr-nav__link:focus, a.lr-nav__link:active, a.lr-nav__link.active {
+a.lr-nav__link:hover, a.lr-nav__link:focus, a.lr-nav__link:active, a.lr-nav__link.lr-nav__active {
   padding-bottom: 7px;
   border-bottom-width: 3px;
   border-bottom-style: solid;
 }
 @media (max-width: 520px) {
   /* line 36, ../scss/_style.scss */
-  a.lr-nav__link:hover, a.lr-nav__link:focus, a.lr-nav__link:active, a.lr-nav__link.active {
+  a.lr-nav__link:hover, a.lr-nav__link:focus, a.lr-nav__link:active, a.lr-nav__link.lr-nav__active {
     padding-bottom: 10px;
     border-bottom-width: 0;
   }
