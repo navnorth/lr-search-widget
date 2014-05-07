@@ -757,6 +757,11 @@ h3.lr-result__heading {
   font-weight: bold;
 }
 
+div.lr-result__description em {
+  font-weight: bold;
+  font-style: italic;
+}
+
 /* line 200, ../scss/_style.scss */
 div.lr-result__source {
   color: #999999;

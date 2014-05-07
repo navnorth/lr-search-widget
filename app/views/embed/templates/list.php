@@ -11,7 +11,13 @@
             Source: <a href="http://{{_source.url_domain}}" target="_blank">{{_source.url_domain}}</a>
         </div>
         <div class="lr-result__description">
-            {{{ highlight.description }}}
+            {{#highlight.description}}
+                {{{ highlight.description }}}
+            {{/highlight.description}}
+
+            {{^highlight.description}}
+                {{{ _source.description }}}
+            {{/highlight.description}}
         </div>
         <div class="lr-result__url">
             <a title="Go to {{ _source.url }}" href="{{ _source.url }}">{{ _source.url }}</a>
