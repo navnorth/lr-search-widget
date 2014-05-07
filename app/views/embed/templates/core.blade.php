@@ -60,7 +60,10 @@
                       </div>
                   </div>
               @endif
-              <div class="embed-search-results" id="lr-results-list"><div></div></div>
+              <div class="embed-search-results" id="lr-results-list">
+                <div class="embed-search-loading"></div>
+                <div></div>
+              </div>
             </div>
           </div>
 

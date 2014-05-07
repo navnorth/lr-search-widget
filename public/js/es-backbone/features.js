@@ -1,5 +1,6 @@
 define([
-  'jquery'
+  'jquery',
+  'perfectScrollbar'
 ], function($) {
   'use strict';
 
@@ -198,7 +199,7 @@ define([
         $listItemText.data('breadcrumb-label', $listItemText.text())
                      .addClass('listview-list-item__title')
 
-        if ($li.has('ul')) {
+        if ($li.has('ul').length) {
           $listItemText
             .addClass('has-children')
             .append('<i class="fa fa-caret-right"></i>');
@@ -290,11 +291,11 @@ define([
   $(function() {
 
     // Add scrollbar to search results and filters.
-    $('#lr-results-list, #lr-results-facets').perfectScrollbar({
+    /*$('#lr-results-list, #lr-results-facets').css('overflow', 'hidden').perfectScrollbar({
        wheelSpeed: 20,
        wheelPropagation: true,
        suppressScrollX: true
-    });
+    });*/
 
     // Implement tabs plugin for main nav.
     $('#lr-nav').tabs({

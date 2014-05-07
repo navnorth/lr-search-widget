@@ -11,7 +11,7 @@ define([
 	var ESBBApp = {};
 
 	ESBBApp.ResourceModalView = Backbone.View.extend({
-		className: 'esbb-popup',
+		className: 'lr-popup',
 
 		initialize: function(options) {
 			this.options = options;
@@ -92,6 +92,23 @@ define([
 			this.query = this.options.query;
 			_.bindAll( this, 'render' );
 			this.render();
+
+			this.listenTo(this.query, 'search:start', this.showLoading)
+			this.listenTo(this.query, 'search:end', this.hideLoading)
+		},
+
+		showLoading: function() {
+			var $results = this.$('.embed-search-results');
+			$results.before(
+				$('<div class="embed-search-loading"></div>')
+					.height($results.height())
+					.width($results.width())
+					.html('Loading...<br /><br /><i class="fa fa-spinner fa-spin fa-5x" />')
+			);
+		},
+
+		hideLoading: function() {
+			this.$('.embed-search-loading').remove()
 		},
 
 		configChange: function(configModel) {

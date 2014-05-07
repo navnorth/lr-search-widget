@@ -461,8 +461,19 @@ a.lr-nav__link {
 #lr-results-list {
   /* Rules needed for Perfect Scrollbar plugin. */
   position: relative;
-  overflow: hidden;
+  overflow: auto;
   height: 500px;
+}
+
+.lr-embed .embed-search-loading {
+  position: absolute;
+  background-color: rgba(80, 80, 80, 0.7);
+  text-align: center;
+  padding-top: 100px;
+
+  font-size: 30px;
+  color: white;
+  z-index: 1;
 }
 
 /* Main styling rules */
@@ -951,7 +962,7 @@ h2.lr-results-filter__title--active {
 div.lr-results-filter__facets {
   position: relative;
   height: 400px;
-  overflow: hidden;
+  overflow: auto;
   margin-top: 0.625em;
   padding: 0 1.25em 0 1.25em;
 }
@@ -1141,7 +1152,7 @@ figure.lr-footer__logo img {
   display: none;
 }
 
-.esbb-popup {
+.lr-popup {
   position: relative;
   display: block;
   background-color: #fff;
@@ -1149,32 +1160,32 @@ figure.lr-footer__logo img {
   width: 80%;
   margin: 20px auto;
 }
-.esbb-popup .domain {
+.lr-popup .lr-modal__domain {
   float: right;
   margin-left: 10px;
 }
-.esbb-popup .title {
+.lr-popup .lr-modal__title {
   margin-top: 0;
 }
-.esbb-popup .link {
+.lr-popup .lr-modal__link {
   white-space: nowrap;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
   overflow: hidden;
 }
-.esbb-popup .preview {
+.lr-popup .lr-modal__preview {
   float: left;
 }
-.esbb-popup .preview img {
+.lr-popup .lr-modal__preview img {
   border: 1px solid #bbb;
 }
-.esbb-popup .content {
+.lr-popup .lr-modal__content {
   margin-left: 320px;
 }
-.esbb-popup .keywords {
+.lr-popup .lr-modal__keywords {
   font-size: 90%;
 }
-.esbb-popup .keywords span {
+.lr-popup .lr-modal__keywords span {
   display: inline-block;
   padding: 3px 5px;
   -webkit-border-radius: 5px;
