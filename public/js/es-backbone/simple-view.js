@@ -256,6 +256,7 @@ define([
 	        	filter: this.get('filter_keys'),
 	            q: this.getQueryString(),
 	            facet_filters: this.getFilters(),
+	            named_filters: this.getNamedFilters(),
 	            facets: this.getFacets(),
 	            limit: this.get('limit'),
 	            highlight: this.get('highlight'),

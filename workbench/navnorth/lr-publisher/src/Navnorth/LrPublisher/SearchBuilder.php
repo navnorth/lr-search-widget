@@ -205,22 +205,8 @@ class SearchBuilder
 
         if($facetFilters)
         {
-            if(array_key_exists('filtered', $searchQuery['query']))
-            {
-                // covert to filtered
-                $searchQuery['query'] = array(
-                    'filtered' => array(
-                        'query' => $searchQuery['query'],
-                        'filter' => array(
-                            'bool' => array(
-                                'must' => array(),
-                                'should' => array(),
-                                'must_not' => array(),
-                            )
-                        )
-                    )
-                );
-            }
+            // covert to filtered
+            $searchQuery['query'] = $this->createFilteredQuery($searchQuery['query']);
 
             foreach($facetFilters as $name => $values)
             {
@@ -230,9 +216,34 @@ class SearchBuilder
                     )
                 );
             }
-
-
         }
+
+        // Apply named filters
+
+        $namedFilters = Input::get('named_filters', array());
+
+        foreach((array) $namedFilters as $filterName => $active)
+        {
+            if($active)
+            {
+                $filters = \Config::get('filters.'.$filterName, null);
+
+                if($filters)
+                {
+                    $searchQuery['query'] = $this->createFilteredQuery($searchQuery['query']);
+
+                    foreach($filters as $field => $terms)
+                    {
+                        $searchQuery['query']['filtered']['filter']['bool']['must'][] = array(
+                            'terms' => array(
+                                $field => $terms,
+                            )
+                        );
+                    }
+                }
+            }
+        }
+
 
         // Highlighting
 
@@ -255,5 +266,30 @@ class SearchBuilder
 
 
         return $searchQuery;
+    }
+
+    protected function createFilteredQuery($query)
+    {
+        if(!array_key_exists('filtered', $query))
+        {
+            return array(
+                'filtered' => array(
+                    'query' => $query,
+                    'filter' => array(
+                        'bool' => array(
+                            'must' => array(),
+                            'should' => array(),
+                            'must_not' => array(),
+                        )
+                    )
+                )
+            );
+        }
+        else
+        {
+            // No need to convert to filtered query
+            return $query;
+        }
+
     }
 }

@@ -262,13 +262,30 @@ define([
 			this.set({
 				query: '',
 				page: 1,
-				filters: {}
+				filters: {},
+				named_filters: {}
 			}, { silent: true });
 
 			return this;
+		},
+
+		setNamedFilter: function(name, value) {
+			var f = this.getNamedFilters();
+
+			if(value) {
+				f[name] = value;
+			} else {
+				delete f[name];
+			}
+
+			this.set('named_filters', f, {silent: true});
+
+			return this;
+		},
+
+		getNamedFilters: function() {
+			return this.get('named_filters') || {};
 		}
-
-
 	});
 
 	ESBB.SearchResultsModel = Backbone.Model.extend({
@@ -1187,18 +1204,19 @@ define([
               <label class="lr-form-item__label" for="lr-search-term">Enter a Keyword</label>\
               <input type="search" id="lr-search-term" class="lr-search-form__term lr-form__input--textfield" placeholder="Search for a learning topic" />\
             </div>\
-            <div class="lr-form-item lr-form__checkbox">\
+            <!-- <div class="lr-form-item lr-form__checkbox">\
               <label class="lr-form-item__label" for="lr-search-federal">Search federal resources only</label>\
               <input type="checkbox" id="lr-search-federal" class="lr-form__input--checkbox" />\
               <div class="lr-form-item__description">Federal Resources Only</div>\
-            </div>\
+            </div> -->\
             <button id="lr-search-button" class="lr-search-form__submit" type="button" title="Search"><span>Search</span><i class="fa fa-search"></i></button>\
             <button id="lr-clear-keyword" class="lr-search-form__clear" type="button" title="Clear search field"><span>Clear</span><i class="fa fa-times"></i></button>\
 		',
 
 		events : {
 			'click .lr-search-form__submit' : 'search',
-			'keypress .lr-search-form__term' : 'checkKey'
+			'keypress .lr-search-form__term' : 'checkKey',
+			'change #lr-search-federal': 'filterFederal',
 		},
 
 		initialize: function(options) {
@@ -1255,9 +1273,18 @@ define([
 		},
 
 		setQuery: function() {
-			var query = this.$el.find( '.lr-search-form__term' ).val();
+			var query = this.$( '.lr-search-form__term' ).val();
 			this.model.setQueryString( query );
+
 			this.model.trigger( 'change' );
+		},
+
+		filterFederal: function() {
+			var filter = this.$('#lr-search-federal').prop('checked');
+
+			this.model.setNamedFilter('federal', filter);
+			this.model.trigger('change');
+			this.model.search();
 		}
 
 	});
