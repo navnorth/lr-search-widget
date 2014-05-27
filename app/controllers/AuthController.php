@@ -37,7 +37,7 @@ class AuthController extends BaseController {
 	{
 		if(($user = Auth::user()) && !$user->api_key)
 		{
-			$user->api_key = hash('sha256', $user->email.str_random(25).uniqid(10, true));
+			$user->generateNewApiKey();
 
 			$user->save();
 		}

@@ -82,4 +82,20 @@ class ApiUser extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->hasMany('Widget');
 	}
 
+
+	public function generateNewApiKey()
+	{
+		return $this->api_key = hash('sha256', $this->email.str_random(25).uniqid(10, true));
+	}
+
+	public function save(array $options = array())
+	{
+		// create an API key if one does not exist
+		if(!$this->api_key)
+		{
+			$this->generateNewApiKey();
+		}
+
+		parent::save($options);
+	}
 }
