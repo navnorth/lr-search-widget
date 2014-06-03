@@ -2,6 +2,9 @@
 
 return array(
 
+	'production' => true,
+
+
 	/*
 	|--------------------------------------------------------------------------
 	| Application Debug Mode
@@ -114,6 +117,8 @@ return array(
 		'Navnorth\LrPublisher\LrPublisherServiceProvider',
 		'Roumen\Asset\AssetServiceProvider',
 		'Intervention\Image\ImageServiceProvider',
+
+		'Maatwebsite\Excel\ExcelServiceProvider',
 	),
 
 	/*
@@ -184,6 +189,8 @@ return array(
 		'Profiler' 		  => 'Profiler\Facades\Profiler',
 		'Asset' 		  => 'Roumen\Asset\Asset',
 		'Image'			  => 'Intervention\Image\Facades\Image',
+
+		'Excel' => 'Maatwebsite\Excel\Facades\Excel',
 
 	),
 

@@ -11,7 +11,7 @@ define([
 	var ESBBApp = {};
 
 	ESBBApp.ResourceModalView = Backbone.View.extend({
-		className: 'esbb-popup',
+		className: 'lr-popup',
 
 		initialize: function(options) {
 			this.options = options;
@@ -39,6 +39,29 @@ define([
 
 			return this;
 		}
+	});
+
+	ESBBApp.HeadingView = Backbone.View.extend({
+		template: '\
+		{{#logo}}\
+			<img id="lr-logo" class="lr-branding__logo" src="{{ logo }}" style="height: 3em">\
+		{{/logo}}\
+        <h1 id="lr-branding-title" class="lr-branding__title">{{heading}}</h1>\
+        ',
+
+        initialize: function (opts) {
+        	this.globalConfig = opts.globalConfig;
+        	this.widgetConfig = opts.widgetConfig;
+
+        	this.listenTo(this.widgetConfig, 'change:heading change:logo', this.render);
+        },
+
+        render: function() {
+        	this.$el.html(Mustache.render(this.template, this.widgetConfig.toJSON()));
+
+        	return this;
+        }
+
 	});
 
 	ESBBApp.SimpleAppView = Backbone.View.extend({
@@ -69,6 +92,23 @@ define([
 			this.query = this.options.query;
 			_.bindAll( this, 'render' );
 			this.render();
+
+			this.listenTo(this.query, 'search:start', this.showLoading)
+			this.listenTo(this.query, 'search:end', this.hideLoading)
+		},
+
+		showLoading: function() {
+			var $results = this.$('.embed-search-results');
+			$results.before(
+				$('<div class="embed-search-loading"></div>')
+					.height($results.height())
+					.width($results.width())
+					.html('Loading...<br /><br /><i class="fa fa-spinner fa-spin fa-5x" />')
+			);
+		},
+
+		hideLoading: function() {
+			this.$('.embed-search-loading').remove()
 		},
 
 		configChange: function(configModel) {
@@ -103,6 +143,13 @@ define([
 
 			var $facet;
 
+			new ESBBApp.HeadingView({
+				model: this.query,
+				globalConfig: this.globalConfig,
+				widgetConfig: this.widgetConfig,
+				el: this.$('.embed-heading')
+			}).render();
+
 			new ESBB.SearchBarView( {
 				model: this.query,
 				el: this.$('.embed-search-bar'),
@@ -112,6 +159,7 @@ define([
 
 			new ESBB.SearchResultsView( {
 				model: this.model,
+				queryModel: this.query,
 				template: this.templates.list,
 				globalData: this.globalConfig,
 				widgetConfig: this.widgetConfig,
@@ -209,6 +257,7 @@ define([
 	        	filter: this.get('filter_keys'),
 	            q: this.getQueryString(),
 	            facet_filters: this.getFilters(),
+	            named_filters: this.getNamedFilters(),
 	            facets: this.getFacets(),
 	            limit: this.get('limit'),
 	            highlight: this.get('highlight'),
@@ -250,18 +299,22 @@ define([
 
 		resetPage: function() {
 			this.set('page', 1);
+			return this;
 		},
 
 		nextPage: function() {
-			this.set('page', this.get('page') + 1)
+			this.set('page', this.get('page') + 1);
+			return this;
 		},
 
 		prevPage: function() {
-			this.set('page', this.get('page') - 1)
+			this.set('page', this.get('page') - 1);
+			return this;
 		},
 
 		setQueryString: function(str) {
-		    this.set('query', str)
+		    this.set('query', str);
+		    return this;
 		},
 
 		getQueryString: function() {
@@ -270,10 +323,12 @@ define([
 
 		setSort: function( sort ) {
 		    this.set('sort', sort);
+
+		    return this;
 		},
 
 		getSort: function() {
-		    this.get('sort');
+		    return this.get('sort');
 		},
 
 		setDateHistInterval: function( facet_name, interval ) {
@@ -283,6 +338,8 @@ define([
 		updateFilters: function( new_filters ) {
 		    this.set('filters', new_filters);
 		    this.trigger('change:filters');
+
+		    return this;
 		},
 
 		getFiltersForChanging: function() {
@@ -325,6 +382,8 @@ define([
 			    curr_filt[val.field].push(val.term)
 		    } );
 		    this.updateFilters( curr_filt );
+
+		    return this;
 		},
 
 		addTermFilter: function( field, term ) {
@@ -340,11 +399,15 @@ define([
 		    curr_filt[field] = _.unique(curr_filt[field]);
 
 		    this.updateFilters( curr_filt );
+
+		    return this;
 		},
 
 		addRangeFilter: function( field, from, to ) {
 
 		    console.log('not supporting range filter at the moment');
+
+		    return this;
 		},
 
 		removeFilter: function( facet_name, facet_value ) {
@@ -364,6 +427,8 @@ define([
 		    }
 
 		    this.updateFilters( curr_filt );
+
+		    return this;
 		},
 
 		getFacets: function() {
@@ -386,6 +451,8 @@ define([
 		        this.updateFilters( filts );
 		        this.trigger( 'change' );
 		    }
+
+		    return this;
 		},
 
 		getURLQueryString: function() {

@@ -58,7 +58,7 @@ class WebcapController extends BaseController
 			$headers = array(
 				'content-type' => 'image/jpeg',
 				'expires' => gmdate ("D, d M Y H:i:s", time() + 7200),
-                'header' => 'cache-control: must-revalidate',
+                'header' => 'cache-control: max-age=7200, must-revalidate',
 			);
 
 			return Response::make(file_get_contents($file), 200, $headers);
@@ -106,8 +106,9 @@ class WebcapController extends BaseController
 			$lines = array();
 			$val = 0;
 
-			//dd(implode(' ', $params));
 			$output = exec(implode(' ', $params), $lines, $val);
+			/*var_dump(implode(' ', $params));
+			dd(array($lines, $val));*/
 		}
 
 		return $file;

@@ -14,6 +14,8 @@
 Route::controller('auth', 'AuthController');
 Route::controller('api/search', 'SearchApiController');
 Route::controller('api/embed', 'EmbedApiController');
+Route::controller('api/standards', 'StandardsApiController');
+Route::controller('api/subjects', 'SubjectsApiController');
 Route::controller('api', 'ApiController');
 Route::controller('embed', 'EmbedController');
 

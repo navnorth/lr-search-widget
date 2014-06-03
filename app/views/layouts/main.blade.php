@@ -52,7 +52,31 @@
 
     </div>
     <div id="footer">
-        Developed by <a href="http://www.navigationnorth.com" target="_blank">Navigation North</a>
+        This Open Source project is developed and maintained by <a href="http://www.navigationnorth.com" target="_blank">Navigation North</a>
+        <br />
+        <small>Source available @ <a href="https://github.com/navnorth/lr-search-widget" target="_blank">GitHub</a></small>
     </div>
+
+    @if(!Config::get('app.production', true))
+        <div class="container">
+            <fieldset>
+                <legend>Dev Login</legend>
+
+                <form method="post" action="/auth/dev-login">
+                    <label for="dev-login-apikey">
+                        API Key:
+                    </label>
+
+                    <input type="text" name="api_key" id="dev-login-apikey">
+
+                    <button type="submit" class="btn btn-primmary">Login</button>
+                </form>
+            </fieldset>
+
+
+        </div>
+    @endif
+
+
 </body>
 </html>

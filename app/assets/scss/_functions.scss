@@ -1,0 +1,54 @@
+// Functions Partials
+
+/* Rem calculation functions: borrowed from Zurb's Foundation 5. */
+
+// The default html and body font-size for the base rem value.
+$rem-base: $base-font-size !default;
+
+// STRIP UNIT
+// It strips the unit of measure and returns it
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
+}
+
+// CONVERT TO REM
+@function convert-to-rem($value, $base-value: $rem-base)  {
+  $value: strip-unit($value) / strip-unit($base-value) * 1rem;
+  @if ($value == 0rem) { $value: 0; } // Turn 0rem into 0
+  @return $value;
+}
+
+// REM CALC
+@function rem-calc($values, $base-value: $rem-base) {
+  $max: length($values);
+
+  @if $max == 1 { @return convert-to-rem(nth($values, 1), $base-value); }
+
+  $remValues: ();
+  @for $i from 1 through $max {
+    $remValues: append($remValues, convert-to-rem(nth($values, $i), $base-value));
+  }
+  @return $remValues;
+}
+
+// To work around a bug in compass-core 1.0.0-alpha.17, we override Compass'
+// support-legacy-browser() function with a version of our own.
+// @TODO Remove this monkey patch after it's fixed in Compass.
+// @see https://github.com/chriseppstein/compass/pull/1524
+// @see also https://github.com/chriseppstein/compass/pull/1520
+@function support-legacy-browser($browser, $min-version, $max-version: null, $threshold: $critical-usage-threshold) {
+  @if not index($supported-browsers, $browser) {
+    @return false;
+  }
+  // Check against declared minimums.
+  $min-required-version: map-get($browser-minimum-versions, $browser);
+  @if $min-required-version {
+    @return compare-browser-versions($browser, $max-version or $min-version, $min-required-version) >= 0;
+  } @else {
+    // Check against usage stats.
+    $usage: if($max-version,
+               omitted-usage($browser, $min-version, $max-version),
+               omitted-usage($browser, $min-version));
+    @return $usage > $threshold;
+  }
+}

@@ -15,6 +15,6 @@ echo "Installing package requirements..."
 php artisan config:publish loic-sharma/profiler
 
 echo "Installing Database"
-php artisan migration
+php artisan migrate
 
 echo "Installation complete"

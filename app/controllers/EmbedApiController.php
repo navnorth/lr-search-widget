@@ -30,6 +30,7 @@ class EmbedApiController extends ApiController
             $widget = new Widget();
 
             $widget->name = 'Default';
+            $widget->widget_key = 'demo';
         }
 
         $viewArgs = array(

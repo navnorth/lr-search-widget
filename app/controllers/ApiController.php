@@ -111,4 +111,13 @@ class ApiController extends BaseController {
 
         return Response::error('404');
     }
+
+    /* Helper Functions */
+    protected function _applyCacheControl($r, $expires = 86400 /* 1 day */)
+    {
+        $r->header('expires',  gmdate ("D, d M Y H:i:s", time() + $expires));
+        $r->header('cache-control', 'max-age='.$expires.', must-revalidate');
+
+        return $r;
+    }
 }

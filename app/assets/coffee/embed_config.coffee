@@ -21,16 +21,18 @@
 
     }
 
+    WidgetConfig = window.LRWidget || {
+        api_key: '',
+        domain: '',
+        production: true,
+    };
+
     require.config({
         baseUrl: '//cdnjs.cloudflare.com/ajax/libs/',
         shim: {
 
             jquery:
                 exports: '$'
-                init: () ->
-                    local = this.jQuery.noConflict(true)
-
-                    return local
 
             underscore:
                 exports: '_'
@@ -41,13 +43,15 @@
 
             backbone:
                 exports: 'Backbone'
-                deps: ['underscore', 'jquery']
                 init: () ->
                     local = this.Backbone.noConflict()
                     # console.log('loading backbone', this, local)
                     return local
 
             'jquery.primer':
+                deps: ['jquery']
+
+            'magnific':
                 deps: ['jquery']
 
             'jquery.flot':
@@ -78,34 +82,40 @@
             jqueryMigrate: 'jquery-migrate/1.2.1/jquery-migrate.min'
             #jqueryUi: 'jqueryui/1.10.3/jquery-ui.min'
             mustache: 'mustache.js/0.7.2/mustache.min'
-            underscore: 'underscore.js/1.5.2/underscore-min'
-            backbone: 'backbone.js/1.1.0/backbone-min'
+            hogan: 'hogan.js/3.0.0/hogan.min.amd'
+            underscore: 'underscore.js/1.6.0/underscore-min'
+            backbone: 'backbone.js/1.1.1/backbone-min'
             excanvas: 'flot/0.8.2/excanvas.min',
             'jquery.flot': 'flot/0.8.2/jquery.flot.min',
             'jquery.flot.pie': 'flot/0.8.2/jquery.flot.pie.min',
             'jquery.flot.selection': 'flot/0.8.2/jquery.flot.selection.min',
+            'jquery.flot.all': window.LRWidget.domain+'/js/jquery.flot-all',
             select2: 'select2/3.4.5/select2.min',
 
             esbb: window.LRWidget.domain+'/js/es-backbone'
-            magnific: 'magnific-popup.js/0.9.9/jquery.magnific-popup.min'
+            #magnific: 'magnific-popup.js/0.9.9/jquery.magnific-popup.min'
+            magnific: window.LRWidget.domain+'/js/jquery.magnific-popup.min'
+            perfectScrollbar: window.LRWidget.domain+'/vendor/perfect-scrollbar/min/perfect-scrollbar-0.4.8.min'
+            'jq-noconflict': window.LRWidget.domain+'/js/jq-noconflict'
 
         },
         map: {
-            '*': {
-
-            },
-            'jquery-private': { 'jquery': 'jquery' }
+            '*':
+                'jquery': 'jq-noconflict'
+            'jq-noconflict':
+                'jquery': 'jquery'
         }
-        #urlArgs: "bust="+new Date().getTime()
+        urlArgs: if WidgetConfig.production then null else "bust="+new Date().getTime()
     })
 
-    require(['jquery', 'underscore', 'backbone', 'esbb/es-backbone', 'esbb/simple-view'], ($, _, Backbone, ESBB, ESBBApp)->
-
-
-        WidgetConfig = window.LRWidget || {
-            api_key: '',
-            domain: '',
-        };
+    require([
+        'jquery',
+        'underscore',
+        'backbone',
+        'esbb/es-backbone',
+        'esbb/simple-view',
+    ],
+    ($, _, Backbone, ESBB, ESBBApp) ->
 
         defers = []
 
@@ -162,7 +172,6 @@
                     model: resultsModel,
                     query: queryModel,
                     el: $(this),
-                    id_prefix: 'esbb-simple',
                     globalConfig: WidgetConfig,
                     widgetConfig: widgetConfigModel,
                     templates: t.templates
@@ -170,10 +179,11 @@
 
 
                 LRSearchWidgets.widgets[widgetKey] = {
-                    queryModel: queryModel,
-                    resultsModel: resultsModel,
+                    queryModel: queryModel
+                    resultsModel: resultsModel
                     view: esbbSimpleApp
                     configModel: widgetConfigModel
+                    widgetKey: widgetKey
                 }
 
                 defer.resolve()
@@ -184,6 +194,52 @@
 
         $.when.apply($, defers).then(->
             LRSearchWidgets.start()
+
+            require([
+                'esbb/features',
+                'esbb/features/standards-browser',
+                'esbb/features/subjects-browser'
+            ], (Features, StandardsBrowser, SubjectsBrowser) ->
+
+                _.each(LRSearchWidgets.widgets, (widget, widgetKey) ->
+
+                    # watch for style changes to trigger style updates
+                    widget.configModel.on('change:font change:main_color change:support_color change:bg_color change:heading_color', ->
+                        Features.createWidgetStyles(
+                            widgetKey,
+                            widget.configModel.toJSON()
+                        )
+                    );
+
+                    # trigger to create initial styles
+                    widget.configModel.trigger('change:font')
+
+                    StandardsBrowser.start(WidgetConfig, widget, (filterValue) ->
+                        widget.view.$el.find('a.lr-nav-link__search').trigger('click')
+
+                        widget.queryModel
+                            .clearSearch()
+                            .addTermFilter('standards', filterValue.toLowerCase())
+                            .search()
+
+                        widget.queryModel.trigger('change')
+                    )
+
+                    SubjectsBrowser.start(WidgetConfig, widget, (filterValue) ->
+                        widget.view.$el.find('a.lr-nav-link__search').trigger('click')
+
+                        widget.queryModel
+                            .clearSearch()
+                            .addTermFilter('keys', filterValue.toLowerCase())
+                            .search()
+
+                        widget.queryModel.trigger('change')
+                    )
+                )
+
+
+                return;
+            );
         )
 
     )

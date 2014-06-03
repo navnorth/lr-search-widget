@@ -1,0 +1,61 @@
+/* Variables */
+
+// Colors
+$gray-light:      #f0f0f0;
+$gray-medium:     #cccccc;
+$gray-dark:       #999999;
+
+// NOTE: that $orange and $blue colors are applied in styles.js.
+$orange:          #dd9a27;
+
+$blue-lightest:   #d5e5ed;
+$blue-light:      #96bfd1;
+$blue-medium:     #2e7fa4;
+$blue-dark:       darken($blue-medium, 20%);
+
+$black:           #3d3d3d;
+$white:           #ffffff;
+
+// Pie chart colors
+$pie-blue:        #68d0ec;
+$pie-purple:      #c39ade;
+$pie-green:       #39d52d;
+$pie-yellow:      #f0efa0;
+$pie-red:         #fd4f00;
+$pie-brown:       #99694b;
+
+$main-font-color: $black;
+
+// The base font size.
+$base-font-size: 16px;
+
+// The base line height determines the basic unit of vertical rhythm.
+$base-line-height: 24px;
+
+// The length unit in which to output vertical rhythm values.
+// Supported values: px, em, rem.
+$rhythm-unit: 'em';
+
+// Set this to true to force CSS output to exactly match normalize.css.
+$strict-normalize: true;
+
+// Fonts.
+$helvetica: Helvetica, Arial, "Nimbus Sans L", sans-serif;
+$base-font-family: $helvetica;
+
+// The font sizes for h1-h6.
+$h1-font-size: 2 * $base-font-size;
+$h2-font-size: 1.25  * $base-font-size;
+$h3-font-size: 1.17 * $base-font-size;
+$h4-font-size: 1    * $base-font-size;
+$h5-font-size: 0.83 * $base-font-size;
+$h6-font-size: 0.67 * $base-font-size;
+
+// The amount lists and blockquotes are indented.
+$indent-amount: 40px;
+
+// After the default variables are set, import the required Compass partials.
+@import "compass/support";
+@import "compass/css3";
+@import "compass/utilities";
+@import "compass/typography/vertical_rhythm";
