@@ -16,5 +16,8 @@ This code is an interface into the LR Search Index.  It provides API access to e
 3. Run `./setup.sh`
 4. Follow installation instructions
 
+## Pretty URL Configuration
+This project includes a `.htaccess` in `public/` that should work immediately when using Apache.  If the provided `.htaccess` file does not work or you are not using Apache, please refer to the laravel 4 documentation on pretty URL configuration: http://laravel.com/docs/installation#pretty-urls
+
 ## API Documentation
 Further documentation and examples for available API endpoints is available at /help
