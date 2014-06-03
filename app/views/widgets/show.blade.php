@@ -44,16 +44,22 @@
         <!-- <dt>Enable Flagging</dt>
         <dd>{{ $widgetSettings[W::SETTINGS_ENABLE_FLAGGING] ? 'True' : 'False' }}</dd> -->
 
-        <dt>Widget Heading</dt>
+        <dt>Heading</dt>
         <dd>{{ $widgetSettings[W::SETTINGS_WIDGET_HEADING] }}</dd>
 
-        <dt>Widget Main Color</dt>
+        <dt>Heading Color</dt>
+        <dd>{{ $widgetSettings[W::SETTINGS_WIDGET_HEADING_COLOR] }}</dd>
+
+        <dt>Navigation Color</dt>
         <dd>{{ $widgetSettings[W::SETTINGS_WIDGET_MAIN_COLOR] }}</dd>
 
-        <dt>Widget Support Color</dt>
-        <dd>{{ $widgetSettings[W::SETTINGS_WIDGET_SUPPORT_COLOR] }}</dd>
+        <!-- <dt>Support Color</dt>
+        <dd>{{ $widgetSettings[W::SETTINGS_WIDGET_SUPPORT_COLOR] }}</dd> -->
 
-        <dt>Widget Font</dt>
+        <dt>Background Color</dt>
+        <dd>{{ $widgetSettings[W::SETTINGS_WIDGET_BG_COLOR] }}</dd>
+
+        <dt>Font</dt>
         <dd>{{ $widgetSettings[W::SETTINGS_WIDGET_FONT] }}</dd>
 
     </dl>

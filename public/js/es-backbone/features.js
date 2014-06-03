@@ -56,12 +56,13 @@ define([
     return "#"+(0x1000000+(Math.round((t-R)*p)+R)*0x10000+(Math.round((t-G)*p)+G)*0x100+(Math.round((t-B)*p)+B)).toString(16).slice(1);
   }
 
-  Features.createWidgetStyles = function(widgetKey, fontFamily, mainColorMedium, supportColor, bgColor) {
+  Features.createWidgetStyles = function(widgetKey, settings) {
     // Set up style variables.
-    fontFamily = fontFamily || 'Helvetica, Arial, "Nimbus Sans L", sans-serif'; // Picked by user.
-    mainColorMedium = mainColorMedium || '#2e7fa4'; // Picked by user.
-    supportColor = supportColor || '#dd9a27'; // Picked by user.
-    bgColor = bgColor || '#ffffff'
+    var fontFamily = settings.font || 'Helvetica, Arial, "Nimbus Sans L", sans-serif';
+    var mainColorMedium = settings.main_color || '#2e7fa4';
+    var supportColor = settings.support_color || '#dd9a27';
+    var bgColor = settings.bg_color || '#ffffff';
+    var headingColor = settings.heading_color || '#2e7fa4';
 
     var mainColorDark = shadeColor(mainColorMedium, -0.4);
     var mainColorLight = shadeColor(mainColorDark, 0.5);
@@ -87,8 +88,8 @@ define([
       stylePrefix+' a.lr-listview__breadcrumbs__link { color: ' + supportColor + ';}'+
       stylePrefix+' a.lr-listview__breadcrumbs__link:last-child:hover { color: ' + supportColor + ';}'+
       stylePrefix+' figcaption.lr-piechart__selection { color: ' + mainColorMedium + ';}'+
-      stylePrefix+' footer.lr-footer { background-color: ' + mainColorMedium + ';'+
-      '}' +
+      stylePrefix+' footer.lr-footer { background-color: ' + mainColorMedium + ';}'+
+      stylePrefix+' h1.lr-branding__title { color: ' + headingColor + ';}'+
       '</style>';
 
     $('head').append(colorStyles);

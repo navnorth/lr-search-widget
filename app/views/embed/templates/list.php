@@ -25,3 +25,7 @@
     </li>
     {{/hits}}
 </ul>
+
+{{#hasNext}}
+    <div class="lr-results__next"><a href="#">Show More Results &raquo;</a></div>
+{{/hasNext}}

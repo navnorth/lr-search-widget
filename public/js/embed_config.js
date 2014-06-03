@@ -176,8 +176,8 @@
         LRSearchWidgets.start();
         return require(['esbb/features', 'esbb/features/standards-browser', 'esbb/features/subjects-browser'], function(Features, StandardsBrowser, SubjectsBrowser) {
           _.each(LRSearchWidgets.widgets, function(widget, widgetKey) {
-            widget.configModel.on('change:font change:main_color change:support_color change:bg_color', function() {
-              return Features.createWidgetStyles(widgetKey, widget.configModel.get('font'), widget.configModel.get('main_color'), widget.configModel.get('support_color'), widget.configModel.get('bg_color'));
+            widget.configModel.on('change:font change:main_color change:support_color change:bg_color change:heading_color', function() {
+              return Features.createWidgetStyles(widgetKey, widget.configModel.toJSON());
             });
             widget.configModel.trigger('change:font');
             StandardsBrowser.start(WidgetConfig, widget, function(filterValue) {

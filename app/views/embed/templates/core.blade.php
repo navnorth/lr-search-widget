@@ -38,10 +38,10 @@
 
       <div id="lr-content" role="main">
           <div id="lr-section-search" class="lr-section lr-tab-pane">
-              <h2 class="lr-section__title">Find Cool Stuff</h2>
+              <!-- <h2 class="lr-section__title">Find Cool Stuff</h2>
               <p class="lr-section__intro">
                 The world's learning resources at your fingertips.
-              </p>
+              </p> -->
             <div class="lr-search-form lr-form embed-search-bar" role="search"></div>
             <div class="lr-results">
               <div class="lr-pager embed-search-pagination"></div>

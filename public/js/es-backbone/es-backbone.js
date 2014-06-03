@@ -340,7 +340,8 @@ define([
 			',
 
 		events: {
-			'click a': 'clickLink'
+			'click .lr-result a': 'clickLink',
+			'click .lr-results__next a': 'nextPage'
 		},
 
 		initialize: function(options) {
@@ -382,6 +383,12 @@ define([
 
 		},
 
+		nextPage: function(e) {
+			e.preventDefault();
+			this.queryModel.nextPage()
+			this.queryModel.search();
+		},
+
 		render: function( note ) {
 			var t = this,
 				results = this.model.toJSON();
@@ -397,10 +404,13 @@ define([
 					}
 				}
 				var data = this.default_data;
+				var start = ((this.queryModel.get('page') - 1) * this.queryModel.get('limit')) + 1;
 				data.header = this.header;
 				data.hits = results.hits.hits;
 				data.total = results.hits.total;
-				data.global = this.globalData
+				data.global = this.globalData;
+
+				data.hasNext = (start + data.hits.length) < data.total;
 
 
 				this.$el.append( Mustache.render( this.template, data ) );

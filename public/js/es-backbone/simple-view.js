@@ -159,6 +159,7 @@ define([
 
 			new ESBB.SearchResultsView( {
 				model: this.model,
+				queryModel: this.query,
 				template: this.templates.list,
 				globalData: this.globalConfig,
 				widgetConfig: this.widgetConfig,

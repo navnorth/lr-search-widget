@@ -19,6 +19,7 @@ class Widget extends Eloquent {
     const SETTINGS_SHOW_RESOURCE_MODAL = 'show_resource_modal';
     const SETTINGS_ENABLE_FLAGGING = 'enable_flagging';
     const SETTINGS_WIDGET_HEADING = 'heading';
+    const SETTINGS_WIDGET_HEADING_COLOR = 'heading_color';
     const SETTINGS_WIDGET_LOGO = 'logo';
     const SETTINGS_WIDGET_FONT = 'font';
     const SETTINGS_WIDGET_MAIN_COLOR = 'main_color';
@@ -36,6 +37,7 @@ class Widget extends Eloquent {
         self::SETTINGS_WIDGET_MAIN_COLOR => '#2e7fa4',
         self::SETTINGS_WIDGET_SUPPORT_COLOR => '#dd9a27',
         self::SETTINGS_WIDGET_BG_COLOR => '#ffffff',
+        self::SETTINGS_WIDGET_HEADING_COLOR => '#2e7fa4',
 
     );
 

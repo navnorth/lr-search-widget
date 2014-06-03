@@ -49,7 +49,7 @@
 
     $searchFilters = Auth::user()->searchFilters;
 
-    echo Former::select(W::SETTINGS_FILTERS.'[]', 'Search Filters')
+    echo Former::select(W::SETTINGS_FILTERS.'[]', 'Search Filters<br />(Click a Filter to Apply)')
         ->fromQuery($searchFilters, 'name', 'filter_key')
         ->multiple()
         ->size($searchFilters->count())
@@ -58,6 +58,9 @@
 
     echo Former::text(W::SETTINGS_WIDGET_HEADING, 'Widget Heading / Title')
         ->value($settings[W::SETTINGS_WIDGET_HEADING]);
+
+    echo Former::color(W::SETTINGS_WIDGET_HEADING_COLOR, 'Widget Heading Color')
+        ->value($settings[W::SETTINGS_WIDGET_HEADING_COLOR]);
 
     echo Former::url(W::SETTINGS_WIDGET_LOGO, 'Widget Logo')
         ->value($settings[W::SETTINGS_WIDGET_LOGO])
@@ -69,11 +72,11 @@
         //'Enable Flagging' => array('name' => W::SETTINGS_ENABLE_FLAGGING, 'value' => true),
     ));
 
-    echo Former::color(W::SETTINGS_WIDGET_MAIN_COLOR, 'Widget Main Color')
+    echo Former::color(W::SETTINGS_WIDGET_MAIN_COLOR, 'Widget Navigation and Text Color')
         ->value($settings[W::SETTINGS_WIDGET_MAIN_COLOR]);
 
-    echo Former::color(W::SETTINGS_WIDGET_SUPPORT_COLOR, 'Widget Support Color')
-        ->value($settings[W::SETTINGS_WIDGET_SUPPORT_COLOR]);
+    /*echo Former::color(W::SETTINGS_WIDGET_SUPPORT_COLOR, 'Widget Sub-Navigation Color')
+        ->value($settings[W::SETTINGS_WIDGET_SUPPORT_COLOR]);*/
 
     echo Former::color(W::SETTINGS_WIDGET_BG_COLOR, 'Widget Background Color')
         ->value($settings[W::SETTINGS_WIDGET_BG_COLOR]);
