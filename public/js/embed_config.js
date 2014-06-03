@@ -38,12 +38,7 @@
       baseUrl: '//cdnjs.cloudflare.com/ajax/libs/',
       shim: {
         jquery: {
-          exports: '$',
-          init: function() {
-            var local;
-            local = this.jQuery.noConflict(true);
-            return local;
-          }
+          exports: '$'
         },
         underscore: {
           exports: '_',
@@ -55,7 +50,6 @@
         },
         backbone: {
           exports: 'Backbone',
-          deps: ['underscore', 'jquery'],
           init: function() {
             var local;
             local = this.Backbone.noConflict();
@@ -63,6 +57,9 @@
           }
         },
         'jquery.primer': {
+          deps: ['jquery']
+        },
+        'magnific': {
           deps: ['jquery']
         },
         'jquery.flot': {
@@ -91,20 +88,24 @@
         jqueryMigrate: 'jquery-migrate/1.2.1/jquery-migrate.min',
         mustache: 'mustache.js/0.7.2/mustache.min',
         hogan: 'hogan.js/3.0.0/hogan.min.amd',
-        underscore: 'underscore.js/1.5.2/underscore-min',
-        backbone: 'backbone.js/1.1.0/backbone-min',
+        underscore: 'underscore.js/1.6.0/underscore-min',
+        backbone: 'backbone.js/1.1.1/backbone-min',
         excanvas: 'flot/0.8.2/excanvas.min',
         'jquery.flot': 'flot/0.8.2/jquery.flot.min',
         'jquery.flot.pie': 'flot/0.8.2/jquery.flot.pie.min',
         'jquery.flot.selection': 'flot/0.8.2/jquery.flot.selection.min',
+        'jquery.flot.all': window.LRWidget.domain + '/js/jquery.flot-all',
         select2: 'select2/3.4.5/select2.min',
         esbb: window.LRWidget.domain + '/js/es-backbone',
-        magnific: 'magnific-popup.js/0.9.9/jquery.magnific-popup.min',
-        perfectScrollbar: window.LRWidget.domain + '/vendor/perfect-scrollbar/min/perfect-scrollbar-0.4.8.with-mousewheel.min'
+        magnific: window.LRWidget.domain + '/js/jquery.magnific-popup.min',
+        perfectScrollbar: window.LRWidget.domain + '/vendor/perfect-scrollbar/min/perfect-scrollbar-0.4.8.min',
+        'jq-noconflict': window.LRWidget.domain + '/js/jq-noconflict'
       },
       map: {
-        '*': {},
-        'jquery-private': {
+        '*': {
+          'jquery': 'jq-noconflict'
+        },
+        'jq-noconflict': {
           'jquery': 'jquery'
         }
       },

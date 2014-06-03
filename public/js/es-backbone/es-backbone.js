@@ -5,9 +5,9 @@ define([
 	'underscore',
 	'backbone',
 	'excanvas',
-	'jquery.flot',
-	'jquery.flot.pie',
-	'jquery.flot.selection',
+	'jquery.flot.all',
+	//'jquery.flot.pie',
+	//'jquery.flot.selection',
 	'magnific',
 ], function($, Mustache, _, Backbone) {
 	var ESBB = {};
