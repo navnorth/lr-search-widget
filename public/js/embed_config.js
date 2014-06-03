@@ -110,7 +110,7 @@
       },
       urlArgs: WidgetConfig.production ? null : "bust=" + new Date().getTime()
     });
-    return require(['jquery', 'underscore', 'backbone', 'esbb/es-backbone', 'esbb/simple-view', 'perfectScrollbar'], function($, _, Backbone, ESBB, ESBBApp) {
+    return require(['jquery', 'underscore', 'backbone', 'esbb/es-backbone', 'esbb/simple-view'], function($, _, Backbone, ESBB, ESBBApp) {
       var defers;
       defers = [];
       $('.lr-search-widget').each(function() {

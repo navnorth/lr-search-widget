@@ -113,7 +113,6 @@
         'backbone',
         'esbb/es-backbone',
         'esbb/simple-view',
-        'perfectScrollbar'
     ],
     ($, _, Backbone, ESBB, ESBBApp) ->
 
