@@ -248,8 +248,13 @@ define([
 			this.listenTo(this, 'change:filters change:query', this.resetPage);
 		},
 
-		search: function() {
+		search: function(opts) {
+
 		    var t = this;
+		    opts = _.defaults(opts || {}, {
+		    	append: false
+		    })
+
 		    this.trigger( 'search:start' );
 		    this.searching = true;
 
@@ -277,7 +282,20 @@ define([
 
 		            t.resultsModel.hasResults = true;
 		            t.resultsModel.hasError = false;
-		            t.resultsModel.set( data );
+
+		            $.log(data);
+
+		            if(opts.append) {
+		            	hits = t.resultsModel.get('hits');
+		            	hits.hits = hits.hits.concat(data.hits.hits);
+
+		            	t.resultsModel.set('hits', hits);
+		            	t.resultsModel.trigger('change');
+		            	t.resultsModel.trigger('change:hits');
+		            } else {
+		            	t.resultsModel.set( data );
+		            }
+
 
 		            t.trigger( 'search:end' );
 		        },

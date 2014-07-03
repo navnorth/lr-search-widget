@@ -215,7 +215,7 @@ define([
         if(resourceCount && resourceFilter) {
           var $link =
             $('<a href="#" />')
-              .text(resourceCount)
+              .text('[View '+resourceCount+' Resources]')
               .attr('title', 'Find Matching Resources')
               .click(function(e) {
                 e.preventDefault();
@@ -226,9 +226,14 @@ define([
                   settings.filterCallback(resourceFilter);
                 }
 
+              })
+              .css({
+                'font-style': 'italic',
+                'color': 'green'
               });
 
-          $listItemText.append('(', $link, ')');
+          $listItemText.append($link);
+          //$listItemText.append('(', $link, ')');
         }
 
 

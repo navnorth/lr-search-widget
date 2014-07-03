@@ -5,6 +5,7 @@ define([
 	'underscore',
 	'backbone',
 	'excanvas',
+	'jquery.lazyload',
 	'jquery.flot.all',
 	//'jquery.flot.pie',
 	//'jquery.flot.selection',
@@ -386,7 +387,7 @@ define([
 		nextPage: function(e) {
 			e.preventDefault();
 			this.queryModel.nextPage()
-			this.queryModel.search();
+			this.queryModel.search({ append: true });
 		},
 
 		render: function( note ) {
@@ -400,11 +401,14 @@ define([
 					var doc = results.hits.hits[docIndex];
 
 					if ( ( doc.highlight != undefined ) && ( typeof doc.highlight != 'string' ) ) {
-						doc.highlight[ this.highlightField ] = doc.highlight[ this.highlightField ].join( '...' );
+						var highlightValue = doc.highlight[ this.highlightField ];
+						doc.highlight[ this.highlightField ] =
+							_.isArray(highlightValue) ? highlightValue.join( '...' ) : highlightValue;
 					}
 				}
 				var data = this.default_data;
-				var start = ((this.queryModel.get('page') - 1) * this.queryModel.get('limit')) + 1;
+				//var start = ((this.queryModel.get('page') - 1) * this.queryModel.get('limit')) + 1;
+				var start = 1;
 				data.header = this.header;
 				data.hits = results.hits.hits;
 				data.total = results.hits.total;
@@ -414,6 +418,12 @@ define([
 
 
 				this.$el.append( Mustache.render( this.template, data ) );
+
+				this.$el.find('img.lr-result__thumb').lazyload({
+					effect: 'fadeIn',
+					container: this.$el,
+					threshold: 200
+				})
 			} else {
 				if ( t.model.hasError )
 					this.$el.append( Mustache.render( this.templateError, results ) );
@@ -1404,12 +1414,12 @@ define([
 					for <strong>"{{{queryTerm}}}"</strong>\
 				{{/queryTerm}} \
 			</div>\
-            <nav class="lr-pager__links">\
+            <!-- <nav class="lr-pager__links">\
             	<ul>\
                   {{#prev}}<li><a href="#" class="prev" title="View the previous page of results">Previous</a></li>{{/prev}}\
                   {{#next}}<li><a href="#" class="next" title="View the next page of results">Next</a></li>{{/next}}\
                 </ul>\
-            </nav>\
+            </nav> -->\
 			',
 		events: {
 			'click .next': 'nextPage',
@@ -1422,7 +1432,8 @@ define([
 			this.listenTo(this.model, 'change', this.render);
 		},
 		render: function() {
-			var start = ((this.queryModel.get('page') - 1) * this.queryModel.get('limit')) + 1;
+			//var start = ((this.queryModel.get('page') - 1) * this.queryModel.get('limit')) + 1;
+			var start = 1;
 
 			data = {
 				start: start,

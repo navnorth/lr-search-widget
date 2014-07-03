@@ -252,15 +252,13 @@ class SearchBuilder
         if($highlight)
         {
             $searchQuery['highlight'] = array(
-                array(
-                    'fields' => array_reduce((array) $highlight, function($memo, $field) {
+                'fields' => array_reduce((array) $highlight, function($memo, $field) {
 
-                        $memo[$field] = array('index_options' => 'offsets');
+                    $memo[$field] = array('index_options' => 'offsets');
 
-                        return $memo;
+                    return $memo;
 
-                    }, array())
-                )
+                }, array())
             );
         }
 

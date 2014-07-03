@@ -699,10 +699,11 @@ ul.lr-results__list {
   margin-bottom: 0;
 }
 
-.lr-results__next {
+.lr-embed .lr-results__next {
   text-align: center;
-  margin-top: .5em;
+  margin-top: 1.5em;
   border-top: 1px solid black;
+  padding: 4px;
 }
 
 .lr-results__next a {

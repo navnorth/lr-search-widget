@@ -76,7 +76,16 @@ class SearchApiController extends ApiController
             return $query;
         }
 
-        return $searchResponse;
+        if(isset($searchResponse['error']))
+        {
+            return Response::json($searchResponse, 500);
+        }
+        else
+        {
+            return $searchResponse;
+        }
+
+
     }
 
     /**

@@ -90,6 +90,7 @@
             'jquery.flot.pie': 'flot/0.8.2/jquery.flot.pie.min',
             'jquery.flot.selection': 'flot/0.8.2/jquery.flot.selection.min',
             'jquery.flot.all': window.LRWidget.domain+'/js/jquery.flot-all',
+            'jquery.lazyload': window.LRWidget.domain+'/js/jquery.lazyload'
             select2: 'select2/3.4.5/select2.min',
 
             esbb: window.LRWidget.domain+'/js/es-backbone'
