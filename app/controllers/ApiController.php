@@ -10,6 +10,7 @@ class ApiController extends BaseController {
     {
         $this->beforeFilter('@filterApiAuth');
         $this->afterFilter('@filterJsonp');
+        $this->afterFilter('@filterUtf8');
     }
 
     public function getUserId()
@@ -81,9 +82,19 @@ class ApiController extends BaseController {
                 $callback = preg_replace("/[^][.\\'\\\"_A-Za-z0-9]/", '', $callback);
 
                 // interject jsonp data into our json response
-                $response->header('content-type', 'application/javascript');
+                $response->header('content-type', 'application/javascript; charset=utf8');
                 $response->setContent($callback.'('.$response->getContent().')');
             }
+        }
+    }
+
+    public function filterUtf8($route, $request, $response)
+    {
+        $contentType = $response->headers->get('content-type');
+
+        if(strstr($contentType, 'charset=') === false)
+        {
+            $response->header('content-type', $contentType.'; charset=utf8');
         }
     }
 
