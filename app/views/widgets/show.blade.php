@@ -48,19 +48,31 @@
         <dd>{{ $widgetSettings[W::SETTINGS_WIDGET_HEADING] }}</dd>
 
         <dt>Heading Color</dt>
-        <dd>{{ $widgetSettings[W::SETTINGS_WIDGET_HEADING_COLOR] }}</dd>
+        <dd>
+            {{ $widgetSettings[W::SETTINGS_WIDGET_HEADING_COLOR] }}
+            <span class="label" style="background-color: {{ $widgetSettings[W::SETTINGS_WIDGET_HEADING_COLOR] }}">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        </dd>
 
         <dt>Navigation Color</dt>
-        <dd>{{ $widgetSettings[W::SETTINGS_WIDGET_MAIN_COLOR] }}</dd>
+        <dd>
+            {{ $widgetSettings[W::SETTINGS_WIDGET_MAIN_COLOR] }}
+            <span class="label" style="background-color: {{ $widgetSettings[W::SETTINGS_WIDGET_MAIN_COLOR] }}">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        </dd>
 
         <dt>Support Color</dt>
-        <dd>{{ $widgetSettings[W::SETTINGS_WIDGET_SUPPORT_COLOR] }}</dd>
+        <dd>
+            {{ $widgetSettings[W::SETTINGS_WIDGET_SUPPORT_COLOR] }}
+            <span class="label" style="background-color: {{ $widgetSettings[W::SETTINGS_WIDGET_SUPPORT_COLOR] }}">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        </dd>
 
         <dt>Background Color</dt>
-        <dd>{{ $widgetSettings[W::SETTINGS_WIDGET_BG_COLOR] }}</dd>
+        <dd>
+            {{ $widgetSettings[W::SETTINGS_WIDGET_BG_COLOR] }}
+            <span class="label" style="background-color: {{ $widgetSettings[W::SETTINGS_WIDGET_BG_COLOR] }}">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        </dd>
 
         <dt>Font</dt>
-        <dd>{{ $widgetSettings[W::SETTINGS_WIDGET_FONT] }}</dd>
+        <dd style="font-family: {{ htmlspecialchars($widgetSettings[W::SETTINGS_WIDGET_FONT]) }}">{{ $widgetSettings[W::SETTINGS_WIDGET_FONT] }}</dd>
 
     </dl>
 </fieldset>
