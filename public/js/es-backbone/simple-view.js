@@ -283,8 +283,6 @@ define([
 		            t.resultsModel.hasResults = true;
 		            t.resultsModel.hasError = false;
 
-		            $.log(data);
-
 		            if(opts.append) {
 		            	hits = t.resultsModel.get('hits');
 		            	hits.hits = hits.hits.concat(data.hits.hits);
@@ -354,14 +352,21 @@ define([
 		},
 
 		updateFilters: function( new_filters ) {
-		    this.set('filters', new_filters);
+			var filtered = _.reduce(new_filters, function(memo, values, type) {
+		    	memo[type] = _.keys(values);
+
+		    	return memo;
+		    }, {});
+
+		    this.set('filters', filtered);
+		    this.set('friendly_filters', new_filters);
 		    this.trigger('change:filters');
 
 		    return this;
 		},
 
 		getFiltersForChanging: function() {
-		    return this.getFilters();
+		    return this.get('friendly_filters') || {};
 		},
 
 		getFilters: function() {
@@ -404,17 +409,16 @@ define([
 		    return this;
 		},
 
-		addTermFilter: function( field, term ) {
-		    var curr_filt = this.getFiltersForChanging();
+		addTermFilter: function( field, term, displayValue ) {
+		    var curr_filt = this.getFiltersForChanging(),
+		    	obj = {};
 
 		    if(!curr_filt[field])
 		    {
-		    	curr_filt[field] = []
+		    	curr_filt[field] = {};
 		    }
 
-		    curr_filt[field].push(term)
-
-		    curr_filt[field] = _.unique(curr_filt[field]);
+		    curr_filt[field][term] = displayValue || term;
 
 		    this.updateFilters( curr_filt );
 
@@ -439,9 +443,10 @@ define([
 		    	}
 		    	else
 		    	{
-		    		curr_filt[facet_name] = _.without(curr_filt[facet_name], facet_value)
-		    	}
+		    		var v = curr_filt[facet_name];
 
+		    		delete v[facet_value];
+		    	}
 		    }
 
 		    this.updateFilters( curr_filt );

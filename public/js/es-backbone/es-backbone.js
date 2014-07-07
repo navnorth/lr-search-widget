@@ -882,7 +882,7 @@ define([
 	ESBB.ActiveFacetListItem = Backbone.View.extend({
 		tagName: 'li',
 		className: 'lr-active-facets__facet',
-		template: '{{ facet_value }} <a href="#"><i class="fa fa-times"></i></a>',
+		template: '{{ facet_name }} <a href="#"><i class="fa fa-times"></i></a>',
 		events: {
 			'click a': 'removeFacet'
 		},
@@ -891,6 +891,8 @@ define([
 		},
 		render: function() {
 			this.$el.html(Mustache.render(this.template, this.model.toJSON()));
+
+			this.$el.attr('data-facet-value', this.model.get('facet_value'));
 
 			return this;
 		},
@@ -922,30 +924,18 @@ define([
 			var t = this;
 			this.$el.empty();
 
-			var filters = this.model.getFilters();
+			var filters = this.model.get('friendly_filters');
 			var tags = [];
 
-			_.each(filters, function(values, i) {
+			_.each(filters, function(values, facet_name) {
 
-				_.each(values, function(value) {
-					if(!tags[i])
-					{
-						tags[i] = []
-					}
-					tags[i].push(value)
-				});
-
-			});
-
-			_.each(_.keys(tags), function(facet_name) {
-
-				var values = tags[facet_name],
-					$list = $(Mustache.render(t.template, { name: t.avail_fields[facet_name] }));
+				var $list = $(Mustache.render(t.template, { name: t.avail_fields[facet_name] }));
 
 				_.each(values, function(facet_value, i) {
 					var itemModel = new Backbone.Model({
 						facet_type: facet_name,
-						facet_value: values[i]
+						facet_name: values[i],
+						facet_value: i
 					});
 
 					var itemView = new ESBB.ActiveFacetListItem({

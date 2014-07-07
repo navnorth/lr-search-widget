@@ -27,7 +27,8 @@
         countsReq = $.ajax(globalConfig.domain + '/api/subjects/counts/' + widget.widgetKey + '?jsonp=?', {
           dataType: 'jsonp',
           data: {
-            api_key: globalConfig.api_key
+            api_key: globalConfig.api_key,
+            aggregate: true
           },
           jsonpCallback: 'subjectsCountCallback',
           cache: true

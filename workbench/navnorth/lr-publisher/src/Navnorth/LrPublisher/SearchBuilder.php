@@ -210,11 +210,20 @@ class SearchBuilder
 
             foreach($facetFilters as $name => $values)
             {
-                $searchQuery['query']['filtered']['filter']['bool']['must'][] = array(
-                    'terms' => array(
-                        $name => (array) $values
-                    )
-                );
+                if(method_exists($this, '_createFacetFilter_'.$name))
+                {
+                    $searchQuery['query']['filtered']['filter']['bool']['must'][] = $this->{'_createFacetFilter_'.$name}($values);
+                }
+                else
+                {
+                    $searchQuery['query']['filtered']['filter']['bool']['must'][] = array(
+                        'terms' => array(
+                            $name => (array) $values
+                        )
+                    );
+                }
+
+
             }
         }
 
@@ -288,6 +297,54 @@ class SearchBuilder
             // No need to convert to filtered query
             return $query;
         }
+
+    }
+
+    protected function _createFacetFilter_standards($values)
+    {
+        $descendants = with(new StandardsTree)->getDescendantsMap();
+
+        $ids = array_reduce($values, function($memo, $value) use ($descendants) {
+
+            return array_merge($memo, $descendants[$value], (array) $value);
+
+        }, array());
+
+        return array(
+            'terms' => array(
+                'standards' => array_unique($ids),
+            )
+        );
+    }
+
+    protected function _createFacetFilter_subjects($subjectValues)
+    {
+        $descendants = with(new SubjectsTree)->getDescendantsMap();
+
+        foreach($descendants as $key => $values)
+        {
+            $descendants[strtolower($key)] = $values;
+        }
+
+        $keywords = array_reduce($subjectValues, function($memo, $value) use ($descendants) {
+
+            return array_merge($memo, $descendants[$value], (array) $value);
+
+        }, array());
+
+        if($keywords)
+        {
+            return array(
+                'terms' => array(
+                    'keys' => array_map('strtolower', $keywords),
+                )
+            );
+        }
+        else
+        {
+            return null;
+        }
+
 
     }
 }

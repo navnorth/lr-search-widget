@@ -25,105 +25,38 @@ class SubjectsApiController extends ApiController
 
     protected function _compileSubjectsTree()
     {
-        $subjectsTree = array();
-        $stack = new SplStack;
-
-        $getLevel = function($line) {
-            foreach($line as $level => $text)
-            {
-                if($text)
-                {
-                    return array($level - 1, $text);
-                }
-            }
-        };
-
-        $subjectData = Excel::load(base_path('data/subjects/all_subjects.xlsx'))->toArray();
-
-        foreach($subjectData as $sheetName => $rows)
-        {
-            foreach($rows as $line)
-            {
-                list($level, $text) = $getLevel($line);
-
-                if($level === null)
-                {
-                    continue;
-                }
-
-                $subject = new StdClass;
-
-                $subject->title = $text;
-                $subject->children = array();
-
-
-                // cut down stack to current level
-                while(count($stack) > $level)
-                {
-                    $stack->pop();
-                }
-
-                if(count($stack) && ($parent = $stack->top()))
-                {
-                    $parent->children[] = $subject;
-                }
-                else
-                {
-                    $subjectsTree[] = $subject;
-                }
-
-                $stack->push($subject);
-            }
-        }
-
-        return $subjectsTree;
+        return with(new Navnorth\LrPublisher\SubjectsTree)->getSubjects();
     }
 
     protected function _compileSubjectsList()
     {
-        $subjectsList = array();
-
-        $getText = function($line) {
-            foreach($line as $level => $text)
-            {
-                if($t = trim($text))
-                {
-                    return $t;
-                }
-            }
-        };
-
-        $subjectData = Excel::load(base_path('data/subjects/all_subjects.xlsx'))->toArray();
-
-        foreach($subjectData as $sheetName => $rows)
-        {
-            foreach($rows as $line)
-            {
-                $text = $getText($line);
-
-                if($text)
-                {
-                    $subjectsList[] = $text;
-                }
-            }
-        }
-
-        return $subjectsList;
+        return with(new Navnorth\LrPublisher\SubjectsTree)->getSubjectsList();
     }
 
+    protected function _compileDescendants()
+    {
+        return with(new Navnorth\LrPublisher\SubjectsTree)->getDescendantsMap();
+    }
 
     public function getIndex()
     {
-        $cache = Cache::tags(self::CACHE_KEY, 'json');
-
-        if(!($subjects = $cache->get('base')))
-        {
-            $subjects = $this->_compileSubjectsTree();
-
-            $cache->put('base', $subjects, self::CACHE_TIME);
-        }
+        $subjects = $this->_compileSubjectsTree();
 
         return $this->_applyCacheControl(Response::json($subjects), 2592000 /* 30 days */);
+    }
+
+    public function getList()
+    {
+        $subjects = $this->_compileSubjectsList();
+
+        return $this->_applyCacheControl(Response::json($subjects), 2592000 /* 30 days */);
+    }
+
+    public function getDescendants()
+    {
+        $descendants = $this->_compileDescendants();
+
+        return $this->_applyCacheControl(Response::json($descendants), 2592000 /* 30 days */);
     }
 
     public function getWidget($widgetKey = null)
@@ -145,8 +78,83 @@ class SubjectsApiController extends ApiController
         return $this->getIndex();
     }
 
+    public function getCountsAggregate($widgetKey = null)
+    {
+        $widget = Widget::where('widget_key', $widgetKey)->where('api_user_id', $this->getUserId())->first();
+
+        if(!$widget)
+        {
+            return Response::make('{}', 200, array('content-type' => 'application/json'));
+        }
+
+        $cache = Cache::tags(self::CACHE_KEY, 'json');
+
+        $widgetCacheKey = $widget->widget_key.'-counts-aggregate-'.$widget->updated_at;
+
+        if(!($counts = $cache->get($widgetCacheKey)))
+        {
+
+            $widgetSettings = $widget->widget_settings;
+
+            $sb = new Navnorth\LrPublisher\SearchBuilder;
+
+            $baseQuery = $sb->buildQuery('', $this->getUserId(), $widgetSettings[Widget::SETTINGS_FILTERS]);
+
+            $baseQuery['size'] = 0;
+
+            $counts = array();
+
+            $allSubjects = $this->_compileDescendants();
+
+            foreach($allSubjects as $id => $subjects)
+            {
+                $query = $baseQuery;
+
+                $combinedSubjects = array_map('strtolower', array_merge((array) $id, $subjects));
+
+                if(isset($query['query']['filtered']['filter']))
+                {
+                    $query['query']['filtered']['filter']['bool']['must'][] = array(
+                        'terms' => array(
+                            'keys' => $combinedSubjects,
+                        )
+                    );
+                }
+                else // not filtered
+                {
+                    $query['query'] = array(
+                        'filtered' => array(
+                            'query' => $query['query'],
+                            'filter' => array(
+                                'terms' => array(
+                                    'keys' => $combinedSubjects,
+                                )
+                            )
+                        )
+                    );
+                }
+
+                $results = $this->searchClient()->search($query);
+
+                if(isset($results['hits']['total']) && $results['hits']['total'])
+                {
+                    $counts[$id] = $results['hits']['total'];
+                }
+            }
+
+            $cache->put($widgetCacheKey, $counts, self::CACHE_TIME);
+        }
+
+        return $this->_applyCacheControl(Response::json($counts));
+    }
+
     public function getCounts($widgetKey = null)
     {
+        if(Input::get('aggregate'))
+        {
+            return $this->getCountsAggregate($widgetKey);
+        }
+
         $widget = Widget::where('widget_key', $widgetKey)->where('api_user_id', $this->getUserId())->first();
 
         if(!$widget)
@@ -166,9 +174,6 @@ class SubjectsApiController extends ApiController
             $sb = new Navnorth\LrPublisher\SearchBuilder;
 
             $query = $sb->buildQuery('', $this->getUserId(), $widgetSettings[Widget::SETTINGS_FILTERS]);
-
-
-            $allSubjects = $this->_compileSubjectsList();
 
             $count = new StdClass;
             $count->count = 0;

@@ -42,6 +42,7 @@ define([
                 dataType: 'jsonp',
                 data:
                     api_key: globalConfig.api_key
+                    aggregate: true
                 jsonpCallback: 'standardsCountCallback'
                 cache: true
             })

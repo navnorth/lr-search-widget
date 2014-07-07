@@ -67,8 +67,9 @@ define([
     var mainColorDark = shadeColor(mainColorMedium, -0.4);
     var mainColorLight = shadeColor(mainColorDark, 0.5);
     var mainColorLightest = shadeColor(mainColorDark, 0.9);
+    var supportColorDark = shadeColor(supportColor, -0.4);
 
-    var stylePrefix = 'div.lr-embed-'+widgetKey;
+    var stylePrefix = ' div.lr-embed-'+widgetKey;
 
     // if styles are already defined, remove it before creating new styles
     $('#widget-style-'+widgetKey).remove()
@@ -85,6 +86,8 @@ define([
       stylePrefix+' a.lr-tags__link { background-color: ' + mainColorLightest + '; }'+
       stylePrefix+' span.listview-list-item__title { color: ' + mainColorMedium + '; }'+
       stylePrefix+' span.listview-list-item__title:hover { background-color: ' + mainColorLightest + '; }'+
+      stylePrefix+' a.listview-list-item__link { color: ' + supportColor + '; }'+
+      stylePrefix+' a.listview-list-item__link:hover { color: ' + supportColorDark + '; }'+
       stylePrefix+' a.lr-listview__breadcrumbs__link { color: ' + supportColor + ';}'+
       stylePrefix+' a.lr-listview__breadcrumbs__link:last-child:hover { color: ' + supportColor + ';}'+
       stylePrefix+' figcaption.lr-piechart__selection { color: ' + mainColorMedium + ';}'+
@@ -127,21 +130,25 @@ define([
       }
 
       function navigateBreadCrumb(breadCrumbLink) {
+
         var breadCrumbLinks = breadCrumbContainer.children('a'),
             parentListLevel = breadCrumbLink.data('breadcrumb-level'),
-            matchingListItems = $('[data-' + containerId + '-lv-level=' + parentListLevel + ']'),
+            matchingListItems = breadCrumbLink.data('breadcrumb-target'),
             maxListLevel = breadCrumbLinks.last().data('breadcrumb-level'),
             breadCrumbLinkIndex = breadCrumbLinks.index(breadCrumbLink),
             breadCrumbCount = 0;
 
         // Walk up the breadcrumb tree, activate the parent list items, and deactivate the currently active list.
-        for (var i = maxListLevel; i >= parentListLevel; i--) {
-          $('[data-' + containerId + '-lv-level="' + i + '"]')
-          .siblings('ul').hide()
-          .removeClass('animated slideInRight');
-          $('[data-' + containerId + '-lv-level="' + i + '"]')
-          .addClass('animated slideInLeft').show();
-        }
+        breadCrumbLinks.each(function() {
+          if($(this).data('breadcrumb-level') >= parentListLevel)
+          {
+            var i = $(this).data('breadcrumb-level'),
+                    $elements = elem.find('[data-' + containerId + '-lv-level="' + i + '"]');
+
+            $elements.siblings('ul').hide().removeClass('animated slideInRight');
+            $elements.addClass('animated slideInLeft').show();
+          }
+        });
 
         // Make sure there is only one list with activeId.
         matchingListItems
@@ -152,7 +159,7 @@ define([
 
         // Re-populate breadcrumbs. Keep track of breadcrumb count,
         // so we can remove unneeded crumbs, and put back the default title when needed.
-        breadCrumbContainer.empty();
+        breadCrumbLinks.detach();
         breadCrumbLinks.each(function(index, value) {
           if (index <= breadCrumbLinkIndex) {
             breadCrumbContainer.append($(this));
@@ -175,10 +182,10 @@ define([
 
         if (breadCrumbContainer.text() === settings.listViewTitle) {
           breadCrumbContainer.empty();
-          breadCrumbContainer.prepend(breadCrumbRoot);
+          breadCrumbContainer.prepend($(breadCrumbRoot).data('breadcrumb-target', listItemSpan));
         }
         if (breadCrumbContainer.data('breadcrumb-type') === containerId) {
-          breadCrumbContainer.append(breadCrumbLink);
+          breadCrumbContainer.append($(breadCrumbLink).data('breadcrumb-target', listItemSpan));
         }
       }
 
@@ -193,11 +200,12 @@ define([
         var $li = $(this),
             $listItemText = $li.children('span'),
             resourceCount = $li.data('resourceCount'),
-            resourceFilter = $li.data('resourceFilter');
+            resourceFilter = $li.data('resourceFilter'),
+            itemText = $listItemText.text();
 
         $li.addClass('listview-list-item');
 
-        $listItemText.data('breadcrumb-label', $listItemText.text())
+        $listItemText.data('breadcrumb-label', itemText)
                      .addClass('listview-list-item__title')
 
         if ($li.has('ul').length) {
@@ -216,6 +224,7 @@ define([
           var $link =
             $('<a href="#" />')
               .text('[View '+resourceCount+' Resources]')
+              .addClass('listview-list-item__link')
               .attr('title', 'Find Matching Resources')
               .click(function(e) {
                 e.preventDefault();
@@ -223,16 +232,12 @@ define([
 
                 if(settings.filterCallback)
                 {
-                  settings.filterCallback(resourceFilter);
+                  settings.filterCallback(resourceFilter, itemText, $li);
                 }
 
               })
-              .css({
-                'font-style': 'italic',
-                'color': 'green'
-              });
 
-          $listItemText.append($link);
+          $listItemText.append(' ', $link);
           //$listItemText.append('(', $link, ')');
         }
 

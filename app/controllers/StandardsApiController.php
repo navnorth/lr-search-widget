@@ -27,23 +27,21 @@ class StandardsApiController extends ApiController
 
     protected function _baseStandards()
     {
-        $standards = json_decode(file_get_contents(base_path('data/standards/all_standards.json')), true);
-
-        return $this->_stripStandardsJson($standards['data']);
+        return with(new Navnorth\LrPublisher\StandardsTree)->getStandards();
     }
 
     public function getIndex()
     {
-        $cache = Cache::tags(self::CACHE_KEY, 'json');
-
-        if(!($standards = $cache->get('base')))
-        {
-            $standards = $this->_baseStandards();
-
-            $cache->put('base', $standards, self::CACHE_TIME);
-        }
+        $standards = $this->_baseStandards();
 
         return $this->_applyCacheControl(Response::json($standards), 2592000 /* 30 days */);
+    }
+
+    public function getDescendants()
+    {
+        $descendants = with(new Navnorth\LrPublisher\StandardsTree)->getDescendantsMap();
+
+        return $this->_applyCacheControl(Response::json($descendants), 2592000 /* 30 days */);
     }
 
     public function getWidget($widgetKey = null)
@@ -67,6 +65,11 @@ class StandardsApiController extends ApiController
 
     public function getCounts($widgetKey = null)
     {
+        if($aggregate = Input::get('aggregate'))
+        {
+            return $this->getCountsAggregate($widgetKey);
+        }
+
         $widget = Widget::where('widget_key', $widgetKey)->where('api_user_id', $this->getUserId())->first();
 
         if(!$widget)
@@ -122,36 +125,85 @@ class StandardsApiController extends ApiController
         return Response::json(array('message' => 'Cache Cleared'));
     }
 
-
-    protected function _stripStandardsJson($standards)
+    public function getCountsAggregate($widgetKey = null)
     {
-        unset($standards['asn_identifier']);
+        $widget = Widget::where('widget_key', $widgetKey)->where('api_user_id', $this->getUserId())->first();
 
-        if(isset($standards['children']))
+        if(!$widget)
         {
-            $children = $standards['children'];
-            $standards['children'] = array();
+            return Response::make('{}', 200, array('content-type' => 'application/json'));
+        }
 
-            foreach($children as $c)
+        $cache = Cache::tags(self::CACHE_KEY, 'json');
+
+        $widgetCacheKey = $widget->widget_key.'-counts-aggregate-'.$widget->updated_at;
+
+        if(!($counts = $cache->get($widgetCacheKey)))
+        {
+            $widgetSettings = $widget->widget_settings;
+
+            $sb = new Navnorth\LrPublisher\SearchBuilder;
+
+            $query = $sb->buildQuery('', $this->getUserId(), $widgetSettings[Widget::SETTINGS_FILTERS]);
+
+            $counts = $this->_recurseStandardsCounts($query, $this->_baseStandards());
+
+            $cache->put($widgetCacheKey, $counts, self::CACHE_TIME);
+        }
+
+        return $this->_applyCacheControl(Response::json($counts));
+    }
+
+    protected function _recurseStandardsCounts($query, $standards)
+    {
+        $counts = array();
+
+        if(isset($standards['children']) && $standards['children'])
+        {
+            foreach($standards['children'] as $childStandard)
             {
-                $standards['children'][] = $this->_stripStandardsJson($c);
+                $counts = array_merge($counts, $this->_recurseStandardsCounts($query, $childStandard));
             }
         }
-        else
+
+        $aggregateIds = array_keys($counts);
+
+        if(isset($standards['id']))
         {
-            $standards['children'] = array();
+            array_push($aggregateIds, $standards['id']);
         }
 
-        if(isset($standards['childCount']) && $standards['childCount'] == 0)
+        $query['size'] = 0;
+
+        if(isset($query['query']['filtered']['filter']))
         {
-            unset($standards['childCount']);
+            $query['query']['filtered']['filter']['bool']['must'][] = array(
+                'terms' => array(
+                    'standards' => $aggregateIds,
+                )
+            );
+        }
+        else // not filtered
+        {
+            $query['query'] = array(
+                'filtered' => array(
+                    'query' => $query['query'],
+                    'filter' => array(
+                        'terms' => array(
+                            'standards' => $aggregateIds,
+                        )
+                    )
+                )
+            );
         }
 
-        if(isset($standards['count']))
+        $results = $this->searchClient()->search($query);
+
+        if(isset($results['hits']['total']) && $results['hits']['total'])
         {
-            unset($standards['count']);
+            $counts[$standards['id']] = $results['hits']['total'];
         }
 
-        return $standards;
+        return $counts;
     }
 }

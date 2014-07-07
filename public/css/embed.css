@@ -913,6 +913,10 @@ span.listview-list-item__title:hover .listview-list-item__tip {
   display: inline-block;
 }
 
+a.listview-list-item__link {
+  font-style: italic;
+}
+
 /* line 283, ../scss/_style.scss */
 div.lr-standards__info {
   margin: 0 1.25em;

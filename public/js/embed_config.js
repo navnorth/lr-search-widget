@@ -181,14 +181,14 @@
               return Features.createWidgetStyles(widgetKey, widget.configModel.toJSON());
             });
             widget.configModel.trigger('change:font');
-            StandardsBrowser.start(WidgetConfig, widget, function(filterValue) {
+            StandardsBrowser.start(WidgetConfig, widget, function(filterValue, itemText) {
               widget.view.$el.find('a.lr-nav-link__search').trigger('click');
-              widget.queryModel.clearSearch().addTermFilter('standards', filterValue.toLowerCase()).search();
+              widget.queryModel.clearSearch().addTermFilter('standards', filterValue.toLowerCase(), itemText).search();
               return widget.queryModel.trigger('change');
             });
-            return SubjectsBrowser.start(WidgetConfig, widget, function(filterValue) {
+            return SubjectsBrowser.start(WidgetConfig, widget, function(filterValue, itemText) {
               widget.view.$el.find('a.lr-nav-link__search').trigger('click');
-              widget.queryModel.clearSearch().addTermFilter('keys', filterValue.toLowerCase()).search();
+              widget.queryModel.clearSearch().addTermFilter('subjects', filterValue.toLowerCase(), itemText).search();
               return widget.queryModel.trigger('change');
             });
           });

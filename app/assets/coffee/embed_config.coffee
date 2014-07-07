@@ -215,23 +215,23 @@
                     # trigger to create initial styles
                     widget.configModel.trigger('change:font')
 
-                    StandardsBrowser.start(WidgetConfig, widget, (filterValue) ->
+                    StandardsBrowser.start(WidgetConfig, widget, (filterValue, itemText) ->
                         widget.view.$el.find('a.lr-nav-link__search').trigger('click')
 
                         widget.queryModel
                             .clearSearch()
-                            .addTermFilter('standards', filterValue.toLowerCase())
+                            .addTermFilter('standards', filterValue.toLowerCase(), itemText)
                             .search()
 
                         widget.queryModel.trigger('change')
                     )
 
-                    SubjectsBrowser.start(WidgetConfig, widget, (filterValue) ->
+                    SubjectsBrowser.start(WidgetConfig, widget, (filterValue, itemText) ->
                         widget.view.$el.find('a.lr-nav-link__search').trigger('click')
 
                         widget.queryModel
                             .clearSearch()
-                            .addTermFilter('keys', filterValue.toLowerCase())
+                            .addTermFilter('subjects', filterValue.toLowerCase(), itemText)
                             .search()
 
                         widget.queryModel.trigger('change')

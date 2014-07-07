@@ -75,8 +75,8 @@
     echo Former::color(W::SETTINGS_WIDGET_MAIN_COLOR, 'Widget Navigation and Text Color')
         ->value($settings[W::SETTINGS_WIDGET_MAIN_COLOR]);
 
-    /*echo Former::color(W::SETTINGS_WIDGET_SUPPORT_COLOR, 'Widget Sub-Navigation Color')
-        ->value($settings[W::SETTINGS_WIDGET_SUPPORT_COLOR]);*/
+    echo Former::color(W::SETTINGS_WIDGET_SUPPORT_COLOR, 'Widget Support Color')
+        ->value($settings[W::SETTINGS_WIDGET_SUPPORT_COLOR]);
 
     echo Former::color(W::SETTINGS_WIDGET_BG_COLOR, 'Widget Background Color')
         ->value($settings[W::SETTINGS_WIDGET_BG_COLOR]);

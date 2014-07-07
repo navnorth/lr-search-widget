@@ -53,8 +53,8 @@
         <dt>Navigation Color</dt>
         <dd>{{ $widgetSettings[W::SETTINGS_WIDGET_MAIN_COLOR] }}</dd>
 
-        <!-- <dt>Support Color</dt>
-        <dd>{{ $widgetSettings[W::SETTINGS_WIDGET_SUPPORT_COLOR] }}</dd> -->
+        <dt>Support Color</dt>
+        <dd>{{ $widgetSettings[W::SETTINGS_WIDGET_SUPPORT_COLOR] }}</dd>
 
         <dt>Background Color</dt>
         <dd>{{ $widgetSettings[W::SETTINGS_WIDGET_BG_COLOR] }}</dd>
