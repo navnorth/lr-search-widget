@@ -414,6 +414,7 @@ define([
 				data.hits = results.hits.hits;
 				data.total = results.hits.total;
 				data.global = this.globalData;
+				data.default_res_image = this.widgetConfig.get('default_res_image') || (this.globalData.domain + '/img/lrlogo.png');
 
 				data.hasNext = (start + data.hits.length) < data.total;
 

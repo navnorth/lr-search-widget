@@ -66,6 +66,11 @@
         ->value($settings[W::SETTINGS_WIDGET_LOGO])
         ->helperText('Please provide the url to the logo you would like to include for branding/identification purposes');
 
+    echo Former::url(W::SETTINGS_DEFAULT_RESOURCE_IMAGE, 'Default Resource Image')
+        ->value($settings[W::SETTINGS_DEFAULT_RESOURCE_IMAGE])
+        ->helperText('Please provide the url to the image you would like to use for resources without loaded images')
+        ->placeholder('Learning Registry Logo');
+
     echo Former::checkboxes('features')->checkboxes(array(
         'Show Facets / Filtering' => array('name' => W::SETTINGS_SHOW_FACETS, 'value' => true),
         'Show Resource Modal' => array('name' => W::SETTINGS_SHOW_RESOURCE_MODAL, 'value' => true),

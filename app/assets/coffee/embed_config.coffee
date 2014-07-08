@@ -118,6 +118,10 @@
     ],
     ($, _, Backbone, ESBB, ESBBApp) ->
 
+        class WidgetModel extends Backbone.Model
+            # no model definition, yet
+
+
         defers = []
 
         $('.lr-search-widget').each(->
@@ -160,7 +164,7 @@
                     highlight: ['description']
                 } );
 
-                widgetConfigModel = new Backbone.Model(t.settings)
+                widgetConfigModel = new WidgetModel(t.settings)
 
                 queryModel.on('change:filter_keys', ->
                     queryModel.search()

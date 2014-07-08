@@ -4,7 +4,7 @@
         <a href="{{_source.url}}" target="_blank">
             <img class="lr-result__thumb" alt="Resource thumbnail" title="{{ _source.title }}" style="width: 145px;"
                 data-original="{{global.domain}}/webcap/{{_id}}/145/screencap.jpg"
-                src="{{global.domain}}/img/anglerfish.jpg"
+                src="{{ default_res_image }}"
             />
         </a>
         <h3 class="lr-result__heading">
