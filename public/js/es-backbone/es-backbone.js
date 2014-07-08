@@ -264,8 +264,9 @@ define([
 				query: '',
 				page: 1,
 				filters: {},
+				friendly_filters: {},
 				named_filters: {}
-			}, { silent: true });
+			});
 
 			return this;
 		},
@@ -1239,8 +1240,13 @@ define([
 			_.bindAll( this, 'render' );
 			this.model.bind('search:start', this.startSpin, this );
 			this.model.bind('search:end', this.stopSpin, this );
+			this.model.bind('change:query', this.updateQueryTerm, this);
 			this.spin_it = this.model.searching;
 			this.render();
+		},
+
+		updateQueryTerm: function() {
+			this.$('.lr-search-form__term').val(this.model.get('query') || '');
 		},
 
 		render: function( note ) {
