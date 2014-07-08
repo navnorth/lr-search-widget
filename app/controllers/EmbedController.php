@@ -48,7 +48,10 @@ class EmbedController extends \BaseController {
 			'production' => Config::get('app.production', true),
 		);
 
-		$content = 'window.LRWidget = '.json_encode($vars)."\n\n";
+		$buildVersion = Navnorth\LrPublisher\VersionControl::getBuildVersion();
+
+		$content = 'window.LRWidget = '.json_encode($vars).";\n";
+		$content .= 'window.LRWidgetBuildVersion = '.json_encode($buildVersion).";\n\n";
 
 		$assets = array(
 			'/js/require.js',

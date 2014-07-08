@@ -19,7 +19,8 @@
         subjectsReq = $.ajax(globalConfig.domain + '/api/subjects/widget/' + widget.widgetKey + '?jsonp=?', {
           dataType: 'jsonp',
           data: {
-            api_key: globalConfig.api_key
+            api_key: globalConfig.api_key,
+            bust: window.LRWidgetBuildVersion
           },
           jsonpCallback: 'subjectsCallback',
           cache: true
@@ -28,7 +29,8 @@
           dataType: 'jsonp',
           data: {
             api_key: globalConfig.api_key,
-            aggregate: true
+            aggregate: true,
+            bust: window.LRWidgetBuildVersion
           },
           jsonpCallback: 'subjectsCountCallback',
           cache: true

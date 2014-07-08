@@ -3,7 +3,6 @@
 use StdClass;
 use SplStack;
 
-
 use Cache;
 use Excel;
 
@@ -16,7 +15,7 @@ class SubjectsTree
 
     public function getSubjects()
     {
-        $cache = Cache::tags(self::CACHE_KEY, 'json');
+        $cache = Cache::tags(self::CACHE_KEY, 'json', VersionControl::getBuildVersion());
 
         if(!($subjectsTree = $cache->get('base')))
         {
@@ -79,7 +78,7 @@ class SubjectsTree
 
     public function getSubjectsList()
     {
-        $cache = Cache::tags(self::CACHE_KEY, 'json');
+        $cache = Cache::tags(self::CACHE_KEY, 'json', VersionControl::getBuildVersion());
 
         if(!($subjectsList = $cache->get('list')))
         {
@@ -119,7 +118,7 @@ class SubjectsTree
 
     public function getDescendantsMap()
     {
-        $cache = Cache::tags(self::CACHE_KEY, 'json');
+        $cache = Cache::tags(self::CACHE_KEY, 'json', VersionControl::getBuildVersion());
 
         if(!($map = $cache->get('descendants')))
         {

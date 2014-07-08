@@ -19,7 +19,8 @@
         standardsReq = $.ajax(globalConfig.domain + '/api/standards/widget/' + widget.widgetKey + '?jsonp=?', {
           dataType: 'jsonp',
           data: {
-            api_key: globalConfig.api_key
+            api_key: globalConfig.api_key,
+            bust: window.LRWidgetBuildVersion
           },
           jsonpCallback: 'standardsCallback',
           cache: true
@@ -28,7 +29,8 @@
           dataType: 'jsonp',
           data: {
             api_key: globalConfig.api_key,
-            aggregate: true
+            aggregate: true,
+            bust: window.LRWidgetBuildVersion
           },
           jsonpCallback: 'standardsCountCallback',
           cache: true

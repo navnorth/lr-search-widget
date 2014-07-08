@@ -6,6 +6,8 @@ use Carbon\Carbon;
 
 use SearchFilter as SF;
 
+use Navnorth\LrPublisher\VersionControl;
+
 class SubjectsApiController extends ApiController
 {
     const CACHE_KEY = 'subjects';
@@ -87,7 +89,7 @@ class SubjectsApiController extends ApiController
             return Response::make('{}', 200, array('content-type' => 'application/json'));
         }
 
-        $cache = Cache::tags(self::CACHE_KEY, 'json');
+        $cache = Cache::tags(self::CACHE_KEY, 'json', VersionControl::getBuildVersion());
 
         $widgetCacheKey = $widget->widget_key.'-counts-aggregate-'.$widget->updated_at;
 
@@ -162,7 +164,7 @@ class SubjectsApiController extends ApiController
             return Response::make('{}', 200, array('content-type' => 'application/json'));
         }
 
-        $cache = Cache::tags(self::CACHE_KEY, 'json');
+        $cache = Cache::tags(self::CACHE_KEY, 'json', VersionControl::getBuildVersion());
 
         $widgetCacheKey = $widget->widget_key.'-counts-'.$widget->updated_at;
 
@@ -208,7 +210,7 @@ class SubjectsApiController extends ApiController
 
     public function getClearCache()
     {
-        $cache = Cache::tags(self::CACHE_KEY, 'json')->flush();
+        $cache = Cache::tags(self::CACHE_KEY, 'json', VersionControl::getBuildVersion())->flush();
 
         return Response::json(array('message' => 'Cache Cleared'));
     }

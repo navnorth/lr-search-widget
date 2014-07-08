@@ -10,7 +10,7 @@ class StandardsTree
 
     public function getStandards()
     {
-        $cache = Cache::tags(self::CACHE_KEY, 'json');
+        $cache = Cache::tags(self::CACHE_KEY, 'json', VersionControl::getBuildVersion());
 
         if(!($standards = $cache->get('base')))
         {
@@ -26,7 +26,7 @@ class StandardsTree
 
     public function getDescendantsMap()
     {
-        $cache = Cache::tags(self::CACHE_KEY, 'json');
+        $cache = Cache::tags(self::CACHE_KEY, 'json', VersionControl::getBuildVersion());
 
         if(!($map = $cache->get('descendants')))
         {

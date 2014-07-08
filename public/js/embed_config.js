@@ -89,7 +89,7 @@
         mustache: 'mustache.js/0.7.2/mustache.min',
         hogan: 'hogan.js/3.0.0/hogan.min.amd',
         underscore: 'underscore.js/1.6.0/underscore-min',
-        backbone: 'backbone.js/1.1.1/backbone-min',
+        backbone: 'backbone.js/1.1.2/backbone-min',
         excanvas: 'flot/0.8.2/excanvas.min',
         'jquery.flot': 'flot/0.8.2/jquery.flot.min',
         'jquery.flot.pie': 'flot/0.8.2/jquery.flot.pie.min',
@@ -110,7 +110,7 @@
           'jquery': 'jquery'
         }
       },
-      urlArgs: WidgetConfig.production ? null : "bust=" + new Date().getTime()
+      urlArgs: WidgetConfig.production ? 'bust=' + window.LRWidgetBuildVersion : "bust=" + new Date().getTime()
     });
     return require(['jquery', 'underscore', 'backbone', 'esbb/es-backbone', 'esbb/simple-view'], function($, _, Backbone, ESBB, ESBBApp) {
       var defers;

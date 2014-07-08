@@ -34,6 +34,7 @@ define([
                 dataType: 'jsonp',
                 data:
                     api_key: globalConfig.api_key
+                    bust: window.LRWidgetBuildVersion
                 jsonpCallback: 'standardsCallback'
                 cache: true
             })
@@ -43,6 +44,7 @@ define([
                 data:
                     api_key: globalConfig.api_key
                     aggregate: true
+                    bust: window.LRWidgetBuildVersion
                 jsonpCallback: 'standardsCountCallback'
                 cache: true
             })

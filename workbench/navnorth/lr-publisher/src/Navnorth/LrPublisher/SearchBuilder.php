@@ -328,7 +328,7 @@ class SearchBuilder
 
         $keywords = array_reduce($subjectValues, function($memo, $value) use ($descendants) {
 
-            return array_merge($memo, $descendants[$value], (array) $value);
+            return array_merge($memo, isset($descendants[$value]) ? $descendants[$value] : array(), (array) $value);
 
         }, array());
 
