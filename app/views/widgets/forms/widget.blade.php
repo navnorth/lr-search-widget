@@ -102,6 +102,26 @@
 
 
 <script>
+    head(function() {
+        var formChanged = false;
+
+        $('#widget_form')
+            .on('change', function() {
+                formChanged = true;
+            })
+            .on('submit', function() {
+                formChanged = false;
+            });
+
+
+
+        $(window).on('beforeunload', function() {
+            if(formChanged) {
+                return 'You are attempting to leave this page without saving. Are you sure?';
+            }
+        })
+    });
+
     head.js('/embed/widget/{{ Auth::user()->api_key }}/embed.js',
         function() {
             LRSearchWidgets.ready(function() {
