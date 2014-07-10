@@ -80,7 +80,6 @@
 
 <fieldset>
     <legend>Embed</legend>
-
     <pre>&lt;!-- Include script in html -->
 &lt;script type="text/javascript" src="{{ URL::to('/embed/widget/'.$widget->api_user->api_key.'/embed.js') }}" />&lt;/script>
 
@@ -94,7 +93,7 @@
     <div class="lr-search-widget" data-widget-key="{{ $widget->widget_key }}"></div>
 
     <script>
-        head.js('/embed/widget/{{ Auth::user()->api_key }}/embed.js');
+        head.js('/embed/widget-loader/{{ Auth::user()->api_key }}/loader.js');
     </script>
 </fieldset>
 

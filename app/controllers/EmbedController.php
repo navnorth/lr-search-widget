@@ -42,10 +42,25 @@ class EmbedController extends \BaseController {
 
 	public function getWidget($apiKey)
 	{
+		$content = 'window.LRWidgetLoaderPath = '.json_encode(URL::to('/embed/widget-loader/'.$apiKey.'/embed-load.js')).";\n\n";
+
+		$content .= file_get_contents(public_path('/js/embed_loader.js'));
+
+		$headers = array(
+			'content-type' => 'application/javascript',
+		);
+
+
+		return Response::make($content, 200, $headers);
+	}
+
+	public function getWidgetLoader($apiKey)
+	{
 		$vars = array(
 			'api_key' => $apiKey,
 			'domain' => URL::to('/'),
 			'production' => Config::get('app.production', true),
+			'loader_path' => URL::to('/embed/widget-loader/'.$apiKey.'/embed-load.js'),
 		);
 
 		$buildVersion = Navnorth\LrPublisher\VersionControl::getBuildVersion();

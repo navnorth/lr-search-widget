@@ -127,7 +127,7 @@
         })
     });
 
-    head.js('/embed/widget/{{ Auth::user()->api_key }}/embed.js',
+    head.js('/embed/widget-loader/{{ Auth::user()->api_key }}/loader.js',
         function() {
             LRSearchWidgets.ready(function() {
 

@@ -1,7 +1,7 @@
 define(['jquery'], (jq) ->
-    $ = jq.noConflict(true)
+    local = jq.noConflict()
 
-    $.log = ->
+    local.log = ->
         if(arguments.length == 1)
             console.log(arguments[0]) if console.log
             return arguments[0]
@@ -9,5 +9,7 @@ define(['jquery'], (jq) ->
             console.log(arguments) if console.log
             return arguments
 
-    return $
+
+    return local
 )
+
