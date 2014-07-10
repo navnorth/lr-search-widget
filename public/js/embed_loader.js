@@ -28,7 +28,7 @@
     l('loading via script tag');
     loader = document.createElement('script');
     loader.type = 'text/javascript';
-    loader.src = loader_path;
+    loader.src = scriptPath;
     s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(loader, s);
   }
