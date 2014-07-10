@@ -4,7 +4,11 @@
 
   scriptPath = window.LRWidgetLoaderPath;
 
-  if (!(l = (_ref = this.console) != null ? _ref.log : void 0)) {
+  if (((_ref = this.console) != null ? _ref.log : void 0)) {
+    l = function(val) {
+      return this.console.log(val);
+    };
+  } else {
     l = function() {};
   }
 

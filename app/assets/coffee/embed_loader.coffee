@@ -3,8 +3,11 @@
 
 scriptPath = window.LRWidgetLoaderPath;
 
-if(!l = @console?.log)
+if(@console?.log)
+    l = (val) -> @console.log(val)
+else
     l = ->
+
 
 if(jq = @jQuery)
     l('loading via jQuery')
