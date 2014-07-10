@@ -71,13 +71,12 @@ define([
 
     applyCounts = (subject, counts) ->
 
-        subject.count = counts[subject.title]
+        subject.count = counts[subject.title] || 0
 
         if(subject.children)
             _.each(subject.children, (sub) ->
                 applyCounts(sub, counts)
             )
-
 
 
     return SubjectsBrowser;

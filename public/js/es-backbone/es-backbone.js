@@ -335,7 +335,7 @@ define([
 			</p>\
 			{{/hits}}\
 			',
-		templateNoResults: '',
+		templateNoResults: '<p>No results found.  Please adjust your search term(s) or filtering criteria.</p>',
 		templateError: '\
 			<h4>Error connecting to Search Service</h4>\
 			<p>{{& error}}</p>\
@@ -418,6 +418,10 @@ define([
 
 				data.hasNext = (start + data.hits.length) < data.total;
 
+				if(data.hits.length === 0)
+				{
+					data.no_hits = true;
+				}
 
 				this.$el.append( Mustache.render( this.template, data ) );
 

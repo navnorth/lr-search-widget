@@ -148,6 +148,12 @@ class StandardsApiController extends ApiController
 
             $query = $sb->buildQuery('', $this->getUserId(), $widgetSettings[Widget::SETTINGS_FILTERS]);
 
+            // speed up query, since we will be doing many of them
+            $query['track_scores'] = false;
+            $query['size'] = 0;
+            unset($query['query']['filtered']['query']);
+            unset($query['sort']);
+
             $counts = $this->_recurseStandardsCounts($query, $this->_baseStandards());
 
             $cache->put($widgetCacheKey, $counts, self::CACHE_TIME);
@@ -174,8 +180,6 @@ class StandardsApiController extends ApiController
         {
             array_push($aggregateIds, $standards['id']);
         }
-
-        $query['size'] = 0;
 
         if(isset($query['query']['filtered']['filter']))
         {

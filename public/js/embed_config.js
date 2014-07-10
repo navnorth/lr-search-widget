@@ -171,6 +171,7 @@
               widgetConfig: widgetConfigModel,
               templates: t.templates
             });
+            queryModel.search();
             LRSearchWidgets.widgets[widgetKey] = {
               queryModel: queryModel,
               resultsModel: resultsModel,
