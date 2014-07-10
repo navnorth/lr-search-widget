@@ -38,6 +38,7 @@
       production: true
     };
     require.config({
+      waitSeconds: 30,
       baseUrl: '//cdnjs.cloudflare.com/ajax/libs/',
       shim: {
         jquery: {

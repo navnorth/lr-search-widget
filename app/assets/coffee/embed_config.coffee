@@ -28,6 +28,7 @@
     };
 
     require.config({
+        waitSeconds: 30, # allow for slow connections, network glitches, and external page nonsense
         baseUrl: '//cdnjs.cloudflare.com/ajax/libs/',
         shim: {
 
