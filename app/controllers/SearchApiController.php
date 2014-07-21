@@ -21,7 +21,9 @@ class SearchApiController extends ApiController
 
     public function getStats()
     {
-        return $this->client()->request('/_stats');
+        $index = Config::get('search.index');
+
+        return $this->client()->request('/'.$index.'/_stats');
     }
 
     public function postIndex()
