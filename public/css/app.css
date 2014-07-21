@@ -9,9 +9,14 @@
   width: 100%;
   line-height: 28px;
 }
+.bootstrap-tagsinput .label {
+  font-size: 90%;
+}
 .bootstrap-tagsinput .label-info {
   background-color: #6495ed;
-  font-size: 90%;
+}
+.bootstrap-tagsinput .label-primary {
+  background-color: #000080;
 }
 .typeahead {
   background-color: #fff;

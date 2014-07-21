@@ -346,7 +346,7 @@
           {
               var newVal = {};
 
-              newVal[self.objectItems] = val;
+              newVal[self.options.defaultItemValueKey] = val;
 
               val = newVal
           }

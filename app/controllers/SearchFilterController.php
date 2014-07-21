@@ -123,13 +123,34 @@ class SearchFilterController extends \BaseController {
 	protected function _applyFilterSettings(SearchFilter $filter)
 	{
 		$filter->name = Input::get('name');
-		$filter->filter_settings = Input::only(array(
+
+		$filterValues = Input::only(array(
 			SearchFilter::FILTER_INCLUDE,
 			SearchFilter::FILTER_EXCLUDE,
 			SearchFilter::FILTER_DISCOURAGE,
 			SearchFilter::FILTER_WHITELISTED_ONLY,
 			SearchFilter::FILTER_INCLUDE_BLACKLISTED,
 		));
+
+		foreach($filterValues as $type => $fields)
+		{
+			if(is_array($fields))
+			{
+				foreach($fields as $name => $values)
+				{
+					if(is_array($values))
+					{
+						// filter out '_none_' placeholder values
+						$filterValues[$type][$name] = array_filter($values, function($s) { return $s != '_none_'; });
+					}
+				}
+
+				// filter out empty fields once the _none_ have been removed
+				$filterValues[$type] = array_filter($filterValues[$type]);
+			}
+		}
+
+		$filter->filter_settings = $filterValues;
 	}
 
 	protected function _loadSearchFilter($id)

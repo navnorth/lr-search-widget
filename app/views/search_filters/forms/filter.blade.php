@@ -47,6 +47,7 @@
         'keys' => 'Keywords',
         'mediaFeatures' => 'Media Features',
         'accessMode' => 'Access Mode',
+        'grades' => 'Grade Levels',
     );
 
 ?>
@@ -71,7 +72,8 @@
                     ->data_role('multiinput')
                     ->data_field($type)
                     ->options($values)
-                    ->select(array_keys($values));
+                    ->select(array_keys($values))
+                    ->data_empty_value('Include All '.$displayName);
             }
 
             echo Former::checkbox(SF::FILTER_INCLUDE_BLACKLISTED);
@@ -100,7 +102,8 @@
                     ->data_role('multiinput')
                     ->data_field($type)
                     ->options($values)
-                    ->select(array_keys($values));
+                    ->select(array_keys($values))
+                    ->data_empty_value('Exclude Nothing');
             }
 
 
@@ -129,7 +132,8 @@
                     ->data_role('multiinput')
                     ->data_field($type)
                     ->options($values)
-                    ->select(array_keys($values));
+                    ->select(array_keys($values))
+                    ->data_empty_value('Discourage Nothing');
             }
         ?>
 
@@ -153,37 +157,71 @@
                 $inputs = $('[data-role="multiinput"]');
 
                 $inputs.each(function() {
-                    $t = $(this)
-                    var field = $t.data('field');
-                    var typeaheadSource = new Bloodhound({
-                        datumTokenizer: function(d) { return d.tokens; },
-                        queryTokenizer: Bloodhound.tokenizers.whitespace,
-                        remote: {
-                            url: '/api/search/facets?facet='+field+'&q=%QUERY',
-                            filter: function(t) {
-                                return t.terms
-                            }
-                        },
-                    });
+                    var $t = $(this),
+                        field = $t.data('field'),
+                        defaultPlaceholder = { _id: '_none_', 'term': $t.data('emptyValue'), 'className': 'primary' },
+                        typeaheadSource = new Bloodhound({
+                            datumTokenizer: function(d) { return d.tokens; },
+                            queryTokenizer: Bloodhound.tokenizers.whitespace,
+                            remote: {
+                                url: '/api/search/facets?facet='+field+'&q=%QUERY',
+                                filter: function(t) {
+                                    return t.terms
+                                }
+                            },
+                        });
 
                     typeaheadSource.initialize();
 
                     $t.tagsinput({
-                        placeholder: 'Start typing to trigger autocomplete',
+                        placeholder: 'Start typing for autocomplete',
                         freeInput: false,
-                        itemValue: 'term',
+                        itemValue: function(item) { return item._id || item.term; },
+                        tagClass: function(item) {
+                            return 'label label-'+(item.className || 'info');
+                        },
+                        defaultItemValueKey: 'term',
                         itemText: 'term',
                         typeahead: {
                             options: {
-                                minLength: 2,
+                                minLength: 1
                             },
                             source: {
                                 name: field+'-dataset',
                                 displayKey: 'term',
-                                source: typeaheadSource.ttAdapter()
-                            }
+                                source: typeaheadSource.ttAdapter(),
+                                templates: {
+                                    empty: '<p>No matching results found</p>'
+                                }
+                            },
                         }
                     });
+
+                    $t.on('itemAdded', function(e) {
+
+                        if(e.item !== defaultPlaceholder)
+                        {
+                            $(this).tagsinput('remove', defaultPlaceholder);
+                        }
+
+                    });
+
+                    $t.on('itemRemoved', function() {
+                        if(!$(this).tagsinput('items').length)
+                        {
+                            $(this).tagsinput('add', defaultPlaceholder);
+                        }
+                    });
+
+                    if(!$t.tagsinput('items').length)
+                    {
+                        // populate with default
+                        $t.tagsinput('add', defaultPlaceholder);
+                    }
+
+                    $t.closest('form').on('beforesubmit', function() {
+                        $t.tagsinput('remove', defaultPlaceholder);
+                    })
                 });
             });
         }
