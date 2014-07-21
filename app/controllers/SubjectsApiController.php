@@ -103,10 +103,10 @@ class SubjectsApiController extends ApiController
             $baseQuery = $sb->buildQuery('', $this->getUserId(), $widgetSettings[Widget::SETTINGS_FILTERS]);
 
             // speed up query, since we will be doing many of them
-            $query['track_scores'] = false;
-            $query['size'] = 0;
-            unset($query['query']['filtered']['query']);
-            unset($query['sort']);
+            $baseQuery['track_scores'] = false;
+            $baseQuery['size'] = 0;
+            unset($baseQuery['query']['filtered']['query']);
+            unset($baseQuery['sort']);
 
             $counts = array();
 
@@ -116,13 +116,13 @@ class SubjectsApiController extends ApiController
             {
                 $query = $baseQuery;
 
-                $combinedSubjects = array_map('strtolower', array_merge((array) $id, $subjects));
+                $combinedSubjects = array_map('trim', array_map('strtolower', array_merge((array) $id, $subjects)));
 
                 if(isset($query['query']['filtered']['filter']))
                 {
                     $query['query']['filtered']['filter']['bool']['must'][] = array(
                         'terms' => array(
-                            'keys' => $combinedSubjects,
+                            'keys_full' => $combinedSubjects,
                         )
                     );
                 }
@@ -133,7 +133,7 @@ class SubjectsApiController extends ApiController
                             'query' => $query['query'],
                             'filter' => array(
                                 'terms' => array(
-                                    'keys' => $combinedSubjects,
+                                    'keys_full' => $combinedSubjects,
                                 )
                             )
                         )
@@ -192,7 +192,7 @@ class SubjectsApiController extends ApiController
             {
                 $query['facets']['key_'.$id] = array(
                     'filter' => array(
-                        'term' => array('keys' => strtolower($subject)),
+                        'term' => array('keys_full' => trim(strtolower($subject))),
                     )
                 );
             }

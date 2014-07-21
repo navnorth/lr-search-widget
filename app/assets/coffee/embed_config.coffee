@@ -178,9 +178,6 @@ require([
                 templates: t.templates
             } );
 
-            queryModel.search();
-
-
             LRSearchWidgets.widgets[widgetKey] = {
                 queryModel: queryModel
                 resultsModel: resultsModel
@@ -207,7 +204,7 @@ require([
             _.each(LRSearchWidgets.widgets, (widget, widgetKey) ->
 
                 # watch for style changes to trigger style updates
-                widget.configModel.on('change:font change:main_color change:support_color change:bg_color change:heading_color', ->
+                widget.configModel.on('buildStyles change:font change:main_color change:support_color change:bg_color change:heading_color', ->
                     Features.createWidgetStyles(
                         widgetKey,
                         widget.configModel.toJSON()
@@ -215,7 +212,7 @@ require([
                 );
 
                 # trigger to create initial styles
-                widget.configModel.trigger('change:font')
+                widget.configModel.trigger('buildStyles')
 
                 StandardsBrowser.start(WidgetConfig, widget, (filterValue, itemText) ->
                     widget.view.$el.find('a.lr-nav-link__search').trigger('click')
@@ -238,6 +235,9 @@ require([
 
                     widget.queryModel.trigger('change')
                 )
+
+                #trigger search to populate widget
+                widget.queryModel.search();
             )
 
 

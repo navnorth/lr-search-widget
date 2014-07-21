@@ -19,7 +19,7 @@
             {{/highlight.description}}
 
             {{^highlight.description}}
-                {{{ _source.description }}}
+                {{{ truncatedDescription }}}
             {{/highlight.description}}
         </div>
         <div class="lr-result__url">

@@ -168,7 +168,6 @@
             widgetConfig: widgetConfigModel,
             templates: t.templates
           });
-          queryModel.search();
           LRSearchWidgets.widgets[widgetKey] = {
             queryModel: queryModel,
             resultsModel: resultsModel,
@@ -188,20 +187,21 @@
       LRSearchWidgets.start();
       return require(['esbb/features', 'esbb/features/standards-browser', 'esbb/features/subjects-browser'], function(Features, StandardsBrowser, SubjectsBrowser) {
         _.each(LRSearchWidgets.widgets, function(widget, widgetKey) {
-          widget.configModel.on('change:font change:main_color change:support_color change:bg_color change:heading_color', function() {
+          widget.configModel.on('buildStyles change:font change:main_color change:support_color change:bg_color change:heading_color', function() {
             return Features.createWidgetStyles(widgetKey, widget.configModel.toJSON());
           });
-          widget.configModel.trigger('change:font');
+          widget.configModel.trigger('buildStyles');
           StandardsBrowser.start(WidgetConfig, widget, function(filterValue, itemText) {
             widget.view.$el.find('a.lr-nav-link__search').trigger('click');
             widget.queryModel.clearSearch().addTermFilter('standards', filterValue.toLowerCase(), itemText).search();
             return widget.queryModel.trigger('change');
           });
-          return SubjectsBrowser.start(WidgetConfig, widget, function(filterValue, itemText) {
+          SubjectsBrowser.start(WidgetConfig, widget, function(filterValue, itemText) {
             widget.view.$el.find('a.lr-nav-link__search').trigger('click');
             widget.queryModel.clearSearch().addTermFilter('subjects', filterValue.toLowerCase(), itemText).search();
             return widget.queryModel.trigger('change');
           });
+          return widget.queryModel.search();
         });
       });
     });

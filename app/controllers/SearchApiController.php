@@ -19,6 +19,11 @@ class SearchApiController extends ApiController
         return ElasticSearch\Client::connection($config);
     }
 
+    public function getStats()
+    {
+        return $this->client()->request('/_stats');
+    }
+
     public function postIndex()
     {
         return $this->getIndex();

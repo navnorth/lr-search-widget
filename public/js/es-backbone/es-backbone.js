@@ -399,13 +399,16 @@ define([
 
 			if ( t.model.hasResults && ( results.hits != undefined ) && ( 0 != results.hits.total ) ) {
 				for ( docIndex in results.hits.hits ) {
-					var doc = results.hits.hits[docIndex];
+					var doc = results.hits.hits[docIndex]
+						description = doc._source.description;
 
 					if ( ( doc.highlight != undefined ) && ( typeof doc.highlight != 'string' ) ) {
 						var highlightValue = doc.highlight[ this.highlightField ];
 						doc.highlight[ this.highlightField ] =
-							_.isArray(highlightValue) ? highlightValue.join( '...' ) : highlightValue;
+							_.isArray(highlightValue) ? highlightValue.slice(0,3).join( ' ... ' ) : highlightValue;
 					}
+
+					doc.truncatedDescription = description.length > 300 ? description.slice(0, 300)+'...' : description
 				}
 				var data = this.default_data;
 				//var start = ((this.queryModel.get('page') - 1) * this.queryModel.get('limit')) + 1;
