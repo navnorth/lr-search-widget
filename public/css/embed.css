@@ -463,7 +463,7 @@ a.lr-nav__link {
   /* Rules needed for Perfect Scrollbar plugin. */
   position: relative;
   overflow: auto;
-  height: 500px;
+  height: 400px;
 }
 
 .lr-embed .embed-search-loading {
@@ -1013,31 +1013,21 @@ h3.lr-results-filter__facets__title {
 
 /* line 360, ../scss/_style.scss */
 div.lr-results-filter__keywords,
-div.lr-results-filter__websites {
-  width: 40%;
+div.lr-results-filter__websites,
+div.lr-results-filter__publishers,
+div.lr-results-filter__grades {
+  width: 48%;
   margin-bottom: 1.875em;
-}
-
-/* line 365, ../scss/_style.scss */
-div.lr-results-filter__keywords {
+  margin-right: 2%;
   float: left;
-}
-
-/* line 368, ../scss/_style.scss */
-div.lr-results-filter__websites {
-  float: right;
-}
-
-/* line 371, ../scss/_style.scss */
-div.lr-results-filter__publishers {
-  clear: both;
-  margin-bottom: 1.25em;
 }
 
 @media (max-width: 580px) {
   /* line 376, ../scss/_style.scss */
   div.lr-results-filter__keywords,
-  div.lr-results-filter__websites {
+  div.lr-results-filter__websites,
+  div.lr-results-filter__publishers,
+  div.lr-results-filter__grades {
     float: none;
     width: 100%;
   }

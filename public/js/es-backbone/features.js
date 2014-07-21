@@ -324,8 +324,8 @@ define([
     // Search filter control: expand and collapse.
     $('#lr-results-facets').hide();
     $('#lr-results-filter__title, #js-lr-results-expand').click(function() {
-      $('#lr-results-expand').fadeToggle();
-      $('#lr-results-filter__title').addClass('lr-results-filter__title--active');
+      $('#lr-results-expand').toggleClass('fa-caret-down').toggleClass('fa-caret-up');
+      $('#lr-results-filter__title').toggleClass('lr-results-filter__title--active');
       $('#lr-results-facets').slideFadeToggle(200, function() {
         $(this).perfectScrollbar('update');
       });

@@ -183,7 +183,8 @@ define([
 						'mediaFeatures': 'Accessibility Features',
 						'url_domain': 'Domains',
 						'keys': 'Keywords',
-						'publisher_full': 'Publishers'
+						'publisher_full': 'Publishers',
+						'grades': 'Grade Levels'
 					}
 				} );
 			}
@@ -191,7 +192,7 @@ define([
 
 			if(($facet = this.$('.embed-domain-pie')).length)
 			{
-				new ESBB.SearchFacetPieView( {
+				new ESBB.SearchFacetSelectView( {
 					facetName: 'url_domain',
 					headerName: 'Websites',
 					el: $facet,
@@ -216,6 +217,17 @@ define([
 				new ESBB.SearchFacetSelectView( {
 					facetName: 'publisher_full',
 					headerName: 'Publisher',
+					el: $facet,
+					searchQueryModel: this.query,
+					model: this.model
+				} );
+			}
+
+			if(($facet = this.$('.embed-grades-selector')).length)
+			{
+				new ESBB.SearchFacetSelectView( {
+					facetName: 'grades',
+					headerName: 'Grade Levels',
 					el: $facet,
 					searchQueryModel: this.query,
 					model: this.model

@@ -155,7 +155,7 @@ require([
                 },
                 limit : 10
                 query : ''
-                facets : if t.settings.show_facets or demo then [ 'url_domain', 'keys', 'publisher_full', 'mediaFeatures'] else []
+                facets : if t.settings.show_facets or demo then [ 'url_domain', 'keys', 'publisher_full', 'mediaFeatures', 'grades'] else []
                 filter_keys: t.settings.filters || []
                 highlight: ['description']
             } );

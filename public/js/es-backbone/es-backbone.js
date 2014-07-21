@@ -7,8 +7,6 @@ define([
 	'excanvas',
 	'jquery.lazyload',
 	'jquery.flot.all',
-	//'jquery.flot.pie',
-	//'jquery.flot.selection',
 	'magnific',
 ], function($, Mustache, _, Backbone) {
 	var ESBB = {};
@@ -821,7 +819,7 @@ define([
 				<tr>\
 					<td><a href="{{name}}" class="esbb-facet-item">{{name}}</a></td>\
 					<td>{{count}}</td>\
-					<td>{{perc}}%</td>\
+					<!-- <td>{{perc}}%</td> -->\
 				</tr>\
 			{{/items}}\
 			{{^items}}\
@@ -863,11 +861,12 @@ define([
 							} );
 						});
 						if ( facet_data.other > 0 )
-							data['items'].push( {
+							// don't include others, allows for bad facet selection
+							/*data['items'].push( {
 								name: 'Others',
 								count: facet_data.other,
 								perc: ( facet_data.other / facet_data.total * 100 ).toFixed(2)
-							} );
+							} );*/
 						break;
 					default:
 						console.error( 'Facet type of ' + facet_data._type + ' for facet ' + this.facetName + ' not implemeneted.' );

@@ -151,7 +151,7 @@
             },
             limit: 10,
             query: '',
-            facets: t.settings.show_facets || demo ? ['url_domain', 'keys', 'publisher_full', 'mediaFeatures'] : [],
+            facets: t.settings.show_facets || demo ? ['url_domain', 'keys', 'publisher_full', 'mediaFeatures', 'grades'] : [],
             filter_keys: t.settings.filters || [],
             highlight: ['description']
           });

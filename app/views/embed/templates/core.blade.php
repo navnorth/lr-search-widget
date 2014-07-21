@@ -49,11 +49,13 @@
               @if($facets || $demo)
                   <div class="embed-facets">
                       <div class="lr-results-filter">
-                        <h2 id="lr-results-filter__title" class="lr-results-filter__title" title="Filter search results">Filter by<i title="Expand search filters" id="lr-results-expand" class="fa fa-caret-down"></i></h2>
+                        <h2 id="lr-results-filter__title" class="lr-results-filter__title" title="Filter search results">Filter by
+                          <i title="Expand search filters" id="lr-results-expand" class="fa fa-caret-down"></i>
+                        </h2>
                         <div id="lr-results-facets" class="lr-results-filter__facets">
-                          <i  title="Collapse search filters" id="lr-results-collapse" class="fa fa-times"></i>
                           <div class="lr-results-filter__keywords embed-keys-selector"></div>
                           <div class="lr-results-filter__websites embed-domain-pie"></div>
+                          <div class="lr-results-filter__grades embed-grades-selector"></div>
                           <div class="lr-results-filter__publishers embed-publishers-selector"></div>
                           <div class="lr-results-filter__mediaFeatures embed-mediaFeatures-selector"></div>
                         </div>
