@@ -77,6 +77,10 @@
         //'Enable Flagging' => array('name' => W::SETTINGS_ENABLE_FLAGGING, 'value' => true),
     ));
 
+    echo Former::text(W::SETTINGS_LEAVING_SITE_MESSAGE, 'Leaving Site Warning')
+        ->value($settings[W::SETTINGS_LEAVING_SITE_MESSAGE])
+        ->placeholder('Enter a message here to alert people they will be leaving your site to see a resource');
+
     echo Former::color(W::SETTINGS_WIDGET_MAIN_COLOR, 'Widget Navigation and Text Color')
         ->value($settings[W::SETTINGS_WIDGET_MAIN_COLOR]);
 

@@ -206,6 +206,8 @@ class SearchApiController extends ApiController
             ),
         );
 
+        return $searchQuery;
+
         $result = $this->client()->search($searchQuery);
 
         return $result;

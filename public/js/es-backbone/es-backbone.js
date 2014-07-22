@@ -380,6 +380,25 @@ define([
 
 				this.modalView.renderResource(new Backbone.Model(doc))
 			}
+			else
+			{
+				var message = this.widgetConfig.get('leaving_site_message');
+
+				if(message)
+				{
+					e.preventDefault();
+
+					$.openSimpleConfirmDialog({
+						messageDetails: {
+							title: 'Continue to Resource?',
+							message: message
+						},
+						onYes: function() {
+							window.open($(e.target).closest('a').attr('href'), '_blank');
+						}
+					});
+				}
+			}
 
 		},
 

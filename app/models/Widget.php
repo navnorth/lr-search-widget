@@ -26,6 +26,7 @@ class Widget extends Eloquent {
     const SETTINGS_WIDGET_SUPPORT_COLOR = 'support_color';
     const SETTINGS_WIDGET_BG_COLOR = 'bg_color';
     const SETTINGS_DEFAULT_RESOURCE_IMAGE = 'default_res_image';
+    const SETTINGS_LEAVING_SITE_MESSAGE = 'leaving_site_message';
 
     public static $DEFAULT_WIDGET_SETTINGS = array(
         self::SETTINGS_FILTERS => array(),
@@ -40,6 +41,7 @@ class Widget extends Eloquent {
         self::SETTINGS_WIDGET_BG_COLOR => '#ffffff',
         self::SETTINGS_WIDGET_HEADING_COLOR => '#2e7fa4',
         self::SETTINGS_DEFAULT_RESOURCE_IMAGE => '',
+        self::SETTINGS_LEAVING_SITE_MESSAGE => '',
     );
 
     public function getWidgetSettingsAttribute($value)

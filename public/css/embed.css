@@ -1208,3 +1208,37 @@ figure.lr-footer__logo img {
   white-space: nowrap;
   margin-bottom: 4px;
 }
+
+.lr-confirm-dialog__background {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 5000;
+  background-color: #000;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.lr-confirm-dialog__dialog {
+  margin: auto;
+  margin-top: 25%;
+  width: 300px;
+  border: 1px solid #eee;
+  background-color: #ddd;
+  padding: 20px;
+}
+
+.lr-confirm-dialog__title {
+  font-weight: bold;
+  font-size
+}
+
+.lr-confirm-dialog__buttons {
+  margin-top: 10px;
+  text-align: right;
+}
+  .lr-confirm-dialog__buttons button {
+
+  }
+

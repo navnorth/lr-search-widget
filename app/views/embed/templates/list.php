@@ -23,7 +23,7 @@
             {{/highlight.description}}
         </div>
         <div class="lr-result__url">
-            <a title="Go to {{ _source.url }}" href="{{ _source.url }}">{{ _source.url }}</a>
+            <a title="Go to {{ _source.url }}" href="{{ _source.url }}" target="_blank">{{ _source.url }}</a>
         </div>
     </li>
     {{/hits}}

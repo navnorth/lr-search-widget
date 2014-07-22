@@ -13,10 +13,15 @@ define([
 	ESBBApp.ResourceModalView = Backbone.View.extend({
 		className: 'lr-popup',
 
+		events: {
+			'click a': 'clickLink'
+		},
+
 		initialize: function(options) {
 			this.options = options;
 			this.template = options.template;
 			this.globalConfig = options.globalConfig;
+			this.widgetConfig = options.widgetConfig;
 		},
 
 		renderResource: function(model) {
@@ -38,8 +43,76 @@ define([
 			})
 
 			return this;
+		},
+
+		clickLink: function(e) {
+			var message = this.widgetConfig.get('leaving_site_message');
+
+			if(message)
+			{
+				e.preventDefault();
+
+				$.openSimpleConfirmDialog({
+					messageDetails: {
+						title: 'Continue to Resource?',
+						message: message
+					},
+					onYes: function() {
+						window.open($(e.target).closest('a').attr('href'), '_blank');
+					}
+				});
+			}
+
 		}
 	});
+
+	ESBBApp.SimpleConfirmDialog = Backbone.View.extend({
+		className: 'lr-confirm-dialog__background',
+		template: '<div class="lr-confirm-dialog__dialog">\
+			<div class="lr-confirm-dialog__title">{{ title }}</div>\
+				<div class="lr-confirm-dialog__message">{{ message }}</div>\
+				<div class="lr-confirm-dialog__buttons">\
+					<button class="lr-confirm-dialog__button" type="button" data-response="yes">Yes</button> \
+					<button class="lr-confirm-dialog__button" type="button" data-response="no">No</button> \
+				</div>\
+			</div>\
+		',
+
+		events: {
+			'click button': 'handleResponse'
+		},
+
+		render: function() {
+			this.$el.html(Mustache.render(this.template, this.model.toJSON()));
+
+			$('body').append(this.$el);
+		},
+
+		handleResponse: function(e) {
+			this.model.trigger('dialog:'+$(e.target).data('response'));
+
+			this.remove();
+		}
+	});
+
+	$.openSimpleConfirmDialog = function(options) {
+		var model = new Backbone.Model(options.messageDetails),
+			dialog = new ESBBApp.SimpleConfirmDialog({ model: model });
+
+		dialog.render();
+
+		if(options.onYes)
+		{
+			dialog.listenTo(model, 'dialog:yes', options.onYes);
+		}
+
+		if(options.onNo)
+		{
+			dialog.listenTo(model, 'dialog:no', options.onNo);
+		}
+
+		return dialog.render();
+	};
 
 	ESBBApp.HeadingView = Backbone.View.extend({
 		template: '\
@@ -86,7 +159,8 @@ define([
 
 			this.modalView = new ESBBApp.ResourceModalView({
 				template: this.templates.modal,
-				globalConfig: this.globalConfig
+				globalConfig: this.globalConfig,
+				widgetConfig: this.widgetConfig
 			});
 
 			this.query = this.options.query;
