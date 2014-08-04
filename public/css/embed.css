@@ -1096,11 +1096,28 @@ ul.lr-active-facets li.last {
 
 /* line 407, ../scss/_style.scss */
 li.lr-active-facets__facet {
-  padding: 0.125em 0 0.125em 0.3125em !important;
+  padding: 0.125em 0.3125em 0.125em 0.3125em !important;
   background-color: #f0f0f0;
   border-radius: 4px;
   font-size: 0.75em;
+  max-width: 100%;
+  position: relative;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
+
+li.lr-active-facets__facet a {
+  background-color: #666;
+  border-radius: 10px;
+  display: none;
+  position: absolute;
+  right: 1px;
+}
+
+li.lr-active-facets__facet:hover a {
+  display: inline;
+}
+
 /* line 412, ../scss/_style.scss */
 li.lr-active-facets__facet .fa {
   margin: 0 0.3125em;
@@ -1109,6 +1126,8 @@ li.lr-active-facets__facet .fa {
   cursor: pointer;
   transition: color .1s;
 }
+
+
 /* line 418, ../scss/_style.scss */
 li.lr-active-facets__facet .fa:hover {
   color: #999999;
