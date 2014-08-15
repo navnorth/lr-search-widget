@@ -21,3 +21,6 @@ This project includes a `.htaccess` in `public/` that should work immediately wh
 
 ## API Documentation
 Further documentation and examples for available API endpoints is available at /help
+
+## Copyright and license
+Code and documentation copyright 2014 Navigation North. Code released dual-licensed, available under either [the MIT license](LICENSE-MIT) or  [the Apache 2 license](LICENSE-APACHE).
