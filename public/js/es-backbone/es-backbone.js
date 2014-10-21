@@ -1279,7 +1279,7 @@ define([
 		render: function( note ) {
 			this.$el.empty();
 			this.$el.append( Mustache.render( this.template, { headerName: this.headerName, buttonText: this.buttonText } ) );
-			this.$el.find( '.lr-search-form__term' ).attr( 'value', this.model.getQueryString() ).focus();
+			this.$el.find( '.lr-search-form__term' ).attr( 'value', this.model.getQueryString() );
 
 			this.spinner = $( '<div/>', { style: 'left:640px; top: -28px;' } );
 			/*this.spinner.spin( 'medium' );
