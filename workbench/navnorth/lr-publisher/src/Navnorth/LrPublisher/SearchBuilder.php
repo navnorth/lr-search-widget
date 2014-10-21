@@ -336,7 +336,7 @@ class SearchBuilder
         {
             return array(
                 'terms' => array(
-                    'keys' => array_map('strtolower', $keywords),
+                    'keys_full' => array_map('strtolower', $keywords),
                 )
             );
         }
