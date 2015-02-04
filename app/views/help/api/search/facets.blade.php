@@ -1,5 +1,4 @@
-<h5>GET /api/search</h5>
-<h5>POST /api/search</h5>
+<h5>GET /api/search/facets</h5>
 
 <p>Endpoint to return facet data</p>
 
