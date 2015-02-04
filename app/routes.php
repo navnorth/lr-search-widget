@@ -17,6 +17,7 @@ Route::controller('api/embed', 'EmbedApiController');
 Route::controller('api/standards', 'StandardsApiController');
 Route::controller('api/subjects', 'SubjectsApiController');
 Route::controller('api', 'ApiController');
+Route::controller('help', 'HelpController');
 Route::controller('embed', 'EmbedController');
 
 
