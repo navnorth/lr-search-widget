@@ -18,9 +18,6 @@ return array(
 	 */
 	'consumers' => array(
 
-		/**
-		 * Google
-		 */
         'Google' => array(
             'client_id'     => $_ENV['test_google_id'],
             'client_secret' => $_ENV['test_google_secret'],

@@ -1,7 +1,5 @@
 <?php
 
-	// use Session;
-
 	class SocialAuthController extends BaseController {
 
 		public function loginWithGoogle() {
