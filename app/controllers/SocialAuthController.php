@@ -5,7 +5,7 @@
 		public function loginWithGoogle() {
 
 			// get google service
-			$googleService = OAuth::consumer('Google', 'http://test-search.learningregistry.net/verify/google');
+			$googleService = OAuth::consumer('Google', $_ENV['test_google_callback']);
 
 	    // get code from input
 	    $code = Input::get('code');
@@ -40,7 +40,7 @@
 		public function loginWithMicrosoft() {
 
 			// get microsoft service
-			$microsoft = OAuth::consumer('Microsoft', 'http://test-search.learningregistry.net/verify/microsoft');
+			$microsoft = OAuth::consumer('Microsoft', $_ENV['test_microsoft_callback']);
 
 			// get code from input
 		  $code = Input::get('code');
@@ -81,7 +81,7 @@
 
 		public function loginWithAmazon() {
 
-				$amazon = OAuth::consumer('Amazon', 'https://test-search.learningregistry.net/verify/amazon');
+				$amazon = OAuth::consumer('Amazon', $_ENV['test_amazon_callback']);
 
 				$code = Input::get('code');
 

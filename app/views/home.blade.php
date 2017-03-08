@@ -3,7 +3,7 @@
 @if(!Session::has('user'))
     <div class="auth">
         <a href="/verify/google">
-            <img src="./img/google_auth_button.png" width="195" height="46" />
+            <img src="./img/google_auth_button.png" width="200" height="50" />
         </a>
         <a href="/verify/amazon">
             <img src="./img/amazon_auth_button.png" width="195" height="46"/>
