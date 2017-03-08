@@ -186,15 +186,15 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 
-		'Former'		  => 'Former\Facades\Former',
-		'Profiler' 		  => 'Profiler\Facades\Profiler',
-		'Asset' 		  => 'Roumen\Asset\Asset',
-		'Image'			  => 'Intervention\Image\Facades\Image',
+		'Former'		      => 'Former\Facades\Former',
+		'Profiler' 		    => 'Profiler\Facades\Profiler',
+		'Asset' 		      => 'Roumen\Asset\Asset',
+		'Image'			      => 'Intervention\Image\Facades\Image',
 
-		'Excel' => 'Maatwebsite\Excel\Facades\Excel',
+		'Excel'           => 'Maatwebsite\Excel\Facades\Excel',
 
-    'OAuth' => 'Artdarek\OAuth\Facade\OAuth',
-
+    'OAuth'           => 'Artdarek\OAuth\Facade\OAuth',
+		'Helper'          => 'Helpers\Helper',
 	),
 
 );

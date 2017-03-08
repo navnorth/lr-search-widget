@@ -83,7 +83,7 @@
 
 		public function loginWithAmazon() {
 
-				$amazon = OAuth::consumer('Amazon', 'http://test-search.learningregistry.net/verify/amazon');
+				$amazon = OAuth::consumer('Amazon', 'https://test-search.learningregistry.net/verify/amazon');
 
 				$code = Input::get('code');
 

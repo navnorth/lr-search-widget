@@ -5,6 +5,7 @@ use Event;
 use ApiUser;
 use Session;
 use Auth;
+use Helper;
 
 class LrPublisherServiceProvider extends ServiceProvider {
 
@@ -44,7 +45,7 @@ class LrPublisherServiceProvider extends ServiceProvider {
 				}
 
 				Session::put('user', $user);
-				Auth::login($user);
+				// Auth::login($user);
 
 				return $user;
 		});
@@ -64,29 +65,32 @@ class LrPublisherServiceProvider extends ServiceProvider {
 			}
 
 			Session::put('user', $user);
-			Auth::login($user);
+			// Auth::login($user);
 
 			return $user;
 		});
 
 		Event::listen('amazon.signin', function($info) {
 
-			$user = ApiUser::where('oauth_id', $info['id'])->first();
+			$user = ApiUser::where('oauth_id', $info['user_id'])->first();
 
 			// if there's no user, create one
-			//
-			// TODO: edit $user creation to match the information amazon returns
 			if (!$user) {
+
+					//amazon doesn't split first and last names
+					$formatted_name = Helper::split_name($info['name']);
+
 					$user = new ApiUser();
-					$user->oauth_id = $info['id'];
+					$user->oauth_id = $info['user_id'];
 					$user->oauth_type = 'amazon';
-					$user->firstname = $info['first_name'];
-					$user->lastname = $info['last_name'];
+					$user->firstname = $formatted_name['first_name'];
+					$user->lastname = $formatted_name['last_name'];
+					$user->email = $info['email'];
 					$user->save();
 			}
 
 			Session::put('user', $user);
-			Auth::login($user);
+			// Auth::login($user);
 
 			return $user;
 		});
