@@ -49,9 +49,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'lr_publisher_widget',
-			'username'  => '*username*',
-			'password'  => '*password*',
+			'database'  => 'lrsearch',
+			'username'  => 'lrsearch',
+			'password'  => 'lrsearch',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

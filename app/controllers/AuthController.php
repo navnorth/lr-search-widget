@@ -35,7 +35,7 @@ class AuthController extends BaseController {
 
 	public function getCreateApiKey()
 	{
-		if(($user = Auth::user()) && !$user->api_key)
+		if(($user = Session::get('user')) && !$user->api_key)
 		{
 			$user->generateNewApiKey();
 
@@ -47,7 +47,7 @@ class AuthController extends BaseController {
 
 	public function postUpdateProfile()
 	{
-		$user = Auth::user();
+		$user = Session::get('user');
 
 		if(!$user)
 		{
@@ -92,4 +92,5 @@ class AuthController extends BaseController {
 
 		return Redirect::to('/');
 	}
+
 }

@@ -1,0 +1,176 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'install' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.37
+4 verbose node symlink /usr/bin/node
+5 verbose readDependencies using package.json deps
+6 verbose install where, deps [ '/lrsearch_src',
+6 verbose install   [ 'clean-css', 'hogan.js', 'stylus', 'nib', 'coffee-script' ] ]
+7 info preinstall LR-Search-Widget@0.0.1
+8 verbose readDependencies using package.json deps
+9 verbose cache add [ 'clean-css@~2.1.0', null ]
+10 verbose cache add name=undefined spec="clean-css@~2.1.0" args=["clean-css@~2.1.0",null]
+11 verbose parsed url { protocol: null,
+11 verbose parsed url   slashes: null,
+11 verbose parsed url   auth: null,
+11 verbose parsed url   host: null,
+11 verbose parsed url   port: null,
+11 verbose parsed url   hostname: null,
+11 verbose parsed url   hash: null,
+11 verbose parsed url   search: null,
+11 verbose parsed url   query: null,
+11 verbose parsed url   pathname: 'clean-css@~2.1.0',
+11 verbose parsed url   path: 'clean-css@~2.1.0',
+11 verbose parsed url   href: 'clean-css@~2.1.0' }
+12 verbose cache add [ 'hogan.js@~2.0.0', null ]
+13 verbose cache add name=undefined spec="hogan.js@~2.0.0" args=["hogan.js@~2.0.0",null]
+14 verbose parsed url { protocol: null,
+14 verbose parsed url   slashes: null,
+14 verbose parsed url   auth: null,
+14 verbose parsed url   host: null,
+14 verbose parsed url   port: null,
+14 verbose parsed url   hostname: null,
+14 verbose parsed url   hash: null,
+14 verbose parsed url   search: null,
+14 verbose parsed url   query: null,
+14 verbose parsed url   pathname: 'hogan.js@~2.0.0',
+14 verbose parsed url   path: 'hogan.js@~2.0.0',
+14 verbose parsed url   href: 'hogan.js@~2.0.0' }
+15 verbose cache add [ 'stylus@~0.42.2', null ]
+16 verbose cache add name=undefined spec="stylus@~0.42.2" args=["stylus@~0.42.2",null]
+17 verbose parsed url { protocol: null,
+17 verbose parsed url   slashes: null,
+17 verbose parsed url   auth: null,
+17 verbose parsed url   host: null,
+17 verbose parsed url   port: null,
+17 verbose parsed url   hostname: null,
+17 verbose parsed url   hash: null,
+17 verbose parsed url   search: null,
+17 verbose parsed url   query: null,
+17 verbose parsed url   pathname: 'stylus@~0.42.2',
+17 verbose parsed url   path: 'stylus@~0.42.2',
+17 verbose parsed url   href: 'stylus@~0.42.2' }
+18 verbose cache add [ 'nib@~1.0.2', null ]
+19 verbose cache add name=undefined spec="nib@~1.0.2" args=["nib@~1.0.2",null]
+20 verbose parsed url { protocol: null,
+20 verbose parsed url   slashes: null,
+20 verbose parsed url   auth: null,
+20 verbose parsed url   host: null,
+20 verbose parsed url   port: null,
+20 verbose parsed url   hostname: null,
+20 verbose parsed url   hash: null,
+20 verbose parsed url   search: null,
+20 verbose parsed url   query: null,
+20 verbose parsed url   pathname: 'nib@~1.0.2',
+20 verbose parsed url   path: 'nib@~1.0.2',
+20 verbose parsed url   href: 'nib@~1.0.2' }
+21 verbose cache add [ 'coffee-script@~1.7.1', null ]
+22 verbose cache add name=undefined spec="coffee-script@~1.7.1" args=["coffee-script@~1.7.1",null]
+23 verbose parsed url { protocol: null,
+23 verbose parsed url   slashes: null,
+23 verbose parsed url   auth: null,
+23 verbose parsed url   host: null,
+23 verbose parsed url   port: null,
+23 verbose parsed url   hostname: null,
+23 verbose parsed url   hash: null,
+23 verbose parsed url   search: null,
+23 verbose parsed url   query: null,
+23 verbose parsed url   pathname: 'coffee-script@~1.7.1',
+23 verbose parsed url   path: 'coffee-script@~1.7.1',
+23 verbose parsed url   href: 'coffee-script@~1.7.1' }
+24 verbose cache add name="clean-css" spec="~2.1.0" args=["clean-css","~2.1.0"]
+25 verbose parsed url { protocol: null,
+25 verbose parsed url   slashes: null,
+25 verbose parsed url   auth: null,
+25 verbose parsed url   host: null,
+25 verbose parsed url   port: null,
+25 verbose parsed url   hostname: null,
+25 verbose parsed url   hash: null,
+25 verbose parsed url   search: null,
+25 verbose parsed url   query: null,
+25 verbose parsed url   pathname: '~2.1.0',
+25 verbose parsed url   path: '~2.1.0',
+25 verbose parsed url   href: '~2.1.0' }
+26 verbose addNamed [ 'clean-css', '~2.1.0' ]
+27 verbose addNamed [ null, '>=2.1.0-0 <2.2.0-0' ]
+28 verbose cache add name="hogan.js" spec="~2.0.0" args=["hogan.js","~2.0.0"]
+29 verbose parsed url { protocol: null,
+29 verbose parsed url   slashes: null,
+29 verbose parsed url   auth: null,
+29 verbose parsed url   host: null,
+29 verbose parsed url   port: null,
+29 verbose parsed url   hostname: null,
+29 verbose parsed url   hash: null,
+29 verbose parsed url   search: null,
+29 verbose parsed url   query: null,
+29 verbose parsed url   pathname: '~2.0.0',
+29 verbose parsed url   path: '~2.0.0',
+29 verbose parsed url   href: '~2.0.0' }
+30 verbose addNamed [ 'hogan.js', '~2.0.0' ]
+31 verbose addNamed [ null, '>=2.0.0-0 <2.1.0-0' ]
+32 verbose cache add name="stylus" spec="~0.42.2" args=["stylus","~0.42.2"]
+33 verbose parsed url { protocol: null,
+33 verbose parsed url   slashes: null,
+33 verbose parsed url   auth: null,
+33 verbose parsed url   host: null,
+33 verbose parsed url   port: null,
+33 verbose parsed url   hostname: null,
+33 verbose parsed url   hash: null,
+33 verbose parsed url   search: null,
+33 verbose parsed url   query: null,
+33 verbose parsed url   pathname: '~0.42.2',
+33 verbose parsed url   path: '~0.42.2',
+33 verbose parsed url   href: '~0.42.2' }
+34 verbose addNamed [ 'stylus', '~0.42.2' ]
+35 verbose addNamed [ null, '>=0.42.2-0 <0.43.0-0' ]
+36 verbose cache add name="nib" spec="~1.0.2" args=["nib","~1.0.2"]
+37 verbose parsed url { protocol: null,
+37 verbose parsed url   slashes: null,
+37 verbose parsed url   auth: null,
+37 verbose parsed url   host: null,
+37 verbose parsed url   port: null,
+37 verbose parsed url   hostname: null,
+37 verbose parsed url   hash: null,
+37 verbose parsed url   search: null,
+37 verbose parsed url   query: null,
+37 verbose parsed url   pathname: '~1.0.2',
+37 verbose parsed url   path: '~1.0.2',
+37 verbose parsed url   href: '~1.0.2' }
+38 verbose addNamed [ 'nib', '~1.0.2' ]
+39 verbose addNamed [ null, '>=1.0.2-0 <1.1.0-0' ]
+40 verbose cache add name="coffee-script" spec="~1.7.1" args=["coffee-script","~1.7.1"]
+41 verbose parsed url { protocol: null,
+41 verbose parsed url   slashes: null,
+41 verbose parsed url   auth: null,
+41 verbose parsed url   host: null,
+41 verbose parsed url   port: null,
+41 verbose parsed url   hostname: null,
+41 verbose parsed url   hash: null,
+41 verbose parsed url   search: null,
+41 verbose parsed url   query: null,
+41 verbose parsed url   pathname: '~1.7.1',
+41 verbose parsed url   path: '~1.7.1',
+41 verbose parsed url   href: '~1.7.1' }
+42 verbose addNamed [ 'coffee-script', '~1.7.1' ]
+43 verbose addNamed [ null, '>=1.7.1-0 <1.8.0-0' ]
+44 silly lockFile 4fe7da3d-clean-css-2-1-0 clean-css@~2.1.0
+45 error Error: Attempt to unlock clean-css@~2.1.0, which hasn't been locked
+45 error     at unlock (/usr/lib/node_modules/npm/lib/utils/locker.js:44:11)
+45 error     at cb (/usr/lib/node_modules/npm/lib/cache/add-named.js:32:5)
+45 error     at /usr/lib/node_modules/npm/lib/cache/add-named.js:41:20
+45 error     at /usr/lib/node_modules/npm/lib/utils/locker.js:22:20
+45 error     at /usr/lib/node_modules/npm/node_modules/inflight/inflight.js:22:7
+45 error     at Array.forEach (native)
+45 error     at res (/usr/lib/node_modules/npm/node_modules/inflight/inflight.js:21:9)
+45 error     at f (/usr/lib/node_modules/npm/node_modules/once/once.js:16:25)
+45 error     at afterMkdir (/usr/lib/node_modules/npm/lib/cache/get-stat.js:53:14)
+45 error     at /usr/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53
+46 error If you need help, you may report this *entire* log,
+46 error including the npm and node versions, at:
+46 error     <http://github.com/npm/npm/issues>
+47 error System Linux 3.2.0-23-generic
+48 error command "/usr/bin/node" "/usr/bin/npm" "install"
+49 error cwd /lrsearch_src
+50 error node -v v0.10.37
+51 error npm -v 1.4.28
+52 verbose exit [ 1, true ]

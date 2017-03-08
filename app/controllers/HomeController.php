@@ -1,5 +1,7 @@
 <?php
 
+// use \Auth;
+
 class HomeController extends BaseController {
 
 	/*

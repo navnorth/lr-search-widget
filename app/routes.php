@@ -27,8 +27,13 @@ Route::resource('widget', 'WidgetController');
 
 Route::get('/', 'HomeController@showHome');
 
+// OAUTH ROUTES //
+Route::get('verify/google', 'SocialAuthController@loginWithGoogle');
+Route::get('verify/microsoft', 'SocialAuthController@loginWithMicrosoft');
+Route::get('verify/amazon', 'SocialAuthController@loginWithAmazon');
+Route::get('/logout', 'SocialAuthController@logout');
+
 Route::get('webcap', 'WebcapController@getIndex');
 Route::get('webcap/screencap.jpg', 'WebcapController@getIndex');
 Route::get('webcap/{id}/screencap.jpg', 'WebcapController@getScreencapById');
 Route::get('webcap/{id}/{size}/screencap.jpg', 'WebcapController@getScreencapById');
-

@@ -42,7 +42,7 @@ class WidgetController extends \BaseController {
 		$this->_applyWidgetSettings($widget);
 
 		$widget->widget_key = str_random(12);
-		$widget->api_user_id = Auth::user()->api_user_id;
+		$widget->api_user_id = Session::get('user')->api_user_id;
 
 		$widget->save();
 
@@ -130,7 +130,7 @@ class WidgetController extends \BaseController {
 	{
 		$widget = Widget::find($id);
 
-		if(Auth::user()->api_user_id == $widget->api_user_id)
+		if(Session::get('user')->api_user_id == $widget->api_user_id)
 		{
 			return $widget;
 		}

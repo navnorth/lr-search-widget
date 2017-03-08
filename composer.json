@@ -7,14 +7,15 @@
 		"laravel/framework": "4.1.25",
 		"nesbot/carbon": "1.8.*",
 		"nervetattoo/elasticsearch": "2.3.*",
-		"anahkiasen/former": "dev-master",
-		"jyggen/persona": "v1.0.1",
+		"anahkiasen/former": "3.4.3",
 		"twitter/bootstrap": "v3.1.1",
 		"loic-sharma/profiler": "1.1.*",
-		"roumen/asset": "dev-master",
+		"roumen/asset": "2.5.1",
 		"intervention/image": "1.5.*",
 		"keboola/csv": "1.1.*",
-		"maatwebsite/excel": "dev-master"
+		"maatwebsite/excel": "dev-master",
+		"artdarek/oauth-4-laravel": "dev-master"
+		
 	},
 	"autoload": {
 		"classmap": [

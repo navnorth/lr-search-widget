@@ -30,10 +30,10 @@ window.prepareAuth = function(loggedInUser) {
         });
 
 
-        $('.logout').click(function(e) {
-            e.preventDefault();
-
-            navigator.id.logout();
-        });
+        // $('.logout').click(function(e) {
+        //     e.preventDefault();
+        //
+        //     navigator.id.logout();
+        // });
     })
 };
