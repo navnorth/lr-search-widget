@@ -14,20 +14,20 @@
     <script src="/js/head.js"></script>
 
     <script>
-    head.js(
-        '/js/jquery.js',
-        'https://login.persona.org/include.js',
-        '/js/auth.js',
-        function() {
-            prepareAuth({{ json_encode(Auth::guest() ? null : Auth::user()->email) }});
-        }
-    );
+    // head.js(
+    //     '/js/jquery.js',
+    //     'https://login.persona.org/include.js',
+    //     '/js/auth.js',
+    //     function() {
+    //         prepareAuth({{ json_encode(Auth::guest() ? null : Auth::user()->email) }});
+    //     }
+    // );
 </script>
 
 </head>
 <body>
 
-    <div class="container">
+    <div class="container content">
 
         <div class="row">
             <div class="col-md-9">
@@ -35,11 +35,9 @@
             </div>
             <div class="col-md-3 text-right">
                 <p>
-                    @if($user = Auth::user())
+                    @if($user = Session::get('user'))
                         Welcome, {{ $user->display_name() }}
-                        <button class="btn btn-sm logout">Log Out</button>
-                    @else
-                        <button class="btn login">Login</button>
+                        <a class="btn btn-sm btn-primary" href="/logout">Log Out</a>
                     @endif
                 </p>
             </div>

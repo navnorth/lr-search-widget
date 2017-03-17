@@ -1,35 +1,54 @@
 
-@if(Auth::guest())
-    Login Required
 
-    <button class="btn login">Login</button>
+@if(!Session::has('user'))
+    <div class="auth">
+        <a href="/verify/google">
+            <img src="./img/google_auth_button.png" width="200" height="50" />
+        </a>
+        <a href="/verify/amazon">
+            <img src="./img/amazon_auth_button.png" width="195" height="46"/>
+        </a>
+        <a href="/verify/microsoft">
+            <img src="./img/microsoft_auth_button.png" width="195" height="46"/>
+        </a>
+   </div>
 
 @else
     <?php
-        $user = Auth::user();
+        $user = Session::get('user');
     ?>
 
     <div class="well">
 
-
-
         <dl class="dl-horizontal">
-            @if($user->firstname !== '')
+
                 <dt>Name</dt>
+            @if($user->firstname)
                 <dd>{{ $user->firstname }} {{ $user->lastname }}</dd>
-
-                <dt>Organization</dt>
-                <dd>{{ $user->organization }}</dd>
-
-                <dt>URL</dt>
-                <dd>{{ $user->url }}</dd>
-
+            @else
+                <dd>&nbsp;</dd>
             @endif
 
+                <dt>Organization</dt>
+            @if($user->organization)
+                <dd>{{ $user->organization }}</dd>
+            @else
+                <dd>&nbsp;</dd>
+            @endif
 
+                <dt>URL</dt>
+            @if($user->url)
+                <dd>{{ $user->url }}</dd>
+            @else
+                <dd>&nbsp;</dd>
+            @endif
 
-            <dt>E-mail</dt>
-            <dd>{{ $user->email }}</dd>
+                <dt>E-mail</dt>
+            @if($user->email)
+                <dd>{{ $user->email }}</dd>
+            @else
+                <dd>&nbsp;</dd>
+            @endif
 
             <dt>API Key</dt>
             <dd>
@@ -44,8 +63,9 @@
             </dd>
 
 
-            @if($user->firstname !== '')
+            @if($user->firstname)
                 <dt></dt>
+                <br>
                 <dd>
                     <a href="/auth/update-profile" class="btn btn-primary">Update Profile</a>
                 </dd>

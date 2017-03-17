@@ -15,7 +15,7 @@ return array(
 	|
 	*/
 
-	'driver' => 'persona',
+	'driver' => 'eloquent',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -67,5 +67,18 @@ return array(
 		'expire' => 60,
 
 	),
-
+	'providers' => array(
+	  'microsoft' => array(
+	    'identifier'    => $_ENV['microsoft_id'],
+	    'secret'        => $_ENV['microsoft_secret'],
+	  ),
+		'google' => array(
+			'identifier'    => $_ENV['google_id'],
+			'secret'        => $_ENV['google_secret']
+		),
+		'amazon' => array(
+			'identifier'    => $_ENV['amazon_id'],
+			'secret'        => $_ENV['amazon_secret']
+		)
+	),
 );

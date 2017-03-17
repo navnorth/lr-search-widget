@@ -42,7 +42,7 @@ class SearchFilterController extends \BaseController {
 		$this->_applyFilterSettings($filter);
 
 		$filter->filter_key = str_random(10);
-		$filter->api_user_id = Auth::user()->api_user_id;
+		$filter->api_user_id = Session::get('user')->api_user_id;
 
 		$filter->save();
 
@@ -157,7 +157,7 @@ class SearchFilterController extends \BaseController {
 	{
 		$filter = SearchFilter::find($id);
 
-		if(Auth::user()->api_user_id == $filter->api_user_id)
+		if(Session::get('user')->api_user_id == $filter->api_user_id)
 		{
 			return $filter;
 		}

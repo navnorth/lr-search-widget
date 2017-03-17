@@ -16,7 +16,7 @@ return array(
 	|
 	*/
 
-	'debug' => false,
+	'debug' => true,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -111,7 +111,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 
 		'Former\FormerServiceProvider',
-		'Jyggen\Persona\Provider\Laravel\PersonaServiceProvider',
+		// 'Jyggen\Persona\Provider\Laravel\PersonaServiceProvider',
 		'Profiler\ProfilerServiceProvider',
 
 		'Navnorth\LrPublisher\LrPublisherServiceProvider',
@@ -119,6 +119,7 @@ return array(
 		'Intervention\Image\ImageServiceProvider',
 
 		'Maatwebsite\Excel\ExcelServiceProvider',
+		'Artdarek\OAuth\OAuthServiceProvider',
 	),
 
 	/*
@@ -185,13 +186,15 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 
-		'Former'		  => 'Former\Facades\Former',
-		'Profiler' 		  => 'Profiler\Facades\Profiler',
-		'Asset' 		  => 'Roumen\Asset\Asset',
-		'Image'			  => 'Intervention\Image\Facades\Image',
+		'Former'		      => 'Former\Facades\Former',
+		'Profiler' 		    => 'Profiler\Facades\Profiler',
+		'Asset' 		      => 'Roumen\Asset\Asset',
+		'Image'			      => 'Intervention\Image\Facades\Image',
 
-		'Excel' => 'Maatwebsite\Excel\Facades\Excel',
+		'Excel'           => 'Maatwebsite\Excel\Facades\Excel',
 
+    'OAuth'           => 'Artdarek\OAuth\Facade\OAuth',
+		'Helper'          => 'Helpers\Helper',
 	),
 
 );
