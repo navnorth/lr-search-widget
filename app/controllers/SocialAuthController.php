@@ -5,7 +5,7 @@
 		public function loginWithGoogle() {
 
 			// get google service
-			$googleService = OAuth::consumer('Google', $_ENV['test_google_callback']);
+			$googleService = OAuth::consumer('Google', $_ENV['google_callback']);
 
 	    // get code from input
 	    $code = Input::get('code');
@@ -40,7 +40,7 @@
 		public function loginWithMicrosoft() {
 
 			// get microsoft service
-			$microsoft = OAuth::consumer('Microsoft', $_ENV['test_microsoft_callback']);
+			$microsoft = OAuth::consumer('Microsoft', $_ENV['microsoft_callback']);
 
 			// get code from input
 		  $code = Input::get('code');
@@ -81,7 +81,7 @@
 
 		public function loginWithAmazon() {
 
-				$amazon = OAuth::consumer('Amazon', $_ENV['test_amazon_callback']);
+				$amazon = OAuth::consumer('Amazon', $_ENV['amazon_callback']);
 
 				$code = Input::get('code');
 

@@ -1,21 +1,15 @@
 <?php
+
+		$URL = 'http://test-search.learningregistry.net';
+
 		return array(
 			'microsoft_id'            => '',
 			'microsoft_secret'        => '',
-			'microsoft_callback'      => '',
+			'microsoft_callback'      => $URL . '/verify/microsoft',
 			'google_id'               => '',
 			'google_secret'           => '',
-			'google_callback'         => '',
+			'google_callback'         => $URL . '/verify/google',
 			'amazon_id'               => '',
 			'amazon_secret'           => '',
-			'amazon_callback'         => '',
-			'test_microsoft_id'       => '',
-			'test_microsoft_secret'   => '',
-			'test_microsoft_callback' => '',
-			'test_google_id'          => '',
-			'test_google_secret'      => '',
-			'test_google_callback'    => '',
-			'test_amazon_id'          => '',
-			'test_amazon_secret'      => '',
-			'test_amazon_callback'    => '',
+			'amazon_callback'         => $URL . '/verify/amazon',
 		);
