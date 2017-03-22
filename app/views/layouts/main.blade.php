@@ -14,14 +14,9 @@
     <script src="/js/head.js"></script>
 
     <script>
-    // head.js(
-    //     '/js/jquery.js',
-    //     'https://login.persona.org/include.js',
-    //     '/js/auth.js',
-    //     function() {
-    //         prepareAuth({{ json_encode(Auth::guest() ? null : Auth::user()->email) }});
-    //     }
-    // );
+    head.js(
+        '/js/jquery.js'
+    );
 </script>
 
 </head>

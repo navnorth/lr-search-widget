@@ -6,7 +6,13 @@ class SearchFilterController extends \BaseController {
 
 	public function __construct()
 	{
-		$this->beforeFilter('auth');
+		$this->beforeFilter(function()
+			{
+					if (!Session::get('user'))
+					{
+							return Redirect::to('/');
+					}
+			});
 	}
 
 	/**

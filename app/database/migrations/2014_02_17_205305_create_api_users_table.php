@@ -18,7 +18,7 @@ class CreateApiUsersTable extends Migration {
 			$table->increments('api_user_id');
 			$table->string('firstname', 50);
 			$table->string('lastname', 50);
-			$table->string('email', 50)->unique();
+			$table->string('email', 50);
 			$table->string('oauth_id')->unique();
 			$table->string('oauth_type', 10);
 			$table->string('password', 50);

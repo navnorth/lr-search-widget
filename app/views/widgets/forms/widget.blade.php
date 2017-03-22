@@ -47,7 +47,7 @@
         ->placeholder('We will generate this one automatically for you')
         ->disabled();
 
-    $searchFilters = Auth::user()->searchFilters;
+    $searchFilters = Session::get('user')->searchFilters;
 
     echo Former::select(W::SETTINGS_FILTERS.'[]', 'Search Filters<br />(Click a Filter to Apply)')
         ->fromQuery($searchFilters, 'name', 'filter_key')
@@ -131,7 +131,7 @@
         })
     });
 
-    head.js('/embed/widget-loader/{{ Auth::user()->api_key }}/loader.js',
+    head.js('/embed/widget-loader/{{ Session::get('user')->api_key }}/loader.js',
         function() {
             LRSearchWidgets.ready(function() {
 
@@ -178,4 +178,3 @@
         }
     );
 </script>
-

@@ -1,5 +1,7 @@
 <?php
 
+		//This $URL will work if your local environment is set up to use it.
+		//If you have a different URL configured, use that instead.
 		$URL = 'http://test-search.learningregistry.net';
 
 		return array(

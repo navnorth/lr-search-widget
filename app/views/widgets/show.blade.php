@@ -93,8 +93,6 @@
     <div class="lr-search-widget" data-widget-key="{{ $widget->widget_key }}"></div>
 
     <script>
-        head.js('/embed/widget-loader/{{ Auth::user()->api_key }}/loader.js');
+        head.js('/embed/widget-loader/{{ Session::get('user')->api_key }}/loader.js');
     </script>
 </fieldset>
-
-

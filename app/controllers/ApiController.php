@@ -34,7 +34,7 @@ class ApiController extends BaseController {
 
         if(!$this->apiUser)
         {
-            $this->apiUser = Auth::user();
+            $this->apiUser = Session::get('user');
         }
 
         if(!$this->apiUser)

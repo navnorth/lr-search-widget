@@ -45,7 +45,6 @@ class LrPublisherServiceProvider extends ServiceProvider {
 				}
 
 				Session::put('user', $user);
-				// Auth::login($user);
 
 				return $user;
 		});
@@ -65,7 +64,6 @@ class LrPublisherServiceProvider extends ServiceProvider {
 			}
 
 			Session::put('user', $user);
-			// Auth::login($user);
 
 			return $user;
 		});
@@ -90,7 +88,6 @@ class LrPublisherServiceProvider extends ServiceProvider {
 			}
 
 			Session::put('user', $user);
-			// Auth::login($user);
 
 			return $user;
 		});
