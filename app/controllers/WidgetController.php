@@ -6,7 +6,13 @@ class WidgetController extends \BaseController {
 
 	public function __construct()
 	{
-		$this->beforeFilter('auth');
+		$this->beforeFilter(function()
+			{
+					if (!Session::get('user'))
+					{
+							return Redirect::to('/');
+					}
+			});
 	}
 
 	/**
@@ -27,6 +33,7 @@ class WidgetController extends \BaseController {
 	public function create()
 	{
 		//
+		// dd('create!');
 		return $this->_defaultView('create');
 	}
 

@@ -19,18 +19,18 @@ return array(
 	'consumers' => array(
 
         'Google' => array(
-            'client_id'     => $_ENV['test_google_id'],
-            'client_secret' => $_ENV['test_google_secret'],
+            'client_id'     => $_ENV['google_id'],
+            'client_secret' => $_ENV['google_secret'],
             'scope'         => array('userinfo_email', 'userinfo_profile'),
         ),
 				'Microsoft' => array(
-						'client_id'     => $_ENV['test_microsoft_id'],
-						'client_secret' => $_ENV['test_microsoft_secret'],
+						'client_id'     => $_ENV['microsoft_id'],
+						'client_secret' => $_ENV['microsoft_secret'],
 						'scope'         => array('wl.basic'),
 				),
 				'Amazon' => array(
-						'client_id'     => $_ENV['test_amazon_id'],
-						'client_secret' => $_ENV['test_amazon_secret'],
+						'client_id'     => $_ENV['amazon_id'],
+						'client_secret' => $_ENV['amazon_secret'],
 						'scope'         => array('profile'),
 				)
 

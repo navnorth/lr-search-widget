@@ -9,7 +9,7 @@
             <select name="filter_keys" class="filter_keys">
                 <option value="">(No Filters Active)</option>
 
-                @if($user = Auth::user())
+                @if($user = Session::get('user'))
                     @foreach($user->searchFilters as $filter)
                         <option value="{{ $filter->filter_key }}">{{ $filter->name }}</option>
                     @endforeach
