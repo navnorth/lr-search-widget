@@ -31,7 +31,7 @@ class LrPublisherServiceProvider extends ServiceProvider {
 
 		Event::listen('google.signin', function($info) {
 
-				$user = ApiUser::where('oauth_id', $info['id'])->first();
+				$user = ApiUser::where('email', $info['email'])->first();
 
 				// if there's no user, create one
 				if (!$user) {
@@ -51,7 +51,7 @@ class LrPublisherServiceProvider extends ServiceProvider {
 
 		Event::listen('microsoft.signin', function($info) {
 
-			$user = ApiUser::where('oauth_id', $info['id'])->first();
+			$user = ApiUser::where('email', $info['email'])->first();
 
 			// if there's no user, create one
 			if (!$user) {
@@ -70,7 +70,7 @@ class LrPublisherServiceProvider extends ServiceProvider {
 
 		Event::listen('amazon.signin', function($info) {
 
-			$user = ApiUser::where('oauth_id', $info['user_id'])->first();
+			$user = ApiUser::where('email', $info['email'])->first();
 
 			// if there's no user, create one
 			if (!$user) {

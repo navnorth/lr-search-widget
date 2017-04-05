@@ -118,7 +118,6 @@ return array(
 		'Roumen\Asset\AssetServiceProvider',
 		'Intervention\Image\ImageServiceProvider',
 
-		'Maatwebsite\Excel\ExcelServiceProvider',
 		'Artdarek\OAuth\OAuthServiceProvider',
 	),
 
