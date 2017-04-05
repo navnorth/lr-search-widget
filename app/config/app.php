@@ -111,7 +111,6 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 
 		'Former\FormerServiceProvider',
-		// 'Jyggen\Persona\Provider\Laravel\PersonaServiceProvider',
 		'Profiler\ProfilerServiceProvider',
 
 		'Navnorth\LrPublisher\LrPublisherServiceProvider',
