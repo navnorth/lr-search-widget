@@ -87,9 +87,9 @@
         <div class="row">
             <div class="col-md-6">
                 <fieldset>
-                    <legend>
+                    <legend class="legend-padding-bottom">
                         My Search Filters
-                        <a href="/searchfilter/create" class="btn btn-default btn-sm">
+                        <a href="/searchfilter/create" class="btn btn-default btn-sm btn-margin-left">
                             <i class="glyphicon glyphicon-plus-sign"></i>
                             Create Search Filter
                         </a>
@@ -105,9 +105,9 @@
             </div>
             <div class="col-md-6">
                 <fieldset>
-                    <legend>
+                    <legend class="legend-padding-bottom">
                         My Search Widgets
-                        <a href="/widget/create" class="btn btn-default btn-sm">
+                        <a href="/widget/create" class="btn btn-default btn-sm btn-margin-left">
                             <i class="glyphicon glyphicon-plus-sign"></i>
                             Create Search Widget
                         </a>
@@ -125,7 +125,3 @@
 
 
 @endif
-
-<script>
-
-</script>

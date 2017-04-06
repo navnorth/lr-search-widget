@@ -111,14 +111,12 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 
 		'Former\FormerServiceProvider',
-		// 'Jyggen\Persona\Provider\Laravel\PersonaServiceProvider',
 		'Profiler\ProfilerServiceProvider',
 
 		'Navnorth\LrPublisher\LrPublisherServiceProvider',
 		'Roumen\Asset\AssetServiceProvider',
 		'Intervention\Image\ImageServiceProvider',
 
-		'Maatwebsite\Excel\ExcelServiceProvider',
 		'Artdarek\OAuth\OAuthServiceProvider',
 	),
 

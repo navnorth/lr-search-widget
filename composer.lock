@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1fa11794b2b15b14826f0d70df38b46f",
+    "content-hash": "04dda6cbbca7cdd5df4c332939226af6",
     "packages": [
         {
             "name": "anahkiasen/former",
@@ -105,21 +105,73 @@
             "time": "2015-03-04T17:12:08+00:00"
         },
         {
+            "name": "arcticfalcon/laravel-analytics",
+            "version": "1.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/arcticfalcon/laravel-analytics.git",
+                "reference": "417e62999c6a5b2550f8e30ab4ef4826c0f0f9da"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/arcticfalcon/laravel-analytics/zipball/417e62999c6a5b2550f8e30ab4ef4826c0f0f9da",
+                "reference": "417e62999c6a5b2550f8e30ab4ef4826c0f0f9da",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~4.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.3.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ArcticFalcon\\LaravelAnalytics\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Robert Kummer",
+                    "email": "rok@ipunkt.biz"
+                },
+                {
+                    "name": "Juan Falcón",
+                    "email": "jcfalcon@gmail.com"
+                }
+            ],
+            "description": "Analytics tracking for laravel 4.x",
+            "keywords": [
+                "analytics",
+                "google analytics",
+                "javascript",
+                "laravel",
+                "php",
+                "statistics"
+            ],
+            "time": "2015-02-12T17:01:09+00:00"
+        },
+        {
             "name": "artdarek/oauth-4-laravel",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/artdarek/oauth-4-laravel.git",
-                "reference": "d7226ea17932ee31143bb33b499e6f0aeb7d8ce2"
+                "reference": "eeeaf95c8b0855eaa56d28f1c9082cf2ed13e712"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/artdarek/oauth-4-laravel/zipball/d7226ea17932ee31143bb33b499e6f0aeb7d8ce2",
-                "reference": "d7226ea17932ee31143bb33b499e6f0aeb7d8ce2",
+                "url": "https://api.github.com/repos/artdarek/oauth-4-laravel/zipball/eeeaf95c8b0855eaa56d28f1c9082cf2ed13e712",
+                "reference": "eeeaf95c8b0855eaa56d28f1c9082cf2ed13e712",
                 "shasum": ""
             },
             "require": {
-                "lusitanian/oauth": "~0.3",
+                "lusitanian/oauth": "dev-master",
                 "php": ">=5.3"
             },
             "require-dev": {
@@ -140,6 +192,11 @@
                     "name": "Artdarek",
                     "email": "artdarek@gmail.com",
                     "role": "Developer"
+                },
+                {
+                    "name": "Alejandro Escobedo",
+                    "email": "aeg0204@gmail.com",
+                    "role": "Developer"
                 }
             ],
             "description": "OAuth Service Provider for Laravel 4",
@@ -150,7 +207,7 @@
                 "oauth",
                 "php"
             ],
-            "time": "2015-01-08T16:40:21+00:00"
+            "time": "2017-03-30T13:46:54+00:00"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -287,6 +344,49 @@
             "time": "2013-12-04T14:19:30+00:00"
         },
         {
+            "name": "google/apiclient",
+            "version": "dev-v1-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/google/google-api-php-client.git",
+                "reference": "107dc7d30fa9c6e5b75ce1200665e4fc3adfba6e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/google/google-api-php-client/zipball/107dc7d30fa9c6e5b75ce1200665e4fc3adfba6e",
+                "reference": "107dc7d30fa9c6e5b75ce1200665e4fc3adfba6e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-v1-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/Google/autoload.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Client library for Google APIs",
+            "homepage": "http://developers.google.com/api-client-library/php",
+            "keywords": [
+                "google"
+            ],
+            "time": "2017-01-09 19:33:08"
+        },
+        {
             "name": "intervention/image",
             "version": "1.5.13",
             "source": {
@@ -338,16 +438,16 @@
         },
         {
             "name": "ircmaxell/password-compat",
-            "version": "v1.0.4",
+            "version": "1.0.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ircmaxell/password_compat.git",
-                "reference": "5c5cde8822a69545767f7c7f3058cb15ff84614c"
+                "reference": "9b99377557a33a4129c9194e60a97a685fab21e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ircmaxell/password_compat/zipball/5c5cde8822a69545767f7c7f3058cb15ff84614c",
-                "reference": "5c5cde8822a69545767f7c7f3058cb15ff84614c",
+                "url": "https://api.github.com/repos/ircmaxell/password_compat/zipball/9b99377557a33a4129c9194e60a97a685fab21e0",
+                "reference": "9b99377557a33a4129c9194e60a97a685fab21e0",
                 "shasum": ""
             },
             "require-dev": {
@@ -376,11 +476,11 @@
                 "hashing",
                 "password"
             ],
-            "time": "2014-11-20T16:49:30+00:00"
+            "time": "2014-11-20T19:18:42+00:00"
         },
         {
             "name": "jeremeamia/SuperClosure",
-            "version": "1.0.2",
+            "version": "1.0.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jeremeamia/super_closure.git",
@@ -618,16 +718,16 @@
         },
         {
             "name": "lusitanian/oauth",
-            "version": "v0.8.9",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Lusitanian/PHPoAuthLib.git",
-                "reference": "29bda6e176df6c292a9b1c43ae8a44d56a87c30b"
+                "reference": "09f4af38f17db6938253f4d1b171d537913ac1ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Lusitanian/PHPoAuthLib/zipball/29bda6e176df6c292a9b1c43ae8a44d56a87c30b",
-                "reference": "29bda6e176df6c292a9b1c43ae8a44d56a87c30b",
+                "url": "https://api.github.com/repos/Lusitanian/PHPoAuthLib/zipball/09f4af38f17db6938253f4d1b171d537913ac1ed",
+                "reference": "09f4af38f17db6938253f4d1b171d537913ac1ed",
                 "shasum": ""
             },
             "require": {
@@ -681,68 +781,20 @@
                 "oauth",
                 "security"
             ],
-            "time": "2016-02-24T00:20:18+00:00"
-        },
-        {
-            "name": "maatwebsite/excel",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Maatwebsite/laravel4-PHPExcel.git",
-                "reference": "64f9cf1853ca0cc1e7e99751907becbdd1d32f72"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Maatwebsite/laravel4-PHPExcel/zipball/64f9cf1853ca0cc1e7e99751907becbdd1d32f72",
-                "reference": "64f9cf1853ca0cc1e7e99751907becbdd1d32f72",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/config": "4.x",
-                "illuminate/filesystem": "4.x",
-                "illuminate/support": "4.x",
-                "php": ">=5.3.0",
-                "phpoffice/phpexcel": "1.8.*"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/Maatwebsite/Excel/Readers"
-                ],
-                "psr-0": {
-                    "Maatwebsite\\Excel": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL"
-            ],
-            "authors": [
-                {
-                    "name": "Maatwebsite.nl",
-                    "email": "info@maatwebsite.nl"
-                }
-            ],
-            "description": "Laravel wrapper for PHP Excel",
-            "keywords": [
-                "PHPExcel",
-                "excel",
-                "laravel"
-            ],
-            "time": "2014-04-16T13:42:56+00:00"
+            "time": "2016-07-12T22:15:40+00:00"
         },
         {
             "name": "monolog/monolog",
-            "version": "1.22.0",
+            "version": "1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "bad29cb8d18ab0315e6c477751418a82c850d558"
+                "reference": "3266b6e257992887035c8952918607f5b858aaf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/bad29cb8d18ab0315e6c477751418a82c850d558",
-                "reference": "bad29cb8d18ab0315e6c477751418a82c850d558",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/3266b6e257992887035c8952918607f5b858aaf8",
+                "reference": "3266b6e257992887035c8952918607f5b858aaf8",
                 "shasum": ""
             },
             "require": {
@@ -807,7 +859,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2016-11-26T00:15:39+00:00"
+            "time": "2017-03-20T10:21:06+00:00"
         },
         {
             "name": "nervetattoo/elasticsearch",
@@ -902,7 +954,7 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v0.9.5",
+            "version": "0.9.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
@@ -947,7 +999,7 @@
         },
         {
             "name": "patchwork/utf8",
-            "version": "v1.1.31",
+            "version": "1.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tchwork/utf8.git",
@@ -995,63 +1047,6 @@
                 "utf8"
             ],
             "time": "2015-12-15T15:29:47+00:00"
-        },
-        {
-            "name": "phpoffice/phpexcel",
-            "version": "1.8.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/PHPOffice/PHPExcel.git",
-                "reference": "372c7cbb695a6f6f1e62649381aeaa37e7e70b32"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/PHPOffice/PHPExcel/zipball/372c7cbb695a6f6f1e62649381aeaa37e7e70b32",
-                "reference": "372c7cbb695a6f6f1e62649381aeaa37e7e70b32",
-                "shasum": ""
-            },
-            "require": {
-                "ext-xml": "*",
-                "ext-xmlwriter": "*",
-                "php": ">=5.2.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "PHPExcel": "Classes/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL"
-            ],
-            "authors": [
-                {
-                    "name": "Maarten Balliauw",
-                    "homepage": "http://blog.maartenballiauw.be"
-                },
-                {
-                    "name": "Mark Baker"
-                },
-                {
-                    "name": "Franck Lefevre",
-                    "homepage": "http://blog.rootslabs.net"
-                },
-                {
-                    "name": "Erik Tilt"
-                }
-            ],
-            "description": "PHPExcel - OpenXML - Read, Create and Write Spreadsheet documents in PHP - Spreadsheet engine",
-            "homepage": "http://phpexcel.codeplex.com",
-            "keywords": [
-                "OpenXML",
-                "excel",
-                "php",
-                "spreadsheet",
-                "xls",
-                "xlsx"
-            ],
-            "time": "2015-05-01T07:00:55+00:00"
         },
         {
             "name": "phpseclib/phpseclib",
@@ -1153,16 +1148,16 @@
         },
         {
             "name": "predis/predis",
-            "version": "v0.8.7",
+            "version": "0.8.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nrk/predis.git",
-                "reference": "4123fcd85d61354c6c9900db76c9597dbd129bf6"
+                "reference": "192dfd61e54c3d32c9526bba03365fff818e17e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nrk/predis/zipball/4123fcd85d61354c6c9900db76c9597dbd129bf6",
-                "reference": "4123fcd85d61354c6c9900db76c9597dbd129bf6",
+                "url": "https://api.github.com/repos/nrk/predis/zipball/192dfd61e54c3d32c9526bba03365fff818e17e4",
+                "reference": "192dfd61e54c3d32c9526bba03365fff818e17e4",
                 "shasum": ""
             },
             "require": {
@@ -1199,11 +1194,11 @@
                 "predis",
                 "redis"
             ],
-            "time": "2014-08-01T09:43:10+00:00"
+            "time": "2015-07-07T17:11:00+00:00"
         },
         {
             "name": "psr/log",
-            "version": "1.0.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
@@ -1304,16 +1299,16 @@
         },
         {
             "name": "stack/builder",
-            "version": "v1.0.4",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stackphp/builder.git",
-                "reference": "59fcc9b448a8ce5e338a04c4e2e4aca893e83425"
+                "reference": "a37d8eaa692df4efc928ce2acebef5d71153f690"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stackphp/builder/zipball/59fcc9b448a8ce5e338a04c4e2e4aca893e83425",
-                "reference": "59fcc9b448a8ce5e338a04c4e2e4aca893e83425",
+                "url": "https://api.github.com/repos/stackphp/builder/zipball/a37d8eaa692df4efc928ce2acebef5d71153f690",
+                "reference": "a37d8eaa692df4efc928ce2acebef5d71153f690",
                 "shasum": ""
             },
             "require": {
@@ -1349,7 +1344,7 @@
             "keywords": [
                 "stack"
             ],
-            "time": "2016-06-02T06:58:42+00:00"
+            "time": "2016-06-02T07:00:00+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -1404,7 +1399,7 @@
         },
         {
             "name": "symfony/browser-kit",
-            "version": "v2.4.10",
+            "version": "2.4.x-dev",
             "target-dir": "Symfony/Component/BrowserKit",
             "source": {
                 "type": "git",
@@ -1459,7 +1454,7 @@
         },
         {
             "name": "symfony/console",
-            "version": "v2.4.10",
+            "version": "2.4.x-dev",
             "target-dir": "Symfony/Component/Console",
             "source": {
                 "type": "git",
@@ -1512,7 +1507,7 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v2.4.10",
+            "version": "2.4.x-dev",
             "target-dir": "Symfony/Component/CssSelector",
             "source": {
                 "type": "git",
@@ -1563,7 +1558,7 @@
         },
         {
             "name": "symfony/debug",
-            "version": "v2.4.10",
+            "version": "2.4.x-dev",
             "target-dir": "Symfony/Component/Debug",
             "source": {
                 "type": "git",
@@ -1618,7 +1613,7 @@
         },
         {
             "name": "symfony/dom-crawler",
-            "version": "v2.4.10",
+            "version": "2.4.x-dev",
             "target-dir": "Symfony/Component/DomCrawler",
             "source": {
                 "type": "git",
@@ -1671,16 +1666,16 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.8.17",
+            "version": "2.8.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "74877977f90fb9c3e46378d5764217c55f32df34"
+                "reference": "88b65f0ac25355090e524aba4ceb066025df8bd2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/74877977f90fb9c3e46378d5764217c55f32df34",
-                "reference": "74877977f90fb9c3e46378d5764217c55f32df34",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/88b65f0ac25355090e524aba4ceb066025df8bd2",
+                "reference": "88b65f0ac25355090e524aba4ceb066025df8bd2",
                 "shasum": ""
             },
             "require": {
@@ -1688,7 +1683,7 @@
             },
             "require-dev": {
                 "psr/log": "~1.0",
-                "symfony/config": "~2.0,>=2.0.5|~3.0.0",
+                "symfony/config": "^2.0.5|~3.0.0",
                 "symfony/dependency-injection": "~2.6|~3.0.0",
                 "symfony/expression-language": "~2.6|~3.0.0",
                 "symfony/stopwatch": "~2.3|~3.0.0"
@@ -1727,20 +1722,20 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2017-01-02T20:30:24+00:00"
+            "time": "2017-04-03T20:37:06+00:00"
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.8.17",
+            "version": "2.8.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "5b77d49ab76e5b12743b359ef4b4a712e6f5360d"
+                "reference": "31ab6827a696244094e6e20d77e7d404f8eb4252"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/5b77d49ab76e5b12743b359ef4b4a712e6f5360d",
-                "reference": "5b77d49ab76e5b12743b359ef4b4a712e6f5360d",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/31ab6827a696244094e6e20d77e7d404f8eb4252",
+                "reference": "31ab6827a696244094e6e20d77e7d404f8eb4252",
                 "shasum": ""
             },
             "require": {
@@ -1776,11 +1771,11 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2017-01-08T20:43:03+00:00"
+            "time": "2017-03-26T15:40:40+00:00"
         },
         {
             "name": "symfony/finder",
-            "version": "v2.4.10",
+            "version": "2.4.x-dev",
             "target-dir": "Symfony/Component/Finder",
             "source": {
                 "type": "git",
@@ -1827,7 +1822,7 @@
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v2.4.10",
+            "version": "2.4.x-dev",
             "target-dir": "Symfony/Component/HttpFoundation",
             "source": {
                 "type": "git",
@@ -1880,7 +1875,7 @@
         },
         {
             "name": "symfony/http-kernel",
-            "version": "v2.4.10",
+            "version": "2.4.x-dev",
             "target-dir": "Symfony/Component/HttpKernel",
             "source": {
                 "type": "git",
@@ -1952,16 +1947,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v2.4.10",
+            "version": "2.4.x-dev",
             "target-dir": "Symfony/Component/Process",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Process.git",
+                "url": "https://github.com/symfony/process.git",
                 "reference": "2756ff2bc8e05527f4d5285cc4406e269b12e516"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/2756ff2bc8e05527f4d5285cc4406e269b12e516",
+                "url": "https://api.github.com/repos/symfony/process/zipball/2756ff2bc8e05527f4d5285cc4406e269b12e516",
                 "reference": "2756ff2bc8e05527f4d5285cc4406e269b12e516",
                 "shasum": ""
             },
@@ -1999,16 +1994,16 @@
         },
         {
             "name": "symfony/routing",
-            "version": "v2.4.10",
+            "version": "2.4.x-dev",
             "target-dir": "Symfony/Component/Routing",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/routing.git",
+                "url": "https://github.com/symfony/Routing.git",
                 "reference": "0bd97a27cfd1ad2699ad045de2a744888318a228"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/routing/zipball/0bd97a27cfd1ad2699ad045de2a744888318a228",
+                "url": "https://api.github.com/repos/symfony/Routing/zipball/0bd97a27cfd1ad2699ad045de2a744888318a228",
                 "reference": "0bd97a27cfd1ad2699ad045de2a744888318a228",
                 "shasum": ""
             },
@@ -2066,7 +2061,7 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v2.4.10",
+            "version": "2.4.x-dev",
             "target-dir": "Symfony/Component/Translation",
             "source": {
                 "type": "git",
@@ -2121,6 +2116,50 @@
             "time": "2014-09-23T05:24:59+00:00"
         },
         {
+            "name": "thujohn/analytics",
+            "version": "1.0.23",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thujohn/analytics-l4.git",
+                "reference": "391591b9e15a6ff6c3da41f3d1bbdd312243350b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thujohn/analytics-l4/zipball/391591b9e15a6ff6c3da41f3d1bbdd312243350b",
+                "reference": "391591b9e15a6ff6c3da41f3d1bbdd312243350b",
+                "shasum": ""
+            },
+            "require": {
+                "google/apiclient": "1.1.*",
+                "illuminate/support": "4.*|5.*",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Thujohn\\Analytics": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jonathan Thuau",
+                    "email": "jonathan.thuau@gmail.com"
+                }
+            ],
+            "description": "Google Analytics for Laravel 4",
+            "keywords": [
+                "analytics",
+                "google",
+                "laravel",
+                "laravel4"
+            ],
+            "time": "2014-12-08T21:16:47+00:00"
+        },
+        {
             "name": "twitter/bootstrap",
             "version": "v3.1.1",
             "source": {
@@ -2165,9 +2204,8 @@
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {
-        "maatwebsite/excel": 20,
         "artdarek/oauth-4-laravel": 20
     },
     "prefer-stable": false,

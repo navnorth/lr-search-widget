@@ -14,4 +14,6 @@
 			'amazon_id'               => '',
 			'amazon_secret'           => '',
 			'amazon_callback'         => $URL . '/verify/amazon',
+
+			'google_analytics_id'     => '',
 		);

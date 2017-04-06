@@ -92,3 +92,9 @@ body {
   border-radius: 6px;
   line-height: 1.33;
 }
+.btn-margin-left {
+  margin-left: 5px;
+}
+.legend-padding-bottom {
+  padding-bottom: 10px;
+}
