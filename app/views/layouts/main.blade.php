@@ -48,7 +48,7 @@
         <br />
         <small>Source available @ <a href="https://github.com/navnorth/lr-search-widget" target="_blank">GitHub</a></small>
 
-        @if($_ENV['google_analytics_id'])
+        @if(!empty($_ENV['google_analytics_id']))
             <!-- Google Analytics -->
             <script>
               (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
