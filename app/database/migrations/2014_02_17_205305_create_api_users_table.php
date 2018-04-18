@@ -23,7 +23,9 @@ class CreateApiUsersTable extends Migration {
 			$table->string('organization', 50);
 			$table->string('url', 255);
 			$table->string('api_key', 200)->unique();
-			$table->timestamps();
+			/*$table->timestamps();*/
+			$table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+			$table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
 			$table->softDeletes();
 
 		});

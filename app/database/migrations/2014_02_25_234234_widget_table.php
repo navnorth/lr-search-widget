@@ -24,7 +24,9 @@ class WidgetTable extends Migration {
 
 			$table->foreign('api_user_id')->references('api_user_id')->on('api_user');
 
-			$table->timestamps();
+			/*$table->timestamps();*/
+			$table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+			$table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
 			$table->softDeletes();
 		});
 	}
