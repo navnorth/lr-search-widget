@@ -19,7 +19,7 @@ class CreateApiUsersTable extends Migration {
 			$table->string('firstname', 50);
 			$table->string('lastname', 50);
 			$table->string('email', 50)->unique();
-			$table->string('password', 50);
+			$table->string('password', 50)->nullable();
 			$table->string('organization', 50);
 			$table->string('url', 255);
 			$table->string('api_key', 200)->unique();
